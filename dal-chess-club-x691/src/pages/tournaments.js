@@ -35,4 +35,14 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
+function formatTime(dateString) {
+  const date = new Date(dateString);
+  
+  const hour = date.getHours().toString();
+  //const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //const year = date.getFullYear();
+
+  return `${hour}`;
+}
+
 export default tournaments

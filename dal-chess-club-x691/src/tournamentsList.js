@@ -1,4 +1,4 @@
-import logo from "./images/Chess Club Logo_thumbnail.png";
+import logo from "./images/logo.png";
 
 export const tournamentsList = [
     {
