@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <Router>
+    <Router>
         <Routes>
           <Route path="/tournaments" element={<Tournaments />} />
         </Routes>
