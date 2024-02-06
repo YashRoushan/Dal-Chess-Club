@@ -12,8 +12,8 @@ function TournamentItem({name, image, date, participantsNo, price, description }
 
   return (
     <div className="tournamentItem" onClick={togglePopUp}>
-      <div style={{ backgroundImage: `url(${image})` }}> </div>
       <h1> {name} </h1>
+      <img className="tournament-image" src={image} alt="Tournament Logo" />
       <p> ${price} </p>
       <p> {date} </p>
       <p> Number of Participants: {participantsNo} </p>

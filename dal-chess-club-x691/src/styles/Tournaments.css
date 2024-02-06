@@ -19,8 +19,6 @@
     place-items: right;
   }
   
-  /* MENU ITEM STYLING */
-  
   .tournamentItem {
     border-radius: 15px;
     width: 300px;
@@ -53,9 +51,8 @@
 
   .tournament-image {
     height: 200px;
-    width: 200px;
-    backgroundSize: 'cover';
-    backgroundPosition: 'center'
+    background-size: cover;
+    background-position: center;
   }
   
   @media only screen and (max-width: 1300px) {

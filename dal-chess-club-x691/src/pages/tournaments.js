@@ -1,11 +1,14 @@
 import React from 'react'
 import { tournamentsList } from '../TournamentsList'
 import TournamentItem from '../TournamentItem'
+import { TournamentSearch } from '../TournamentSearch'
 import "../styles/Tournaments.css"
 
 function tournaments() {
   return (
     <div className="tournament">
+      <h1>Tournaments</h1>
+      <TournamentSearch />
         <div className="tournamentList">
             {tournamentsList.map((tournamentItem, key) => {
               return(
