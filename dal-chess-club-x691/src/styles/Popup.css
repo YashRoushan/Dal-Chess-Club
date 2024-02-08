@@ -1,4 +1,4 @@
-.popup-background {
+.trainer-popup-background {
     position: fixed;
     border-radius: 0;
     top: 0;
@@ -12,7 +12,7 @@
     z-index: 1000;
 }
 
-.popup-content {
+.trainer-popup-content {
     position: relative;
     padding: 20px;
     border-radius: 15px;

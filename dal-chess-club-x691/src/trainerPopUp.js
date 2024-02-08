@@ -3,8 +3,8 @@ import './styles/Popup.css'
 
 function trainerPopUp({ name, image, description, onClose}) {
     return (
-        <div className="popup-background" onClick={onClose}>
-            <div className="popup-content" onClick = {e => e.stopPropagation()}>
+        <div className="trainer-popup-background" onClick={onClose}>
+            <div className="trainer-popup-content" onClick = {e => e.stopPropagation()}>
                 <img className="event-image" src={image} alt="Event Pic" />
                 <h1>{name}</h1>
                 <p>{description}</p>
