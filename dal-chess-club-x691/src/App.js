@@ -1,5 +1,5 @@
 import './App.css';
-import Tournaments from './pages/Tournaments';
+import Tournaments from './pages/tournaments.js';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {

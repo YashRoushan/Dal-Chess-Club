@@ -1,8 +1,8 @@
 import React from 'react'
 import {useState} from "react";
-import { tournamentsList } from '../TournamentsList'
-import TournamentItem from '../TournamentItem'
-import { TournamentSearch } from '../TournamentSearch'
+import { tournamentsList } from '../tournamentsList.js'
+import TournamentItem from '../tournamentItem.js'
+import { TournamentSearch } from '../tournamentSearch.js'
 import "../styles/Tournaments.css"
 
 function Tournaments() {

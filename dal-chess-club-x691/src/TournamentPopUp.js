@@ -1,5 +1,5 @@
 import React from 'react'
-import CloseIcon from '@mui/icons-material/Close';
+import {Close} from '@mui/icons-material';
 import './styles/Popup.css'
 
 function TournamentPopUp({ name, image, date, time, endTime, participantsNo, price, description, registrationLink, onClose }) {
@@ -14,7 +14,7 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
         <p> Number of Participants: {participantsNo} </p>
         <p> {description} </p>
         <a href={registrationLink} id="register-button">Register</a> 
-        <button id="close-button" onClick={onClose}><CloseIcon /></button>
+        <button id="close-button" onClick={onClose}><Close /></button>
     </div>
   </div>
   );
