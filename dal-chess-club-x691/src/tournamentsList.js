@@ -1,6 +1,6 @@
 import logo from "./images/logo.png";
-import winter from "./images/winter-blitz.jpg"
-import rapid from "./images/winter-rapid-open.jpg"
+import winter from "./images/winter-blitz.jpg";
+import rapid from "./images/winter-rapid-open.jpg";
 
 export const tournamentsList = [
     {
