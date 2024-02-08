@@ -3,8 +3,8 @@ import './styles/eventPopUp.css'
 
 function eventPopUp({ name, image, date, description, onClose}) {
     return (
-        <div className="popup-background" onClick={onClose}>
-            <div className="popup-content" onClick = {e => e.stopPropagation()}>
+        <div className="event-popup-background" onClick={onClose}>
+            <div className="event-popup-content" onClick = {e => e.stopPropagation()}>
                 <h1>{name}</h1>
                 <p>{date}</p>
                 <p>{description}</p>

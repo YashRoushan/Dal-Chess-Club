@@ -1,4 +1,4 @@
-.popup-background {
+.event-popup-background {
     position: fixed;
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0.75);
@@ -11,7 +11,7 @@
     
 }
 
-.popup-content {
+.event-popup-content {
     position: relative;
     background-color: white;
     overflow-y: auto;
