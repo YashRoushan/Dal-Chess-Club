@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles/Popup.css'
+import './styles/trainerPopUp.css'
 
 function trainerPopUp({ name, image, description, onClose}) {
     return (
