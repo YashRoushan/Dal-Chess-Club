@@ -48,6 +48,7 @@ function improve() {
   return (
     <div className="improve">
       <div className="event">
+        <h1>Event Tab</h1>
           <div className="eventList">
             <Slider {...settings}>
               {eventList.map((eventItem, key) => {
