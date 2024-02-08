@@ -20,13 +20,14 @@
     width: auto;
     max-width: 600px;
     min-width: 300px;
+    max-height: 75%;
     z-index: 1000;
     background-color: white;
     overflow-y: auto;
     cursor: default;
 }
 
-.popup-content button {
+.popup-content #close-button {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -34,3 +35,24 @@
     border: none;
     cursor: pointer;
 }
+
+#register-button {
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #FFD400;
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#register-button:hover {
+    background-color: #242424;
+    color: #FFD400;
+  }
+
+.popup-content::-webkit-scrollbar {
+    border-radius: 15px;
+  }

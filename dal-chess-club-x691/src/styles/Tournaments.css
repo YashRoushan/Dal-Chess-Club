@@ -10,6 +10,29 @@
     font-family: cursive;
     font-size: 60px;
   }
+
+  .filters-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-color: #ddd;
+    border-width: 1px;
+    border-style: solid;
+    border-left: none;
+    border-right: none;
+  }
+
+  .filter {
+    background-color: #ddd;
+    width: 50%;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+  }
   
   .tournamentList {
     width: 70vw;
@@ -50,7 +73,7 @@
   }
 
   .tournament-image {
-    height: 200px;
+    width: 100%;
     background-size: cover;
     background-position: center;
   }

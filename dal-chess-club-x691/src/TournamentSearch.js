@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './styles/TournamentSearch.css'
 
-export const TournamentSearch = () => {
+export const TournamentSearch = ({setResults}) => {
     const [input, setInput] = useState("");
 
     const fetchData = (value) => {
@@ -11,10 +11,14 @@ export const TournamentSearch = () => {
         .then((response) => response.json())
         .then((json) => {
             // Filter the json data to match the input value
-            const filteredResults = json.filter(user => 
-                user.name.toLowerCase().includes(value.toLowerCase())
+            const filteredResults = json.filter(user => {
+                return (
+                    user.name.toLowerCase().includes(value.toLowerCase())
+                );
+            }
+                
             );
-            console.log(filteredResults);
+            setResults(filteredResults);
         });
     };
     

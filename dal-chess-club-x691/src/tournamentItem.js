@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 import TournamentPopUp from './TournamentPopUp';
 
-function TournamentItem({name, image, date, participantsNo, price, description }) {
+function TournamentItem({name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
   
   const [showPopUp, setShowPopUp] = useState(false);
   
-  //function toggles whether popup is visible
   const togglePopUp = () => {
     setShowPopUp(!showPopUp);
   }
@@ -14,17 +13,19 @@ function TournamentItem({name, image, date, participantsNo, price, description }
     <div className="tournamentItem" onClick={togglePopUp}>
       <h1> {name} </h1>
       <img className="tournament-image" src={image} alt="Tournament Logo" />
-      <p> ${price} </p>
-      <p> {date} </p>
-      <p> Number of Participants: {participantsNo} </p>
+      <p> {date} | {time} - {endTime} | ${price} </p>
+      <p> Number of Participants: {participantsNo}</p>
       {showPopUp && (
         <TournamentPopUp
           name={name}
           image={image}
           date={date}
+          time={time}
+          endTime={endTime}
           participantsNo={participantsNo}
           price={price}
           description={description}
+          registrationLink={registrationLink}
           onClose={togglePopUp}
         />
       )}
