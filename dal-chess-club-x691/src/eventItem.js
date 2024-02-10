@@ -5,7 +5,6 @@ function EventItem({name, image, date, description }) {
   
   const [showPopUp, setShowPopUp] = useState(false);
   
-  //function toggles whether popup is visible
   const togglePopUp = () => {
     setShowPopUp(!showPopUp);
   }
