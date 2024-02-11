@@ -9,7 +9,6 @@
     border-top: 5px solid #FFD400;
     position: relative;
     bottom: 0;
-    width: 100%;
 }
 
 .footer .top {
@@ -58,6 +57,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 15px;
 }
 
 .footer .bottom img {
@@ -73,7 +73,7 @@
     }
 
     .footer .bottom {
-        padding-bottom: 10px;
+        padding-bottom: 15px;
     }
 
     .footer .logo {
