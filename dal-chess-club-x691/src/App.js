@@ -1,6 +1,6 @@
 import './App.css';
-import imporve from "./pages/improve";
-import library from "./pages/library";
+import Improve from "./pages/improve";
+import Library from "./pages/library";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,7 +8,8 @@ function App() {
     <div className="App">
     <Router>
         <Routes>
-          <Route path="/" exact Component={library}/>
+        <Route path="/library" element={<Library />} />
+        <Route path="/improve" element={<Improve />} />
         </Routes>
       </Router>
     </div>
