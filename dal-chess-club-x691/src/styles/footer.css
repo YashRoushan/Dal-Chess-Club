@@ -5,6 +5,7 @@
     color: white;
     bottom: 0;
     flex-shrink: 2;
+    padding-left: 10px;
     border-top: 5px solid #FFD400;
     position: relative;
     bottom: 0;
@@ -22,6 +23,7 @@
 .footer a img {
     width: 40px;
     height: 40px;
+    margin-left: -5px;
     flex-shrink: 2;
     
 }

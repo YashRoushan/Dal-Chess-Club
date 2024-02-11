@@ -31,7 +31,7 @@ function NavBar() {
                 </div>
             </div>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/tournaments'}}>Tournament</button>
+                <button className='dropbtn' onClick={() => { window.location.href='/tournaments'}}>Tournaments</button>
                 <div className='dropdown-content'>
                     <a href='/'>Option 1</a>
                     <a href='/'>Option 2</a>
