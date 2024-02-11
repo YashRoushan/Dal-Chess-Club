@@ -1,6 +1,6 @@
 .footer {
     height: auto;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
     background-color: #242424;
     color: white;
     bottom: 0;
@@ -40,7 +40,7 @@
     text-decoration: none;
     position: relative;
     display: inline-block;
-    width: 115px;
+    width: 125px;
     color: white;
     margin-top: 16px;
 }
