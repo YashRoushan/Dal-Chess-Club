@@ -1,0 +1,87 @@
+/* CustomSlider.css */
+
+.custom-slider-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 5%;
+}
+
+ /* src/Components/ImageCarousel/ImageCarousel.css */
+ .slick-slide {
+  text-align: center;
+  position: relative;
+}
+
+.slick-slide img {
+  width: 100%;
+  max-height: 400px; /* Set a max-height for your images */
+  object-fit: cover; /* This will cover the area without stretching the images */
+}
+
+.custom-slider-container .slick-slide {
+  margin: 0 1px;
+  background-color: black;
+  color: yellow;
+}
+
+.custom-slider-container .slick-arrow {
+  display: block !important;
+  z-index: 2;
+  width: auto;
+  height: auto;
+  background: transparent;
+  position: absolute;
+  top: 220px; /* Adjust this value to move the arrows upwards */
+  transform: translateX(-50%); /* Center the arrows horizontally */
+}
+
+.custom-slider-container .next-arrow,
+.custom-slider-container .prev-arrow {
+  width: auto;
+  height: auto;
+  background: transparent;
+}
+
+.custom-slider-container .prev-arrow {
+  left: 50%; /* Move the left arrow to the center */
+  transform: translateX(-50%); /* Center the left arrow horizontally */
+}
+.custom-slider-container .next-arrow {
+  right: 50%; /* Move the right arrow to the center */
+  transform: translateX(50%); /* Center the right arrow horizontally */
+}
+.custom-slider-container .prev-arrow {
+  left: -25px;
+  color: black;
+}
+
+.custom-slider-container .next-arrow {
+  right: -25px;
+  color: black;
+}
+
+
+.custom-slider-container .slick-center .custom-slider-item {
+  transform: scale(1.08);
+  transition: transform 0.3s ease;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: black; /* Changes the color of the arrow icons */
+}
+
+
+@media (max-width: 768px) {
+  .custom-slider-container .next-arrow {
+    right: 10px;
+  }
+
+  .custom-slider-container .prev-arrow {
+    left: 10px;
+  }
+
+  .custom-slider-container .slick-slide {
+    margin: 0 5px;
+  }
+}
+

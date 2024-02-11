@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-
-//Base auto-generated Page Layout for App, structure and values expected to change
+import HomePage from './pages/Homepage';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App() {
   return (
@@ -24,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
