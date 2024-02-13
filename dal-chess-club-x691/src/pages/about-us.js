@@ -1,5 +1,5 @@
 import React from 'react';
-import './about-us.css';
+import '../styles/about-us.css';
 import members from '../images/members.png';
 
 function AboutUsPage() {
