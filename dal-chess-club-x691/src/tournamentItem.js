@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import TournamentPopUp from './TournamentPopUp.js';
+import TournamentPopUp from './tournamentPopUp.js';
 
 function TournamentItem({name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
   
