@@ -25,33 +25,20 @@ function NavBar() {
             <div className='dropdown'>
                 <button className='dropbtn' onClick={() => { window.location.href='/about'}}>About Us</button>
                 <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
+                    <a href='/about'>Our Members</a>
+                    <a href='/faq'>FAQ</a>
                 </div>
             </div>
             <div className='dropdown'>
                 <button className='dropbtn' onClick={() => { window.location.href='/tournaments'}}>Tournaments</button>
-                <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
-                </div>
             </div>
             <div className='dropdown'>
                 <button className='dropbtn' onClick={() => { window.location.href='/news'}}>News</button>
-                <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
-                </div>
             </div>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/faq'}}>FAQ</button>
+                <button className='dropbtn' onClick={() => { window.location.href='/improve'}}>Improve</button>
                 <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
+                    <a href='/library'>Library</a>
                 </div>
             </div>
         </div>
