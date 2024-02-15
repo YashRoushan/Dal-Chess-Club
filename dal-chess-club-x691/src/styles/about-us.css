@@ -1,0 +1,53 @@
+*{
+    text-align: left;
+}
+
+h3 {
+    text-align: left;
+}
+
+p {
+    text-align: left;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container{
+    padding: 40px;
+}
+
+.member {
+    text-align: left;
+    margin-top: 100px;
+}
+
+.member-info {
+    display: flex;
+    height: 100px;
+    margin-top: 0px;
+}
+
+.members-placeholder {
+    height: 150px;
+}
+
+img{
+    padding-right: 15px;
+}
+
+.position {
+    
+    margin-bottom: 0px;
+    width: 150px;
+    text-align: center;
+    padding-left: 3px;
+    font-size: medium;
+    padding-bottom: 10px; 
+}
+
+#other-info-section {
+    margin-top: 150px;
+}
+

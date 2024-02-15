@@ -23,7 +23,7 @@ function NavBar() {
                 <button className='dropbtn' onClick={() => { window.location.href='/'}}>Home</button>
             </div>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/about'}}>About Us</button>
+                <button className='dropbtn' onClick={() => { window.location.href='/about-us'}}>About Us</button>
                 <div className='dropdown-content'>
                     <a href='/about'>Our Members</a>
                     <a href='/faq'>FAQ</a>
