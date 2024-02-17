@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-item {
+  background: #000000;
+}
+
+.carousel-item img {
+  opacity: 0.4;
+}
+
+.image-container {
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.zoom-image {
+  transition: transform 1.0s;
+}
+
+.zoom-image:hover {
+  transform: scale(2.2);
+}
+
+.professional-tabs .nav-link {
+  color: #333;
+}
+
+.professional-tabs .nav-link.active {
+  font-weight: bold;
+}
+
+.professional-tabs .nav-item {
+  margin-right: 10px;
+}
+
+.professional-tabs .nav-item:last-child {
+  margin-right: 0;
+}
+
+.professional-tabs .nav-link:hover {
+  color: #007bff;
+}
+
+#share-dropdown {
+  background: #ffffff !important;
+  border: none;
+}
