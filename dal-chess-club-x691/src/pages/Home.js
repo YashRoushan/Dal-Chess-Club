@@ -9,13 +9,13 @@ import {
 } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "../styles/homestyle.css";
-import slide1Image1 from "../Images/dal_carousel.jpg";
-import slide1Image2 from "../Images/dal_counter.jpg";
-import slide1Image3 from "../Images/dal_chessboard.jpeg";
+import slide1Image1 from "../images/dal_carousel.jpg";
+import slide1Image2 from "../images/dal_counter.jpg";
+import slide1Image3 from "../images/dal_chessboard.jpeg";
 
-import slide1Image11 from "../Images/image_3.jpg";
-import slide1Image12 from "../Images/image_4.jpg";
-import slide1Image13 from "../Images/image_6.jpg";
+import slide1Image11 from "../images/image_3.jpg";
+import slide1Image12 from "../images/image_4.jpg";
+import slide1Image13 from "../images/image_6.jpg";
 
 function Home() {
   return (
