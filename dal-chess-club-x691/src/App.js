@@ -8,6 +8,8 @@ import Improve from "./pages/improve";
 import Library from "./pages/library";
 import AboutUsPage from './pages/about-us';
 import FAQpage from './pages/faq';
+import AdminLogin from './pages/adminLogin.js';
+import AdminLanding from './pages/adminLanding.js';
  
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/improve" element={<Improve />} />
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/faq" element={<FAQpage />} />
+          <Route path="/adminLogin" element={<AdminLogin />} />
+          <Route path="/adminLanding" element={<AdminLanding />} />
         </Routes>
         <Footer />
       </Router>
