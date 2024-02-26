@@ -20,7 +20,6 @@
 }
 
 .footer a img {
-    width: 40px;
     height: 40px;
     margin-left: -5px;
     flex-shrink: 2;
@@ -66,7 +65,6 @@
 }
 
 .footer .bottom img {
-    width: 50px;
     height: 50px;
 }
 
