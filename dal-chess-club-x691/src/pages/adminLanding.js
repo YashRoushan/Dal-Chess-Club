@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import '../styles/adminLanding.css';
 
 const adminLanding = () => {
+
+    //Variable to handle the link content
     const redirectLink = [
         { label: 'Add Tournament'},
         { label: 'Edit Tournament'},
@@ -17,9 +19,10 @@ const adminLanding = () => {
         { label: 'Add FAQ'},
         { label: 'Edit FAQ'},
         { label: 'Add AboutUs'},
-        { label: 'Add AboutUs'},
+        { label: 'Edit AboutUs'},
     ];
 
+    //Code for the page layout
     return (
     <div class="page">
         <h1>Welcome!</h1>

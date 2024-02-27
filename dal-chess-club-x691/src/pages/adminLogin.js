@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
 
+//Method to handle validation
 const handleLogin = (username, password) => {
     console.log('Username: ', username);
     console.log('Password: ', password);
 }
 
 const LoginForm = () => {
+    //Checks state of the username and password
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
         handleLogin(username, password);
+        navigate('../adminLanding')
     };
 
+    //Code for the form design
     return (
         <div className="login-container">
             <h1>Login</h1>
@@ -32,7 +37,6 @@ const LoginForm = () => {
                         <input type='password' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                 </div>
-                <Link className='forget-password'>Forget Password?</Link>
                 <br></br>
                 <button type="submit">Login</button>
             </form>
