@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../styles/navbar.css';
 import Logo from '../images/logo.png';
 import Reorder from '../images/reorder.png';
+import { Link } from 'react-router-dom';
+
 import { useEffect } from 'react';
 
 
@@ -27,31 +29,36 @@ function NavBar() {
 
   return (
     <div className="navbar">
-        <a href='/'><img src={ Logo } alt='Dal Chess Club Logo' /></a>
+        <Link to='/'><img src={ Logo } alt='Dal Chess Club Logo' /></Link>
         <button className='mobile-toggle' onClick={toggleDropdowns}>
             <img src={ Reorder } alt='reorder icon' className='icon' />
         </button>
         <div className={`links ${showDropdowns ? 'show-dropdowns' : ''}`}>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/'}}>Home</button>
+                <Link to='/'><button className='dropbtn'>Home</button></Link>
             </div>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/about-us'}}>About Us</button>
+                <Link to='/about-us'><button className='dropbtn'>About Us</button></Link>
                 <div className='dropdown-content'>
-                    {userIsDesktop ? <a href='/about-us'>Our Members</a> : <a href='/about-us'>- Our Members</a>}
-                    {userIsDesktop ? <a href='/faq'>FAQ</a> : <a href='/faq'>- FAQ</a>}
+                    <Link to='/about-us'><button className='dropbtn'>Our Members</button></Link>
+                    <Link to='/faq'><button className='dropbtn'>FAQ</button></Link>
                 </div>
             </div>
             <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/tournaments'}}>Tournaments</button>
-            </div>
-            <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/news'}}>News</button>
-            </div>
-            <div className='dropdown'>
-                <button className='dropbtn' onClick={() => { window.location.href='/improve'}}>Improve</button>
+                <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
                 <div className='dropdown-content'>
-                    {userIsDesktop ? <a href='/library'>Library</a> : <a href='/library'>- Library</a>}
+                    <Link to='/'><button className='dropbtn'>Option 1</button></Link>
+                    <Link to='/'><button className='dropbtn'>Option 2</button></Link>
+                    <Link to='/'><button className='dropbtn'>Option 3</button></Link>
+                </div>
+            </div>
+            <div className='dropdown'>
+                <Link to='/News'><button className='dropbtn'>News</button></Link>
+            </div>
+            <div className='dropdown'>
+            <Link to='/improve'><button className='dropbtn' >Improve</button></Link>
+                <div className='dropdown-content'>
+                    <Link to='/library'><button className='dropbtn'>Library</button></Link>
                 </div>
             </div>
         </div>
