@@ -15,7 +15,7 @@ function NavBar() {
 
   return (
     <div className="navbar">
-        <a href='/'><img src={ Logo } alt='Dal Chess Club Logo' /></a>
+        <Link to='/'><img src={ Logo } alt='Dal Chess Club Logo' /></Link>
         <button className='mobile-toggle' onClick={toggleDropdowns}>
             <img src={ Reorder } alt='reorder icon' className='icon' />
         </button>
