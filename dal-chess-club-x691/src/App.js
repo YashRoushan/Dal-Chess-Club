@@ -8,11 +8,11 @@ import Improve from "./pages/improve";
 import Library from "./pages/library";
 import AboutUsPage from './pages/about-us';
 import FAQpage from './pages/faq';
- 
+
 function App() {
   return (
     <div className="App">
-    <Router>
+    <Router basename="/chessclub">
         <NavBar />
         <Routes>
           <Route path="/tournaments" element={<Tournaments />} />
@@ -21,11 +21,13 @@ function App() {
           <Route path="/improve" element={<Improve />} />
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/faq" element={<FAQpage />} />
+          
         </Routes>
         <Footer />
       </Router>
     </div>
   );
+  //Will add <Route path="" element={<Homepage />} /> when homepage is completed
 }
 
 export default App;
