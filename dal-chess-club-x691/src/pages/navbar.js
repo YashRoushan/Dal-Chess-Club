@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/navbar.css';
 import Logo from '../images/logo.png';
 import Reorder from '../images/reorder.png';
-
+import { useEffect } from 'react';
 
 
 function NavBar() {    
@@ -11,6 +11,19 @@ function NavBar() {
     const toggleDropdowns = () => {
         setShowDropdowns(!showDropdowns);
     };
+
+    //checking if the user is in mobile or desktop
+    const [userIsDesktop, setUserIsDesktop] = useState(window.innerWidth > 1280);
+    const toggleWindowView = () => {
+        window.innerWidth > 1280 ? setUserIsDesktop(true) : setUserIsDesktop(false);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', toggleWindowView);
+        return () => {
+            window.removeEventListener('resize', toggleWindowView);
+        }
+    }, [userIsDesktop]);
 
   return (
     <div className="navbar">
@@ -25,8 +38,8 @@ function NavBar() {
             <div className='dropdown'>
                 <button className='dropbtn' onClick={() => { window.location.href='/about-us'}}>About Us</button>
                 <div className='dropdown-content'>
-                    <a href='/about-us'>Our Members</a>
-                    <a href='/faq'>FAQ</a>
+                    {userIsDesktop ? <a href='/about-us'>Our Members</a> : <a href='/about-us'>- Our Members</a>}
+                    {userIsDesktop ? <a href='/faq'>FAQ</a> : <a href='/faq'>- FAQ</a>}
                 </div>
             </div>
             <div className='dropdown'>
@@ -38,7 +51,7 @@ function NavBar() {
             <div className='dropdown'>
                 <button className='dropbtn' onClick={() => { window.location.href='/improve'}}>Improve</button>
                 <div className='dropdown-content'>
-                    <a href='/library'>Library</a>
+                    {userIsDesktop ? <a href='/library'>Library</a> : <a href='/library'>- Library</a>}
                 </div>
             </div>
         </div>

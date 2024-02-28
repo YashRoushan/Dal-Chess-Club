@@ -12,8 +12,6 @@ function footer() {
             <div className='item'>
                 <h2>Contact Us</h2>
                 <p>chess@dal.ca</p>
-                <p>+1 902 123 4567</p>
-                <p>other stuff here</p>
             </div>
             <div className='item'>
                 <h2>Socials</h2>
