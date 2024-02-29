@@ -109,7 +109,6 @@ body {
     z-index: 1;
   }
 
-  /*for accessability*/
   .dropdown:focus-within .dropdown-content, .dropdown:focus-within .dropdown-content a {
     display: block;
     opacity: 1;
