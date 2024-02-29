@@ -1,14 +1,15 @@
-* {
-  margin: 0;
-  padding: 0;
+
+.slider-item {
+  position: relative;
 }
 
-.carousel-item {
-  background: #000000;
-}
-
-.carousel-item img {
-  opacity: 0.4;
+.carousel-caption {
+  position: absolute;
+  top: 80%;
+  left: 35%;
+  transform: translate(-50%, -10%);
+  text-align: center;
+  color: #fff;
 }
 
 .image-container {
@@ -47,4 +48,135 @@
 #share-dropdown {
   background: #ffffff !important;
   border: none;
+}
+
+#cardHover {
+  overflow: hidden;
+}
+
+#cardimg {
+  transition: 400ms all;
+  width: 105%;
+}
+
+#cardimg:hover {
+  scale: 1.5;
+}
+
+.cardCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1200px){
+.css-1oqqzyl-MuiContainer-root {
+    max-width: 1343px !important;
+}}
+
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  height: 23rem !important;
+}
+
+
+/* ===========Swiper Slider============= */
+
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+
+@media (max-width:650px) {
+  .sliderMain {
+    height: 30rem !important;
+}
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+}
+
+.sliderMain {
+  max-width: 65rem;
+  height: 55rem;
+  width: 80%;
+  display: flex;
+  margin: auto;
+  margin-top: 5vw;
+  margin-bottom: 5vw;
+  padding: 0rem;
+
+
+  .swiper-button-next:after {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: -1.3rem;
+  }
+
+  .swiper-button-prev:after {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 1.3rem;
+  }
+
+
+  .swiper-pagination-bullet {
+    background: #fff;
+  }
+
+  .innerContent {
+    position: relative;
+
+    div {
+      position: absolute;
+      bottom: 3vw;
+      left: 6vw;
+      color: #ffffff;
+
+      h1 {
+        font-size: 1.8rem;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+
+    @media (max-width:600px) {
+      div {
+        position: absolute;
+        bottom: 3vw;
+        left: 6vw;
+        color: #ffffff;
+
+        h1 {
+          font-size: 1.2rem;
+          text-align: left;
+        }
+
+        p {
+          font-size: .9rem;
+        }
+      }
+    }
+
+  }
 }
