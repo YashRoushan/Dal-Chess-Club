@@ -14,7 +14,7 @@ import AdminLanding from './pages/adminLanding.js';
 function App() {
   return (
     <div className="App">
-    <Router basename="/chessclub">
+    <Router>
         <NavBar />
         <Routes>
           <Route path="/tournaments" element={<Tournaments />} />
@@ -30,7 +30,6 @@ function App() {
       </Router>
     </div>
   );
-  //Will add <Route path="" element={<Homepage />} /> when homepage is completed
 }
 
 export default App;
