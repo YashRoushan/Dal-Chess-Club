@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Tournaments from './pages/tournaments.js';
-import NewsPage from './pages/News.js';
+import NewsPage from './pages/news.js';
 import NavBar from './pages/navbar';
 import Footer from './pages/footer';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
