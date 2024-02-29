@@ -28,7 +28,6 @@ body {
     float: left;
     display: flex;
     text-decoration: none;
-    transition-duration: 250ms;
   }
   
   .navbar img {
@@ -63,7 +62,6 @@ body {
     color: black;
     background-color: inherit;
     font-family: inherit;
-    transition-duration: 250ms;
     cursor: pointer;
   }
 
