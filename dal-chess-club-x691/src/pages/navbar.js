@@ -34,10 +34,10 @@ function NavBar() {
         </button>
         <div className={`links ${showDropdowns ? 'show-dropdowns' : ''}`}>
             <div className='dropdown'>
-                <Link to='/'><button className='dropbtn'>Home</button></Link>
+                <button className='dropbtn' onClick={() => { window.location.href='/'}}>Home</button>
             </div>
             <div className='dropdown'>
-                <Link to='/about-us'><button className='dropbtn'>About Us</button></Link>
+                <button className='dropbtn' onClick={() => { window.location.href='/about-us'}}>About Us</button>
                 <div className='dropdown-content'>
                     {userIsDesktop ? <Link to='/about-us'><button className='content'>Our Members</button></Link> : <Link to='/about-us'><button className='content'>{'>'} Our Members</button></Link>}
                     {userIsDesktop ? <Link to='/faq'><button className='content'>FAQ</button></Link> : <Link to='/faq'><button className='content'>{'>'} FAQ</button></Link>}

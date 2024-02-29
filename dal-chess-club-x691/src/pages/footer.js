@@ -4,6 +4,7 @@ import Logo from '../images/Logo 2.png';
 import Facebook from '../images/facebook.png';
 import Instagram from '../images/instagram.png';
 import Discord from '../images/Discord.png';
+import { Link } from 'react-router-dom';
 
 function footer() {
   return (
@@ -31,7 +32,7 @@ function footer() {
                 <p>&copy; 2024 dalchess.com</p>
             </div>
             <div className='admin'>
-                <a href='/admin'>Admin</a>
+                <Link to='/adminLogin'><p>Admin</p></Link>
             </div>
             <div className='logo'>
                <img src={ Logo } alt='Dal Chess Club Logo' />
