@@ -4,6 +4,7 @@ import Logo from '../images/Logo 2.png';
 import Facebook from '../images/facebook.png';
 import Instagram from '../images/instagram.png';
 import Discord from '../images/Discord.png';
+import { Link } from 'react-router-dom';
 
 function footer() {
   return (
@@ -11,9 +12,7 @@ function footer() {
         <div className='top'>
             <div className='item'>
                 <h2>Contact Us</h2>
-                <p>sampleEmail@gmail.com</p>
-                <p>+1 902 123 4567</p>
-                <p>other stuff here</p>
+                <p>chess@dal.ca</p>
             </div>
             <div className='item'>
                 <h2>Socials</h2>
@@ -24,13 +23,15 @@ function footer() {
                 </div>
             </div>
             <div className='item'>
-                <h2>Mailing List</h2>
-                <a href='/'>Join Mailing List</a>
+                <Link to='/'><h2>Mailing List</h2></Link>
             </div>
         </div>
         <div className='bottom'>
             <div className='copy'>
                 <p>&copy; 2024 dalchess.com</p>
+            </div>
+            <div className='admin'>
+                <Link to='/adminLogin'><p>Admin</p></Link>
             </div>
             <div className='logo'>
                <img src={ Logo } alt='Dal Chess Club Logo' />
