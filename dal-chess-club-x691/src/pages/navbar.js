@@ -39,7 +39,7 @@ function NavBar() {
                 </div>
             </div>
             <div className='dropdown'>
-                <Link to='/News'><button className='dropbtn'>News</button></Link>
+                <Link to='/news'><button className='dropbtn'>News</button></Link>
             </div>
             <div className='dropdown'>
             <Link to='/improve'><button className='dropbtn' >Improve</button></Link>

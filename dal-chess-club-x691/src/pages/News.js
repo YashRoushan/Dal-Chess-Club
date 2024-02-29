@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/News.css';
+import '../styles/news.css';
 
 const newsArticles = [
 // Sample news artciles added for reference - CHANGE with actual content
