@@ -28,7 +28,7 @@ body {
     float: left;
     display: flex;
     text-decoration: none;
-    transition-duration: 500ms;
+    transition-duration: 250ms;
   }
   
   .navbar img {
@@ -51,10 +51,22 @@ body {
     padding-left: 20px;
     background-color: inherit;
     font-family: inherit;
-    transition-duration: 500ms;
+    transition-duration: 250ms;
     cursor: pointer;
   }
   
+  .content {
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: inherit;
+    font-family: inherit;
+    transition-duration: 250ms;
+    cursor: pointer;
+  }
+
   .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #ffe874;
   }
@@ -69,6 +81,7 @@ body {
     height: 0;
     transform: translateY(-5px);
     transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease;
+    top: 100px;
   }
   
   .dropdown-content a {
@@ -93,8 +106,9 @@ body {
     opacity: 1;
     height: auto;
     transform: translateY(0);
+    z-index: 1;
   }
-  
+
   /*for accessability*/
   .dropdown:focus-within .dropdown-content, .dropdown:focus-within .dropdown-content a {
     display: block;
@@ -109,15 +123,17 @@ body {
   
   @media screen and (max-width: 600px) {
   
-    .dropdown .dropbtn {
+    .dropdown .dropbtn, .dropdown a {
       height: 50px;
+      width: 100%;
+      text-align: left;
     }
-  
+      
     .navbar .links {
       display: none;
       flex-direction: column;
-      float: left;
       width: 100%;
+      overflow: hidden;
       height: auto;
     }
   
@@ -126,6 +142,11 @@ body {
       padding-right: 0;
     }
   
+    .dropdown {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
     .dropdown-content a:hover {
       background-color: #fff79c;
     }
@@ -135,7 +156,6 @@ body {
     }
   
     .dropdown-content a {
-      text-indent: 20px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.141);
     }
   
@@ -162,27 +182,21 @@ body {
       position: static;
       background-color: #FFD400;
       box-shadow: none;
-      z-index: 2;
-      opacity: 1;
+      float: left;
       height: auto;
-      transform: translateY(-5px);
       border-bottom: none;
-      transition: opacity 0.5s ease, transform 0.5s ease, height 0.5s ease;
+      text-indent: 20px;
     }
   
     .navbar img {
       height: 65px;
     }
   
-    .dropdown .dropbtn {
-      width: 100%;
-      text-align: left;
-    }
-  
     .navbar .links.show-dropdowns .dropdown-content, .navbar .links.show-dropdowns .dropdown-content a {
       display: block;
-      opacity: 1;
+      flex-direction: column;
       height: auto;
+      opacity: 1;
       transform: translateY(0);
     }
   }
