@@ -1,11 +1,11 @@
-const mysql = require('mysql');
+// database.js
+const mysql = require('mysql2');
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: 'euro.cs.dal.ca',
-  user: 'chessclub',
-  password: 'Mee5shaong9kaiw4',
-  database: 'chessclub'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 
-module.exports = pool;
+module.exports = pool.promise();

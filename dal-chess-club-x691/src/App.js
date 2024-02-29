@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import './App.css';
 import Tournaments from './pages/tournaments.js';
 import News from './pages/News';
@@ -8,9 +9,17 @@ import Improve from "./pages/improve";
 import Library from "./pages/library";
 
 function App() {
+  // Move useEffect inside the App function
+  useEffect(() => {
+    fetch('http://localhost:3000/api/data')
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <div className="App">
-    <Router>
+      <Router>
         <NavBar />
         <Routes>
           <Route path="/tournaments" element={<Tournaments />} />
@@ -23,4 +32,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
