@@ -20,7 +20,6 @@
 }
 
 .footer a img {
-    width: 40px;
     height: 40px;
     margin-left: -5px;
     flex-shrink: 2;
@@ -60,8 +59,12 @@
     padding-bottom: 15px;
 }
 
+.bottom a {
+    text-decoration: none;
+    color: rgb(255, 198, 198);
+}
+
 .footer .bottom img {
-    width: 50px;
     height: 50px;
 }
 

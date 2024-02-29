@@ -11,9 +11,7 @@ function footer() {
         <div className='top'>
             <div className='item'>
                 <h2>Contact Us</h2>
-                <p>sampleEmail@gmail.com</p>
-                <p>+1 902 123 4567</p>
-                <p>other stuff here</p>
+                <p>chess@dal.ca</p>
             </div>
             <div className='item'>
                 <h2>Socials</h2>
@@ -31,6 +29,9 @@ function footer() {
         <div className='bottom'>
             <div className='copy'>
                 <p>&copy; 2024 dalchess.com</p>
+            </div>
+            <div className='admin'>
+                <a href='/admin'>Admin</a>
             </div>
             <div className='logo'>
                <img src={ Logo } alt='Dal Chess Club Logo' />

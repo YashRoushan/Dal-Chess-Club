@@ -3,7 +3,7 @@ import '../styles/navbar.css';
 import Logo from '../images/logo.png';
 import Reorder from '../images/reorder.png';
 import { Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 
 function NavBar() {    
@@ -13,9 +13,22 @@ function NavBar() {
         setShowDropdowns(!showDropdowns);
     };
 
+    //checking if the user is in mobile or desktop
+    const [userIsDesktop, setUserIsDesktop] = useState(window.innerWidth > 650);
+    const toggleWindowView = () => {
+        window.innerWidth > 650 ? setUserIsDesktop(true) : setUserIsDesktop(false);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', toggleWindowView);
+        return () => {
+            window.removeEventListener('resize', toggleWindowView);
+        }
+    }, [userIsDesktop]);
+
   return (
     <div className="navbar">
-        <a href='/'><img src={ Logo } alt='Dal Chess Club Logo' /></a>
+        <Link to='/'><img src={ Logo } alt='Dal Chess Club Logo' /></Link>
         <button className='mobile-toggle' onClick={toggleDropdowns}>
             <img src={ Reorder } alt='reorder icon' className='icon' />
         </button>
@@ -26,33 +39,20 @@ function NavBar() {
             <div className='dropdown'>
                 <Link to='/about-us'><button className='dropbtn'>About Us</button></Link>
                 <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
+                    {userIsDesktop ? <Link to='/about-us'><button className='content'>Our Members</button></Link> : <Link to='/about-us'><button className='content'>{'>'} Our Members</button></Link>}
+                    {userIsDesktop ? <Link to='/faq'><button className='content'>FAQ</button></Link> : <Link to='/faq'><button className='content'>{'>'} FAQ</button></Link>}
                 </div>
             </div>
             <div className='dropdown'>
                 <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
-                <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
-                </div>
             </div>
             <div className='dropdown'>
-                <Link to='/News'><button className='dropbtn'>News</button></Link>
-                <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
-                </div>
+                <Link to='/news'><button className='dropbtn'>News</button></Link>
             </div>
             <div className='dropdown'>
-                <Link to='/faq'><button className='dropbtn'>FAQ</button></Link>
+            <Link to='/improve'><button className='dropbtn' >Improve</button></Link>
                 <div className='dropdown-content'>
-                    <a href='/'>Option 1</a>
-                    <a href='/'>Option 2</a>
-                    <a href='/'>Option 3</a>
+                    {userIsDesktop ? <Link to='/library'><button className='content'>Library</button></Link> : <Link to='/library'><button className='content'>{'>'} Library</button></Link>}
                 </div>
             </div>
         </div>

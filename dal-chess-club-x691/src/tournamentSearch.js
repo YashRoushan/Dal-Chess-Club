@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import './styles/TournamentSearch.css'
+import './styles/tournamentSearch.css'
 
 export const TournamentSearch = ({setResults}) => {
     const [input, setInput] = useState("");
