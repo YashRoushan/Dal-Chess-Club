@@ -21,10 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-// .env
-DB_HOST=euro.cs.dal.ca
-DB_USER=chessclub
-DB_PASS=Mee5shaong9kaiw4
-DB_NAME=chessclub
-PORT=3000
