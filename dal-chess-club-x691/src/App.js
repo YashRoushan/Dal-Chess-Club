@@ -10,6 +10,12 @@ import AboutUsPage from './pages/about-us';
 import FAQpage from './pages/faq';
 import AdminLogin from './pages/adminLogin.js';
 import AdminLanding from './pages/adminLanding.js';
+import AddFormAboutUs from './forms/addForm-AboutUs.js';
+import HomeAddForm from './forms/Home-AddForm.js';
+import TournamentsAddForm from './forms/Tournaments-AddForm.js';
+import FAQAddForm from './forms/FAQ-AddForm.js';
+import NewsAddForm from './forms/News-AddForm.js';
+
  
 function App() {
   return (
@@ -25,6 +31,11 @@ function App() {
           <Route path="/faq" element={<FAQpage />} />
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminLanding" element={<AdminLanding />} />
+          <Route path="/addForm-AboutUs" element={<AddFormAboutUs />} />
+          <Route path="/Home-AddForm" element={<HomeAddForm />} />
+          <Route path="/Tournaments-AddForm" element={<TournamentsAddForm />} />
+          <Route path="/FAQ-AddForm" element={<FAQAddForm />} />
+          <Route path="/News-AddForm" element={<NewsAddForm />} />
         </Routes>
         <Footer />
       </Router>
