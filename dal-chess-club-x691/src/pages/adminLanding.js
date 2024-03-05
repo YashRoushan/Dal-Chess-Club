@@ -7,7 +7,7 @@ const adminLanding = () => {
     //Variable to handle the link content
     const redirectLink = [
         { label: 'Add Tournament'},
-        { label: 'Edit Tournament'},
+        { label: 'Edit Tournament', to: '../editTournaments'},
         { label: 'Add Book'},
         { label: 'Edit Books'},
         { label: 'Add News'},
@@ -29,7 +29,7 @@ const adminLanding = () => {
         <div className='button-container'>
             <br></br>
             {redirectLink.map((button , index) => (
-                <Link key={index} className='redirectLink'>{button.label}</Link>
+                <Link key={index} className='redirectLink' to={button.to}>{button.label}</Link>
             ))}
         </div>
     </div>

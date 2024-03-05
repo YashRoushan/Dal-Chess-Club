@@ -10,6 +10,7 @@ import AboutUsPage from './pages/about-us';
 import FAQpage from './pages/faq';
 import AdminLogin from './pages/adminLogin.js';
 import AdminLanding from './pages/adminLanding.js';
+import EditTournaments from './pages/editPage-tournaments.js';
  
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/faq" element={<FAQpage />} />
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminLanding" element={<AdminLanding />} />
+          <Route path="/editTournaments" element={<EditTournaments />} />
         </Routes>
         <Footer />
       </Router>
