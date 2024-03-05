@@ -20,6 +20,9 @@ function Home() {
 
   return (
     <>
+    <div className="homeTitle">
+    <h1>Dalhousie Chess Club</h1>
+    </div>
       {/* swiper-slider container */}
       <div className="sliderMain">
       <Swiper

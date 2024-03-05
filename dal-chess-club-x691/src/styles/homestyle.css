@@ -1,3 +1,7 @@
+.homeTitle {
+  padding-top: 10px;
+  font-size: 20pt;
+}
 
 .slider-item {
   position: relative;
@@ -69,6 +73,10 @@
   align-items: center;
 }
 
+.my-5 {
+  padding-bottom: 20px;
+}
+
 @media (min-width: 1200px){
 .css-1oqqzyl-MuiContainer-root {
     max-width: 1343px !important;
@@ -92,6 +100,18 @@
   .sliderMain {
     height: 30rem !important;
 }
+
+}
+
+@media screen and (max-width: 800px) {
+  .homeTitle {
+    font-size: 15pt;
+  }
+}
+@media screen and (max-width: 600px) {
+  .homeTitle {
+    font-size: 10pt;
+  }
 }
 
 .swiper-slide {
@@ -118,19 +138,18 @@
   width: 80%;
   display: flex;
   margin: auto;
-  margin-top: 5vw;
-  margin-bottom: 5vw;
+  margin-bottom: 1vw;
   padding: 0rem;
 
 
   .swiper-button-next:after {
-    color: rgb(255, 255, 255);
+    color: #FFD400;
     position: absolute;
     left: -1.3rem;
   }
 
   .swiper-button-prev:after {
-    color: rgb(255, 255, 255);
+    color: #FFD400;
     position: absolute;
     left: 1.3rem;
   }
