@@ -7,19 +7,19 @@ const adminLanding = () => {
     //Variable to handle the link content
     const redirectLink = [
         { label: 'Add Tournament'},
-        { label: 'Edit Tournament', to: '../editTournaments'},
+        { label: 'Edit Tournament'},
         { label: 'Add Book'},
-        { label: 'Edit Books', to: '../editLibrary'},
+        { label: 'Edit Books'},
         { label: 'Add News'},
-        { label: 'Edit News', to: '../editNews'},
+        { label: 'Edit News'},
         { label: 'Add Trainer',},
-        { label: 'Edit Trainer', to: '../editTrainer'},
+        { label: 'Edit Trainer'},
         { label: 'Add Event'},
-        { label: 'Edit Event', to: '../editEvent'},
+        { label: 'Edit Event'},
         { label: 'Add FAQ'},
-        { label: 'Edit FAQ', to: '../editFaq'},
+        { label: 'Edit FAQ'},
         { label: 'Add AboutUs'},
-        { label: 'Edit AboutUs', to: '../editAbout'},
+        { label: 'Edit AboutUs'},
     ];
 
     //Code for the page layout
