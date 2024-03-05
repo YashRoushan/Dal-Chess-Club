@@ -11,6 +11,12 @@ import FAQpage from './pages/faq';
 import AdminLogin from './pages/adminLogin.js';
 import AdminLanding from './pages/adminLanding.js';
 import EditTournaments from './pages/editPage-tournaments.js';
+import EditAbout from './pages/editPage-about.js';
+import EditLibrary from './pages/editPage-library.js';
+import EditFaq from './pages/editPage-faq.js';
+import EditTrainer from './pages/editPage-trainers.js';
+import EditEvent from './pages/editPage-events.js';
+import EditNews from './pages/editPage-news.js';
  
 function App() {
   return (
@@ -27,6 +33,12 @@ function App() {
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminLanding" element={<AdminLanding />} />
           <Route path="/editTournaments" element={<EditTournaments />} />
+          <Route path="/editAbout" element={<EditAbout />} />
+          <Route path="/editLibrary" element={<EditLibrary />} />
+          <Route path="/editNews" element={<EditNews />} />
+          <Route path="/editFaq" element={<EditFaq />} />
+          <Route path="/editTrainer" element={<EditTrainer />} />
+          <Route path="/editEvent" element={<EditEvent />} />
         </Routes>
         <Footer />
       </Router>
