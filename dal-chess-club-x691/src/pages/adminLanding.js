@@ -12,7 +12,7 @@ const adminLanding = () => {
         { label: 'Edit Books'},
         { label: 'Add News'},
         { label: 'Edit News'},
-        { label: 'Add Trainer'},
+        { label: 'Add Trainer',},
         { label: 'Edit Trainer'},
         { label: 'Add Event'},
         { label: 'Edit Event'},
@@ -29,7 +29,7 @@ const adminLanding = () => {
         <div className='button-container'>
             <br></br>
             {redirectLink.map((button , index) => (
-                <Link key={index} className='redirectLink'>{button.label}</Link>
+                <Link key={index} className='redirectLink' to={button.to}>{button.label}</Link>
             ))}
         </div>
     </div>

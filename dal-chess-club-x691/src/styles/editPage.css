@@ -1,0 +1,24 @@
+.editing-container {
+    display: flex ;
+    align-items: center;
+    flex-direction: column;
+}
+
+.item {
+    padding: 10px;
+}
+
+.item h3 {
+    margin-bottom: 5px;
+}
+
+.item button {
+    background-color: #FFD400;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+

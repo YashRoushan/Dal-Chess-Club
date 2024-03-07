@@ -13,6 +13,13 @@ import { Suspense } from "react";
 import HomePage from "./pages/Home";
 import AdminLogin from './pages/adminLogin.js';
 import AdminLanding from './pages/adminLanding.js';
+import EditTournaments from './pages/editPage-tournaments.js';
+import EditAbout from './pages/editPage-about.js';
+import EditLibrary from './pages/editPage-library.js';
+import EditFaq from './pages/editPage-faq.js';
+import EditTrainer from './pages/editPage-trainers.js';
+import EditEvent from './pages/editPage-events.js';
+import EditNews from './pages/editPage-news.js';
 import AddFormAboutUs from './forms/addForm-AboutUs.js';
 import HomeAddForm from './forms/Home-AddForm.js';
 import TournamentsAddForm from './forms/Tournaments-AddForm.js';
@@ -49,6 +56,13 @@ function App() {
             <Route path="/Tournaments-AddForm" element={<TournamentsAddForm />} />
             <Route path="/FAQ-AddForm" element={<FAQAddForm />} />
             <Route path="/News-AddForm" element={<NewsAddForm />} />
+            <Route path="/editTournaments" element={<EditTournaments />} />
+            <Route path="/editAbout" element={<EditAbout />} />
+            <Route path="/editLibrary" element={<EditLibrary />} />
+            <Route path="/editNews" element={<EditNews />} />
+            <Route path="/editFaq" element={<EditFaq />} />
+            <Route path="/editTrainer" element={<EditTrainer />} />
+            <Route path="/editEvent" element={<EditEvent />} />
         </Routes>
         <Footer/>
         </Router>
