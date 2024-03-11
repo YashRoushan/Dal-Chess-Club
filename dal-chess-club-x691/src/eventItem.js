@@ -12,7 +12,7 @@ function EventItem({name, image, date, description }) {
   return (
     <div className="eventItem" onClick={togglePopUp}>
       <img className="event-image" src={image} alt="Event Image" />
-      <h1> {name} </h1>
+      <h2> {name} </h2>
       {showPopUp && (
         <EventPopUp
           name={name}

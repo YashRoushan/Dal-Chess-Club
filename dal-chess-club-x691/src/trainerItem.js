@@ -12,7 +12,7 @@ function TrainerItem({name, image,  description }) {
   return (
     <div className="trainerItem" onClick={togglePopUp}>
       <img className="trainer-image" src={image} alt="Trainer Image" />
-      <h1> {name} </h1>
+      <h2> {name} </h2>
       {showPopUp && (
         <TrainerPopUp
           name={name}

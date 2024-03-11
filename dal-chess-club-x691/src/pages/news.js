@@ -42,7 +42,7 @@ const NewsArticle = ({ title, date, text, imageUrl }) => (
 
 const NewsPage = () => (
  <div className="news-page">
-   <h1 className="news-header">NEWS</h1>
+   <h1 className="news-header">News</h1>
    <div className="news-container">
    {newsArticles.map((article, index) => (
      <NewsArticle key={index} {...article} />

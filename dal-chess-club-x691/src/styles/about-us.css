@@ -15,18 +15,28 @@ h1 {
 }
 
 .container{
-    padding: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    overflow-y: auto;
 }
 
 .member {
     text-align: left;
-    margin-top: 75px;
+    margin-top: 55px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .member-info {
     display: flex;
-    height: 100px;
+    height: auto;
     margin-top: 0px;
+    
 }
 
 .members-placeholder {
