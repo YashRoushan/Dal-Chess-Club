@@ -27,6 +27,7 @@ import FAQAddForm from './forms/FAQ-AddForm.js';
 import NewsAddForm from './forms/News-AddForm.js';
 import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
+import LibraryAddForm from './forms/Library_AddForm.js';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
             <Route path="/News-AddForm" element={<NewsAddForm />} />
             <Route path="/Trainers-AddForm" element={<TrainersAddForm />} />
             <Route path="/Events-AddForm" element={<EventsAddForm />} />
+            <Route path="/Library-AddForm" element={<LibraryAddForm />} />
             <Route path="/editTournaments" element={<EditTournaments />} />
             <Route path="/editAbout" element={<EditAbout />} />
             <Route path="/editLibrary" element={<EditLibrary />} />
