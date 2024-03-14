@@ -47,7 +47,7 @@ function App() {
             <Route path="/library" element={<Library />} />
             <Route path="/improve" element={<Improve />} />
             <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/faq" element={<FAQpage />} />
+            <Route path="/faq" element={<FAQpage />} /> 
             <Route path="/adminLogin" element={<AdminLogin />} />
             <Route path="/adminLanding" element={<AdminLanding />} />
             <Route path="/" element={<HomePage />} />
