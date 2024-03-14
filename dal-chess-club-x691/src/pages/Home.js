@@ -100,7 +100,7 @@ function Home() {
                   WEEKLY MEETINGS
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Join Us on Mondays and Thursdays from 5.30 to 8.30
+                  Join Us on Mondays and Thursdays from 5:30 to 8:30
                 </Typography>
               </CardContent>
             </Card>
