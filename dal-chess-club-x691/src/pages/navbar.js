@@ -32,6 +32,7 @@ function NavBar() {
         <button className='mobile-toggle' onClick={toggleDropdowns}>
             <img src={ Reorder } alt='reorder icon' className='icon' />
         </button>
+        <h2>Dalhousie Chess Club</h2>
         <div className={`links ${showDropdowns ? 'show-dropdowns' : ''}`}>
             <div className='dropdown'>
                 <Link to='/'><button className='dropbtn'>Home</button></Link>
