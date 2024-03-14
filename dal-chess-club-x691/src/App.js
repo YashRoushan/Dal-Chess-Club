@@ -28,6 +28,7 @@ import NewsAddForm from './forms/News-AddForm.js';
 import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
+import ForgotPassword from './pages/forgotPassword.js';
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
             <Route path="/editFaq" element={<EditFaq />} />
             <Route path="/editTrainer" element={<EditTrainer />} />
             <Route path="/editEvent" element={<EditEvent />} />
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
         </Routes>
         <Footer/>
         </Router>
