@@ -1,5 +1,5 @@
 .footer {
-    height: 200px;
+    height: auto;
     font-weight: bold;
     background-color: #242424;
     color: white;
@@ -13,10 +13,6 @@
 
 .footer .top {
     display: flex;
-}
-
-.footer p, .footer a, footer h2 {
-    margin-bottom: -10px;
 }
 
 .footer a img {

@@ -16,9 +16,9 @@ import slide1Image11 from "../images/slide-1.jpg";
 import slide1Image12 from "../images/slide-2.jpeg";
 import slide1Image13 from "../images/slide-3.jpg";
 import '../styles/homestyle.css'
+import ChessPuzzle from "./chessPuzzle";
 
 function Home() {
-
   return (
     <>
     <div className="homeTitle">
@@ -152,6 +152,8 @@ function Home() {
         </Grid>
       </Container>
 
+      <h1>Daily Puzzle</h1>
+      <ChessPuzzle />
     </>
   );
 }
