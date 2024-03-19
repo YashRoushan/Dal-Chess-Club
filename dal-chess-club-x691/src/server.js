@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const mysql = require('mysql');
-const { Client } = require('ssh2');
-const sshClient = new Client();
+//const { Client } = require('ssh2');
+//const sshClient = new Client();
 
 const app = express();
 
@@ -17,14 +17,57 @@ const sshConfig = {
   password: 'eshooRi9oofaVah0',
 };
 
-const db = mysql.createConnection({
+//Original db connection
+/*const db = mysql.createConnection({
   host: "euro.cs.dal.ca",
   user: "chessclub",
   password: "Mee5shaong9kaiw4",
   database: "chessclub",
   port: 3306,
+});*/
+
+var Client = require('ssh2').Client;
+var ssh = new Client();
+
+var db = new Promise(function(resolve, reject){
+	ssh.on('ready', function() {
+	  ssh.forwardOut(
+	    // source address, this can usually be any valid address
+	    'euro.cs.dal.ca',
+	    // source port, this can be any valid port number
+	    5000,
+	    // destination address (localhost here refers to the SSH server)
+	    'euro.cs.dal.ca:22',
+	    // destination port
+	    3306,
+	    function (err, stream) {
+	      if (err) throw err; 
+	      	connection = mysql.createConnection({
+	          host     : 'euro.cs.dal.ca',
+	          user     : 'chessclub',
+	          password : 'Mee5shaong9kaiw4', 
+	          database : 'chessclub',
+	          stream: stream
+	        });
+
+	        // send connection back in variable depending on success or not
+		connection.connect(function(err){
+			if (err) {
+				resolve(connection);
+			} else {
+				reject(err);
+			}
+		});
+	  });
+	}).connect({
+	  host: 'euro.cs.dal.ca',
+	  port: 22,
+	  username: 'chessclub',
+	  password: 'eshooRi9oofaVah0'
+	});
 });
 
+//Previous attempt to SSH connection
 /*sshClient.on('ready', () => {
   sshClient.forwardOut(
     // Source address and port
