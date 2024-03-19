@@ -15,7 +15,7 @@ build:
     - npm run build  # Build your website
   artifacts:
     paths:
-      - build/  # Make build directory available for deployment
+      - /builds/courses/csci-x691/dal-chess-club/dal-chess-club-x691/build/  # Make build directory available for deployment
 
 deploy:
   stage: deploy
