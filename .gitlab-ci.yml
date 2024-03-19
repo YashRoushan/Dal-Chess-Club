@@ -4,6 +4,7 @@ stages:
 
 build:
   stage: build
+  image: node:latest
   script:
     - npm install  # Install dependencies
     - npm run build  # Build your website
@@ -13,6 +14,7 @@ build:
 
 deploy:
   stage: deploy
+  image: ubuntu:latest
   script:
     - apt-get update -qy && apt-get install -y lftp
     - lftp -c "set sftp:auto-confirm yes; open -u chessclub,eshooRi9oofaVah0 sftp://euro.cs.dal.ca; mirror -R build/ /local/websites/chessclub"
