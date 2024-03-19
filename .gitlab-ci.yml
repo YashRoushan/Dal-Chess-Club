@@ -22,6 +22,6 @@ deploy:
   image: ubuntu:latest
   script:
     - apt-get update -qy && apt-get install -y lftp
-    - lftp -c "set sftp:auto-confirm yes; open -u chessclub,eshooRi9oofaVah0 sftp://euro.cs.dal.ca; mirror -R build/ /local/websites/chessclub"
+    - lftp -c "set sftp:auto-confirm yes; open -u chessclub,eshooRi9oofaVah0 sftp://euro.cs.dal.ca; mirror -R /builds/courses/csci-x691/dal-chess-club/dal-chess-club-x691/build/ /local/websites/chessclub"
   only:
     - main  # Deploy only when changes are pushed to the main branch
