@@ -14,7 +14,6 @@ const sshConfig = {
   host: 'euro.cs.dal.ca:22',
   port: 22, // Standard SSH port
   username: 'chessclub',
-  privateKey: "C:\Users\natal\.ssh\id_rsa",
   password: 'eshooRi9oofaVah0',
 };
 
@@ -26,6 +25,78 @@ const db = mysql.createConnection({
   port: 3306,
 });
 
+/*sshClient.on('ready', () => {
+  sshClient.forwardOut(
+    // Source address and port
+    'euro.cs.dal.ca:22', 12345,
+    // Destination address and port
+    sshConfig.host, sshConfig.port,
+    (err, stream) => {
+      if (err) throw err;
+      // Override dbConfig with stream
+      const modifiedDbConfig = { ...dbConfig, stream };
+      // Create a MySQL connection over the SSH tunnel
+      const db = mysql.createConnection(modifiedDbConfig);
+
+      db.connect((err) => {
+        if (err) {
+          console.error('Database connection failed: ', err);
+          return;
+        }
+        console.log('Connected to the database over SSH tunnel');
+
+        app.get('/api/data', async (req, res) => {
+          try {
+            const [rows] = await require('./database').query('SELECT * FROM my_table');
+            res.json(rows);
+          } catch (error) {
+            res.status(500).json({ error: error.message });
+          }
+        });
+      
+        //REST API for displaying tournaments on tournaments page
+        app.get("/tournaments", (req, res) => {
+          const tournamentQuery = "SELECT * FROM tournaments";
+          db.query(tournamentQuery, (err, data) => {
+            if (err) return res.json(err);
+            return res.json(data);
+          });
+      });
+
+        const PORT = process.env.PORT || 5000;
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+      });
+    }
+  );
+}).connect(sshConfig);*/
+
+app.get('/api/data', async (req, res) => {
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM my_table');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+  //REST API for displaying tournaments on tournaments page
+  app.get("/tournaments", (req, res) => {
+    const tournamentQuery = "SELECT * FROM tournaments";
+    db.query(tournamentQuery, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+    });
+});
+ 
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 /*db.connect((err) => {
@@ -36,30 +107,3 @@ const db = mysql.createConnection({
   console.log('Connected to the database');
 });*/
 
-app.get('/api/data', async (req, res) => {
-    try {
-      const [rows] = await require('./database').query('SELECT * FROM my_table');
-      res.json(rows);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  //REST API for displaying tournaments on tournaments page
-  app.get("/tournaments", (req, res) => {
-    const tournamentQuery = "SELECT * FROM tournaments";
-    db.query(tournamentQuery, (err, data) => {
-      if (err) return res.json(err);
-      return res.json(data);
-    });
-});
-
-
-  app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
-  
-
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
