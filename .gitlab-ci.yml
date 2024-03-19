@@ -1,0 +1,11 @@
+stages:    
+  - build
+  - package
+  - deploy
+
+build-job:     
+  stage: build
+  tags:
+    - windows-runner
+  script:
+    - write-host "Hello world"
