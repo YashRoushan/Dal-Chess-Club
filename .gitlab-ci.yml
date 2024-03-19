@@ -1,12 +1,20 @@
-stages:    
+stages:
   - build
-  - package
   - deploy
 
-build-job:     
+build:
   stage: build
-  tags:
-    - windows-runner
   script:
-    - write-host "Hello world"
-    - write-host "Welcome to Gitlab Runner"
+    - npm install  # Install dependencies
+    - npm run build  # Build your website
+  artifacts:
+    paths:
+      - build/  # Make build directory available for deployment
+
+deploy:
+  stage: deploy
+  script:
+    - apt-get update -qy && apt-get install -y lftp
+    - lftp -c "set sftp:auto-confirm yes; open -u chessclub,eshooRi9oofaVah0 sftp://euro.cs.dal.ca; mirror -R build/ /local/websites/chessclub"
+  only:
+    - main  # Deploy only when changes are pushed to the main branch
