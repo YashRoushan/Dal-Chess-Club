@@ -9,3 +9,4 @@ build-job:
     - windows-runner
   script:
     - write-host "Hello world"
+    - write-host "Welcome to Gitlab Runner"
