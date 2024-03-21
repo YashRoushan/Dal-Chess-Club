@@ -29,12 +29,12 @@ import NewsAddForm from './forms/News-AddForm.js';
 
 function App() {
   // Move useEffect inside the App function
-  useEffect(() => {
-    fetch('http://localhost:3000/api/data')
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/api/data')
+  //     .then(response => response.json())
+  //     .then(data => console.log(data))
+  //     .catch(error => console.error('Error fetching data:', error));
+  // }, []);
 
   return (
     <div className="App">
