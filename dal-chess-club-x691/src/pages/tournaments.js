@@ -3,7 +3,7 @@ import {useState} from "react";
 import { tournamentsList } from '../tournamentsList.js';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
-import "../styles/Tournaments.css";
+import "../styles/tournaments.css";
 
 function Tournaments() {
   //Search results state

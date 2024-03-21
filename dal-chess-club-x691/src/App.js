@@ -29,6 +29,9 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import MailingList from './pages/mailingList.js';
+import Subscribers from './pages/subscribers.js';
+
 
 
 function App() {
@@ -71,6 +74,8 @@ function App() {
             <Route path="/editTrainer" element={<EditTrainer />} />
             <Route path="/editEvent" element={<EditEvent />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/mailingList" element={<MailingList />} />
+            <Route path="/subscribers" element={<Subscribers />} />
         </Routes>
         <Footer/>
         </Router>
