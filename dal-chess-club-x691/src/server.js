@@ -151,6 +151,162 @@ app.get("/tournaments", (req, res) => {
     res.status(500).send("Failed to connect to the database");
 });
 });
+app.get("/api/home/homePageCards", (req, res) => {
+  db.then((dbConnection) => {
+    const sql = "select * from event_images LIMIT 3";
+    dbConnection.query(sql, (error, data) => {
+      console.log("/homePageCards called");
+      if (error) {
+        console.error("Error while fetching Homepage data:", error);
+        return res
+          .status(500)
+          .json({ error: "Internal Server Error", message: error.message });
+      }
+
+      if (data.length > 0) {
+        console.log("/homePageCards data found");
+        const slideData = data.map((item) => {
+          return {
+            id: item.event_imageID,
+            content: item.alt_text,
+            title: item.alt_text,
+            image: `http://localhost:5000${item.image}`,
+          };
+        });
+        return res.json(slideData);
+      } else {
+        res.status(404).json({ error: "No data found" });
+      }
+    });
+  }).catch(err => {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error", message: err.message });
+  });
+});
+
+
+// For creating a homepage slide
+app.post("/api/home/createHomePageSlide", (req, res) => {
+  console.log("createHomePageSlide called");
+  const { image, alt_text } = req.body;
+  const sql = 'INSERT INTO event_images (image, alt_text) VALUES (?, ?)';
+  
+  db.then((dbConnection) => {
+      dbConnection.query(sql, [image, alt_text], (err, result) => {
+          if (err) {
+              console.error('Error creating homepage slide:', err);
+              return res.status(500).json({ error: 'Internal Server Error', message: err.message });
+          }
+          res.json({ id: result.insertId, image, alt_text });
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// For getting homepage cards
+app.get("/api/home/getHomePageCards", (req, res) => {
+  const sql = 'SELECT * FROM people_images LIMIT 3';
+  console.log("/api/home/getHomePageCards");
+  db.then((dbConnection) => {
+      dbConnection.query(sql, (err, data) => {
+          if (err) {
+              console.error('Error fetching homepage card data:', err);
+              return res.status(500).json({ error: 'Internal Server Error', message: err.message });
+          }
+          if (data.length > 0) {
+              const cardImgData = data.map(item => ({
+                  id: item.people_imageID,
+                  alt_text: item.alt_text,
+                  image: `http://localhost:5000${item.image}`
+              }));
+              return res.json(cardImgData);
+          } else {
+              return res.status(404).json({ error: 'No data found' });
+          }
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// For updating a homepage slide
+app.put("/api/home/updateHomePageSlide/:id", (req, res) => {
+  console.log("/api/home/updateHomePageSlide/:id");
+  const { id } = req.params;
+  const { alt_text, image } = req.body;
+  const sql = 'UPDATE event_images SET alt_text = ?, image = ? WHERE event_imageID = ?';
+
+  db.then((dbConnection) => {
+      dbConnection.query(sql, [alt_text, image, id], (err, result) => {
+          if (err) {
+              console.error('Error updating homepage slide:', err);
+              return res.status(500).json({ error: 'Internal Server Error', message: err.message });
+          }
+          if (result.affectedRows === 0) {
+              return res.status(404).json({ error: `Slide with id ${id} not found` });
+          }
+          res.json({ id, alt_text, image });
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// For deleting a homepage slide
+app.delete("/api/home/deleteHomePageSlide/:id", (req, res) => {
+  console.log("/api/home/deleteHomePageSlide/:id");
+  const { id } = req.params;
+  const sql = 'DELETE FROM event_images WHERE event_imageID = ?';
+
+  db.then((dbConnection) => {
+      dbConnection.query(sql, [id], (err, result) => {
+          if (err) {
+              console.error('Error deleting homepage slide:', err);
+              return res.status(500).json({ error: 'Internal Server Error', message: err.message });
+          }
+          if (result.affectedRows === 0) {
+              return res.status(404).json({ error: `Slide with id ${id} not found` });
+          }
+          res.json({ message: `Slide with id ${id} deleted successfully` });
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// For getting homepage slides
+app.get("/api/home/getHomePageSlides", (req, res) => {
+  console.log("/api/home/getHomePageSlides");
+  const sql = "SELECT * FROM event_images LIMIT 3";
+
+  db.then((dbConnection) => {
+      dbConnection.query(sql, (error, data) => {
+          if (error) {
+              console.error("Error while fetching homepage slides:", error);
+              return res.status(500).json({ error: "Internal Server Error", message: error.message });
+          }
+          if (data.length > 0) {
+              const slideData = data.map((item) => ({
+                  id: item.event_imageID,
+                  content: item.alt_text,
+                  title: item.alt_text,
+                  image: `http://localhost:5000${item.image}`,
+              }));
+              return res.json(slideData);
+          } else {
+              res.status(404).json({ error: "No data found" });
+          }
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
 
   
   app.use((err, req, res, next) => {
