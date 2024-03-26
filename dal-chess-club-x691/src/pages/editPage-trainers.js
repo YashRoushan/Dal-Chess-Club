@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/editPage.css';
 
 function EditTrainer() {
@@ -13,10 +14,12 @@ function EditTrainer() {
 
     const handleEdit = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-trainers?itemId=${itemId}`;
     };
 
     const handleDelete = (itemId) => {
         console.log(itemId);
+        window.location.href = `/deleteForm?itemId=${itemId}`;
     };
 
     return (
@@ -27,8 +30,13 @@ function EditTrainer() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                            {/* <button onClick={() => handleEdit(item.id)}>Edit</button> */}
+                            <Link to={`/editForm-trainers?itemId=${item.id}`}>
+                                <button>Edit</button>
+                            </Link>
+                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                                <button>Delete</button>
+                            </Link>
                         </div>
                     </div>
                  ))}

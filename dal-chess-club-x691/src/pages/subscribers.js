@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/editPage.css';
 
 function Subscribers() {
@@ -11,12 +12,9 @@ function Subscribers() {
         {id: 4, title: 'Subscriber'},
     ]);
 
-    // const handleEdit = (itemId) => {
-    //     console.log(itemId);
-    // };
-
     const handleDelete = (itemId) => {
         console.log(itemId);
+        window.location.href = `/subscribersDeleteForm?itemId=${itemId}`;
     };
 
     return (
@@ -24,14 +22,16 @@ function Subscribers() {
             <h1>Subscribers List</h1>
             <div className='editing-container'>
                 {items.map(item => (
-                    <div key = {item.id} className='item'>
+                    <div key={item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            {/* <button onClick={() => handleEdit(item.id)}>Edit</button> */}
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                            {/* Use Link component for the "Delete" button */}
+                            <Link to={`/subscribersDeleteForm?itemId=${item.id}`}>
+                                <button>Delete</button>
+                            </Link>
                         </div>
                     </div>
-                 ))}
+                ))}
             </div>
         </div>
     );
