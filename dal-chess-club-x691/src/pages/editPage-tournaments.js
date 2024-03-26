@@ -14,10 +14,12 @@ function EditTournaments() {
 
     const handleEdit = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-tournaments?itemId=${itemId}`;
     };
 
     const handleDelete = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-tournaments?itemId=${itemId}`;
     };
 
     return (
@@ -28,8 +30,12 @@ function EditTournaments() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                            <Link to={`/editForm-tournaments?itemId=${item.id}`}>
+                                <button>Edit</button>
+                            </Link>
+                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                                <button>Delete</button>
+                            </Link>
                         </div>
                     </div>
                  ))}

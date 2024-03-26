@@ -14,12 +14,12 @@ function EditEvents() {
 
     const handleEdit = (itemId) => {
         console.log(itemId);
-        window.location.href = `/editForm-trainers?itemId=${itemId}`;
+        window.location.href = `/editForm-events?itemId=${itemId}`;
     };
 
     const handleDelete = (itemId) => {
         console.log(itemId);
-        window.location.href = `/editForm-trainers?itemId=${itemId}`;
+        window.location.href = `/editForm-events?itemId=${itemId}`;
     };
 
     return (

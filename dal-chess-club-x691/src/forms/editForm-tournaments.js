@@ -1,14 +1,21 @@
 import React from 'react';
 import './AddForms.css';
 
-function FaqEditForm() {
+function TournamentsEditForm() {
 
   return (
     <div className="add-form-container">
 
       <div className="header-info">
-        <h2 id="main-header">FAQ Page Edit Form</h2>
-        <p>This is the page where you, the admin, can edit existing content in the "FAQ" page.</p>
+        <h2 id="main-header">Tournaments Page Edit Form</h2>
+        <p>This is the page where you, the admin, can edit existing content in the "Tournaments" page.</p>
+      </div>
+
+      <div className="form-A">
+        <form className="form-element">
+          <label>Images</label>
+          <input className="file-form" type="file" accept="image/*" required />
+        </form>
       </div>
 
       {/* Second Form */}
@@ -35,4 +42,4 @@ function FaqEditForm() {
   )
 }
 
-export default FaqEditForm;
+export default TournamentsEditForm;

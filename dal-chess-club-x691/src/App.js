@@ -37,10 +37,10 @@ import DeleteForm from './pages/deleteForm.js';
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
-// import FaqEditForm from './forms/editForm-faq.js';
-// import LibraryEditForm from './forms/editForm-library.js';
-// import TournamentsEditForm from './forms/editForm-tournaments.js';
-// import NewsEditForm from './forms/editForm-news.js';
+import FaqEditForm from './forms/editForm-faq.js';
+import LibraryEditForm from './forms/editForm-library.js';
+import TournamentsEditForm from './forms/editForm-tournaments.js';
+import NewsEditForm from './forms/editForm-news.js';
 
 
 
@@ -92,10 +92,10 @@ function App() {
             <Route path="/editForm-trainers" element={<TrainersEditForm />} />
             <Route path="/editForm-about" element={<AboutUsEditForm />} />
             <Route path="/editForm-events" element={<EventsEditForm />} />
-            {/* <Route path="/editForm-faq" element={<FaqEditForm />} />
-            <Route path="/editForm-library" element={<LibraryEditForm />} />
+            <Route path="/editForm-faq" element={<FaqEditForm />} />
             <Route path="/editForm-news" element={<NewsEditForm />} />
-            <Route path="/editForm-tournaments" element={<TournamentsEditForm />} /> */}
+            <Route path="/editForm-library" element={<LibraryEditForm />} />
+            <Route path="/editForm-tournaments" element={<TournamentsEditForm />} />
 
         </Routes>
         <Footer/>

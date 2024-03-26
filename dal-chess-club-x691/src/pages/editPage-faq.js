@@ -14,10 +14,12 @@ function EditFaq() {
 
     const handleEdit = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-faq?itemId=${itemId}`;
     };
 
     const handleDelete = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-faq?itemId=${itemId}`;
     };
 
     return (
@@ -28,8 +30,12 @@ function EditFaq() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                            <Link to={`/editForm-faq?itemId=${item.id}`}>
+                                <button>Edit</button>
+                            </Link>
+                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                                <button>Delete</button>
+                            </Link>
                         </div>
                     </div>
                  ))}
