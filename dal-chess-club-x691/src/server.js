@@ -63,7 +63,7 @@ app.get('/api/data', async (req, res) => {
   //REST API for displaying tournaments on tournaments page
   app.get("/tournaments", (req, res) => {
     db.then((dbConnection) => {
-      const tournamentQuery = "SELECT * FROM tournaments";
+      const tournamentQuery = "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
       dbConnection.query(tournamentQuery, (err, data) => {
           if (err) {
               console.error("Error fetching tournaments:", err);
@@ -78,14 +78,14 @@ app.get('/api/data', async (req, res) => {
 });
 
 //Method to test connection
-/*db.then((dbConnection) => {
-  dbConnection.query('SHOW TABLES', function (error, results) {
-      if (error) throw error;
-      console.log('Tables: ', results);
-  });
-}).catch((error) => {
-  console.log(error);
-});*/
+// db.then((dbConnection) => {
+//   dbConnection.query('SHOW TABLES', function (error, results) {
+//       if (error) throw error;
+//       console.log('Tables: ', results);
+//   });
+// }).catch((error) => {
+//   console.log(error);
+// });
  
 
 // Error handler
