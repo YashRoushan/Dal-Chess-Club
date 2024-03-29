@@ -1,11 +1,10 @@
-
 .news-page {
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
   }
    .news-header {
-    font-size: 2.5rem;
     margin: 20px 0;
-    color: #333;
     text-align: center;
   }
    .news-container {
@@ -19,6 +18,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
     text-align: left;
   }
    .news-article h2 {
