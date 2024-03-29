@@ -20,6 +20,7 @@
     "express": "^4.18.3",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.2",
+    "nodemon": "^3.1.0",
     "popup": "^0.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
@@ -30,11 +31,14 @@
     "react-slick": "^0.30.1",
     "react-social-media-embed": "^2.5.9",
     "slick-carousel": "^1.8.1",
+    "ssh2": "^1.15.0",
     "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "react-scripts start",
+    "server": "nodemon src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -56,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

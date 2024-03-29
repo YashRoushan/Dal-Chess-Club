@@ -1,11 +1,11 @@
-import React from 'react';
-import {useState} from "react";
-import { tournamentsList } from '../tournamentsList.js';
+import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
 
 function Tournaments() {
+  const [tournamentsList, setTournamentsList] = useState([]);
+
   //Search results state
   const [filteredResults, setResults] = useState([]);
 
@@ -13,6 +13,19 @@ function Tournaments() {
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
+    // Fetch tournaments from the API
+    useEffect(() => {
+      fetch("http://localhost:5000/tournaments")
+        .then(response => response.json())
+        .then(data => {
+          setTournamentsList(data); // Assuming the API returns an array of tournaments
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }, []); 
+
+    //Filter and search not set up to the database yet
   const filterTournaments = () => {
     return tournamentsList.filter(tournament => {
       const tournamentDate = new Date(tournament.date);
@@ -48,19 +61,20 @@ function Tournaments() {
         </div>
 
         <div className="tournamentList">
-            {tournamentsList.map((tournamentItem, key) => {
+            {filteredTournaments.map((tournament, key) => {
               return(
                 <TournamentItem
                   key={key}
-                  name={tournamentItem.name}
-                  image={tournamentItem.image}
-                  price={tournamentItem.price}
-                  date={formatDate(tournamentItem.date)}
-                  time={formatTime(tournamentItem.date)}
-                  endTime={formatTime(tournamentItem.endDate)}
-                  participantsNo={tournamentItem.participantsNo}
-                  description={tournamentItem.description}
-                  registrationLink={tournamentItem.registrationLink}
+                  name={tournament.title}
+                  image={tournament.image}
+                  price={tournament.cost}
+                  date={formatDate(tournament.start_date)}
+                  time={formatTime(tournament.start_date)}
+                  endTime={formatTime(tournament.end_date)}
+                  // Assuming participantsNo is meant to be num_of_participants
+                  participantsNo={tournament.num_of_participants}
+                  description={tournament.description}
+                  registrationLink={tournament.registration_link}
                 />
               )
             })}
