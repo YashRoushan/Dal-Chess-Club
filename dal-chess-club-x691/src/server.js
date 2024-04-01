@@ -67,9 +67,7 @@ app.get('/api/login', (req, res) => {
     db.then((dbConnection) => {
       const loginQuery = ("Select * from admin");
       dbConnection.query(loginQuery, (err, result) => {
-        console.log(result);
         user = JSON.stringify(result);
-        console.log(user);
         if (err) {
           console.error("Error fetching login information:", err);
           return res.status(500).json(err);
