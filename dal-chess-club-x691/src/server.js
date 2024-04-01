@@ -63,7 +63,40 @@ app.get('/api/data', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-*/
+
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await db.query('SELECT * FROM admin WHERE username = ?', [username]);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    res.json({ message: 'Login successful!' });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+  //REST API for displaying tournaments on tournaments page
+  app.get("/tournaments", (req, res) => {
+    db.then((dbConnection) => {
+      const tournamentQuery = "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+      dbConnection.query(tournamentQuery, (err, data) => {
+          if (err) {
+              console.error("Error fetching tournaments:", err);
+              return res.status(500).json(err);
+          }
+          return res.json(data);
+      });
+  }).catch((error) => {
+      console.error("Database connection error:", error);
+      res.status(500).send("Failed to connect to the database");
+  });
+});
   
   //check if email is in database
   app.post('/emailVer', async (req,res) => {
