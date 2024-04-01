@@ -29,6 +29,8 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import AuthGuard from './components/AuthGuard.js';
+import { AuthProvider } from './contexts/AuthContext';
 
 
 function App() {
@@ -42,39 +44,43 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback="loading ...">
-        <Router basename='/chessclub'>
-          <NavBar />
-          <Routes>
-            <Route path="/tournaments" element={<Tournaments />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/improve" element={<Improve />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/faq" element={<FAQpage />} /> 
-            <Route path="/adminLogin" element={<AdminLogin />} />
-            <Route path="/adminLanding" element={<AdminLanding />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/AboutUs-AddForm" element={<AddFormAboutUs />} /> 
-            <Route path="/Home-AddForm" element={<HomeAddForm />} />
-            <Route path="/Tournaments-AddForm" element={<TournamentsAddForm />} />
-            <Route path="/FAQ-AddForm" element={<FAQAddForm />} />
-            <Route path="/News-AddForm" element={<NewsAddForm />} />
-            <Route path="/Trainers-AddForm" element={<TrainersAddForm />} />
-            <Route path="/Events-AddForm" element={<EventsAddForm />} />
-            <Route path="/Library-AddForm" element={<LibraryAddForm />} />
-            <Route path="/editTournaments" element={<EditTournaments />} />
-            <Route path="/editAbout" element={<EditAbout />} />
-            <Route path="/editLibrary" element={<EditLibrary />} />
-            <Route path="/editNews" element={<EditNews />} />
-            <Route path="/editFaq" element={<EditFaq />} />
-            <Route path="/editTrainer" element={<EditTrainer />} />
-            <Route path="/editEvent" element={<EditEvent />} />
-            <Route path="/forgotPassword" element={<ForgotPassword />} />
-        </Routes>
-        <Footer/>
-        </Router>
-      </Suspense>
+      <AuthProvider>
+        <Suspense fallback="loading ...">
+          <Router basename='/chessclub'>
+            <NavBar />
+            <Routes>
+              <Route path="/tournaments" element={<Tournaments />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/improve" element={<Improve />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+              <Route path="/faq" element={<FAQpage />} /> 
+              <Route path="/adminLogin" element={<AdminLogin />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
+
+              {/* Admin only Routes */}
+              <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
+              <Route path="/AboutUs-AddForm" element={<AuthGuard><AddFormAboutUs /></AuthGuard>} />
+              <Route path="/Home-AddForm" element={<AuthGuard><HomeAddForm /></AuthGuard>} />
+              <Route path="/Tournaments-AddForm" element={<AuthGuard><TournamentsAddForm /></AuthGuard>} />
+              <Route path="/FAQ-AddForm" element={<AuthGuard><FAQAddForm /></AuthGuard>} />
+              <Route path="/News-AddForm" element={<AuthGuard><NewsAddForm /></AuthGuard>} />
+              <Route path="/Trainers-AddForm" element={<AuthGuard><TrainersAddForm /></AuthGuard>} />
+              <Route path="/Events-AddForm" element={<AuthGuard><EventsAddForm /></AuthGuard>} />
+              <Route path="/Library-AddForm" element={<AuthGuard><LibraryAddForm /></AuthGuard>} />
+              <Route path="/editTournaments" element={<AuthGuard><EditTournaments /></AuthGuard>} />
+              <Route path="/editAbout" element={<AuthGuard><EditAbout /></AuthGuard>} />
+              <Route path="/editLibrary" element={<AuthGuard><EditLibrary /></AuthGuard>} />
+              <Route path="/editNews" element={<AuthGuard><EditNews /></AuthGuard>} />
+              <Route path="/editFaq" element={<AuthGuard><EditFaq /></AuthGuard>} />
+              <Route path="/editTrainer" element={<AuthGuard><EditTrainer /></AuthGuard>} />
+              <Route path="/editEvent" element={<AuthGuard><EditEvent /></AuthGuard>} />
+          </Routes>
+          <Footer/>
+          </Router>
+        </Suspense>
+      </AuthProvider>
     </div>
   );
 }

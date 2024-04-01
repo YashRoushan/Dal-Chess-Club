@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => setIsAdmin(false);
 
     return (
-        <AuthContext.Provider value={{ isAdmin, login, logout }}>
+        <AuthContext.Provider value={{ isAdmin}}>
             {children}
         </AuthContext.Provider>
     );
