@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { Container, Grid, Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
 
 
@@ -15,11 +16,14 @@ import slide1Image11 from "../images/slide-1.jpg";
 import slide1Image12 from "../images/slide-2.jpeg";
 import slide1Image13 from "../images/slide-3.jpg";
 import '../styles/homestyle.css'
+import ChessPuzzle from "./chessPuzzle";
 
 function Home() {
-
   return (
     <>
+    <div className="homeTitle">
+    <h1>Dalhousie Chess Club</h1>
+    </div>
       {/* swiper-slider container */}
       <div className="sliderMain">
       <Swiper
@@ -42,7 +46,7 @@ function Home() {
           <SwiperSlide data-hash="slide1">
 
             <div className="innerContent">
-              <img src={slide1Image1} alt=""/>
+              <Link to='/' onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}><img src={slide1Image1} alt="drone view of dalhousie campus"/></Link>
               <div>
               <h1>WELCOME TO THE DAL CHESS CLUB</h1>
               <p>
@@ -53,7 +57,7 @@ function Home() {
           </SwiperSlide>
           <SwiperSlide data-hash="slide2">
           <div className="innerContent">
-              <img src={slide1Image2} alt=""/>
+              <Link to='/news' onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}><img src={slide1Image2} alt="chess board"/></Link>
               <div>
               <h1>CHESS FEST</h1>
               <p>
@@ -64,7 +68,7 @@ function Home() {
           </SwiperSlide>
           <SwiperSlide data-hash="slide3">
           <div className="innerContent">
-              <img src={slide1Image3} alt=""/>
+              <Link to='/tournaments' onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}><img src={slide1Image3} alt="chess club kiosk"/></Link>
               <div>
               <h1>UPCOMING TOURNAMENTS</h1>
               <p>
@@ -82,7 +86,7 @@ function Home() {
         <Grid container spacing={3} className="cardCenter">
           <Grid item md={4} className="mt-3">
             <Card>
-              <CardActionArea id="cardHover" component={NavLink} to="/page">
+              <CardActionArea id="cardHover" component={NavLink} to="/news" onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}>
                 <CardMedia id="cardimg"
                   component="img"
                   alt="WEEKLY MEETINGS"
@@ -96,14 +100,14 @@ function Home() {
                   WEEKLY MEETINGS
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Join Us on Mondays and Thursdays from 5.30 to 8.30
+                  Join Us on Mondays and Thursdays from 5:30 to 8:30
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
           <Grid item md={4} className="mt-3">
             <Card>
-              <CardActionArea id="cardHover" component={NavLink} to="/about-us">
+              <CardActionArea id="cardHover" component={NavLink} to="/about-us" onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}>
                 <CardMedia
                   id="cardimg"
                   component="img"
@@ -125,7 +129,7 @@ function Home() {
           </Grid>
           <Grid item md={4} className="mt-3">
             <Card>
-              <CardActionArea id="cardHover" component={NavLink} to="/faq">
+              <CardActionArea id="cardHover" component={NavLink} to="/faq" onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}>
                 <CardMedia
                   id="cardimg"
                   component="img"
@@ -148,6 +152,8 @@ function Home() {
         </Grid>
       </Container>
 
+      <h1>Daily Puzzle</h1>
+      <ChessPuzzle />
     </>
   );
 }

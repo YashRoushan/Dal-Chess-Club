@@ -12,7 +12,7 @@ var Client = require('ssh2').Client;
 var ssh = new Client();
 var mysql = require('mysql');
 
-var db = new Promise(function(resolve, reject){
+const db = new Promise(function(resolve, reject){
   ssh.on('ready', function() {
     ssh.forwardOut(
       // source address, this can usually be any valid address
@@ -25,7 +25,7 @@ var db = new Promise(function(resolve, reject){
       3306,
       function (err, stream) {
         if (err) resolve(err);
-          connection = mysql.createConnection({
+          let connection = mysql.createConnection({
             host     : 'euro.cs.dal.ca',
             user     : 'chessclub',
             password : 'Mee5shaong9kaiw4',
@@ -52,7 +52,68 @@ var db = new Promise(function(resolve, reject){
   });
 });
 
-// Method to test connection
+app.get('/api/data', async (req, res) => {
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM my_table');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await db.query('SELECT * FROM admin WHERE username = ?', [username]);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    res.json({ message: 'Login successful!' });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/login', (req, res) => {
+  
+  db.then((dbConnection) => {
+    const loginQuery = ("Select * from admin");
+    dbConnection.query(loginQuery, (err, result) => {
+      let user = JSON.stringify(result);
+      if (err) {
+        console.error("Error fetching login information:", err);
+        return res.status(500).json(err);
+      }
+
+      return res.json(user);
+    });
+  }).catch((error) => {
+    res.status(500).json({ error: error.message });
+  });
+});
+
+  //REST API for displaying tournaments on tournaments page
+  app.get("/tournaments", (req, res) => {
+    db.then((dbConnection) => {
+      const tournamentQuery = "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+      dbConnection.query(tournamentQuery, (err, data) => {
+          if (err) {
+              console.error("Error fetching tournaments:", err);
+              return res.status(500).json(err);
+          }
+          return res.json(data);
+      });
+  }).catch((error) => {
+      console.error("Database connection error:", error);
+      res.status(500).send("Failed to connect to the database");
+  });
+});
+
+//Method to test connection
 // db.then((dbConnection) => {
 //   dbConnection.query('SHOW TABLES', function (error, results) {
 //       if (error) throw error;
@@ -61,29 +122,14 @@ var db = new Promise(function(resolve, reject){
 // }).catch((error) => {
 //   console.log(error);
 // });
+ 
 
-app.get('/api/login', (req, res) => {
-  
-    db.then((dbConnection) => {
-      const loginQuery = ("Select * from admin");
-      dbConnection.query(loginQuery, (err, result) => {
-        user = JSON.stringify(result);
-        if (err) {
-          console.error("Error fetching login information:", err);
-          return res.status(500).json(err);
-        }
-
-        return res.json(user);
-      });
-    }).catch((error) => {
-      res.status(500).json({ error: error.message });
-    });
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
-  app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
-  
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

@@ -3,6 +3,7 @@ import {Close} from '@mui/icons-material';
 import './styles/Popup.css'
 
 function TournamentPopUp({ name, image, date, time, endTime, participantsNo, price, description, registrationLink, onClose }) {
+  let embedLink = registrationLink + "&embed=true";
   return (
     <div className="popup-background" onClick={onClose}>
     <div className="popup-content" onClick={e => e.stopPropagation()}>
@@ -13,7 +14,7 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
         <p> Time: {time} - {endTime}</p>
         <p> Number of Participants: {participantsNo} </p>
         <p> {description} </p>
-        <a href={registrationLink} id="register-button">Register</a> 
+        <a href={registrationLink} id="register-button" target="_blank">Register</a> 
         <button id="close-button" onClick={onClose}><Close /></button>
     </div>
   </div>

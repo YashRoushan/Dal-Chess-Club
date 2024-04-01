@@ -37,8 +37,9 @@
     background-size: cover;
   }
   
-  .eventItem h1{
+  .eventItem h2{
     text-align: center;
+    padding-bottom: 10px;
   }
 
   .eventItem p {
@@ -51,6 +52,7 @@
     width: 200px;
     border-radius: 50%;
     margin-left: 48px;
+    padding-top: 10px;
   }
 
   @media only screen and (max-width: 1300px) {

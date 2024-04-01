@@ -45,6 +45,7 @@ const LoginForm = () => {
         }
     };
 
+
     //Code for the form design
     return (
         <div className="login-container">
@@ -62,6 +63,11 @@ const LoginForm = () => {
                         <input type='password' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                 </div>
+
+                <p className="forgot-password-text">
+                <a href="/chessclub/forgotPassword">Forgot password?</a>
+                </p>
+
                 <br></br>
                 <button type="submit">Login</button>
                 <ToastContainer />
