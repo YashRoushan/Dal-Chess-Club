@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ function Home() {
   const [cards, setcards] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/homePageSlides`)
+    fetch(`http://localhost:5000/api/home/getHomePageSlides`)
       .then(res => res.json())
       .then(data => {       
         setslides(data);
@@ -27,7 +26,7 @@ function Home() {
       .catch(err => console.log(err))
   }, []);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/homePageCards`)
+    fetch(`http://localhost:5000/api/home/getHomePageCards`)
       .then(res => res.json())
       .then(data => setcards(data))
       .catch(err => console.log(err))
@@ -50,7 +49,7 @@ function Home() {
           navigation={true}
           modules={[Pagination, Navigation, HashNavigation, Autoplay]}
           autoplay={{
-            delay: 4000,  // Adjust the delay as needed
+            delay: 4000,  
             disableOnInteraction: false,
           }}
           loop={true}
