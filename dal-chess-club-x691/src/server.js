@@ -5,33 +5,8 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 
-// const connectDB = require("./database");
-// connectDB().catch((error) => {
-//   console.error("Error connecting to MySQL:", error);
-// });
-// const pool = mysql.createPool({
-//   host: "euro.cs.dal.ca",
-//   user: "chessclub",
-//   password: "Mee5shaong9kaiw4",
-//   database: "chessclub",
-// });
-
 app.use(cors());
 app.use(express.json());
-
-// app.listen(process.env.PORT || 5000, () => {
-//   console.log(`Server is running on port ${process.env.PORT || 5000}`);
-// });
-
-// app.get('/api/data', async (req, res) => {
-//     try {
-//       const [rows] = await require('./database').query('SELECT * FROM my_table');
-//       res.json(rows);
-//     } catch (error) {
-//       res.status(500).json({ error: error.message });
-//     }
-//   });
-
 
 var Client = require('ssh2').Client;
 var ssh = new Client();
@@ -77,37 +52,34 @@ var db = new Promise(function(resolve, reject){
   });
 });
 
-//Method to test connection
-db.then((dbConnection) => {
-  dbConnection.query('SHOW TABLES', function (error, results) {
-      if (error) throw error;
-      console.log('Tables: ', results);
-  });
-}).catch((error) => {
-  console.log(error);
-});
+// Method to test connection
+// db.then((dbConnection) => {
+//   dbConnection.query('SHOW TABLES', function (error, results) {
+//       if (error) throw error;
+//       console.log('Tables: ', results);
+//   });
+// }).catch((error) => {
+//   console.log(error);
+// });
 
-app.post('/api/login', async (req, res) => {
-    const { username, password } = req.body;
+app.get('/api/login', (req, res) => {
   
-    try {
-      const user = await connectDB.query('SELECT * FROM admin WHERE username = ?', [username]);
-  
-      if (!user) {
-        return res.status(401).json({ error: 'Invalid username or password' });
-      }
+    db.then((dbConnection) => {
+      const loginQuery = ("Select * from admin");
+      dbConnection.query(loginQuery, (err, result) => {
+        console.log(result);
+        user = JSON.stringify(result);
+        console.log(user);
+        if (err) {
+          console.error("Error fetching login information:", err);
+          return res.status(500).json(err);
+        }
 
-      else if(password != user.password) {
-        return res.status(401).json({ error: 'Invalid username or password' });
-      }
-
-      else {
-        res.status(200).json({ message: 'Login successful!' });
-      }
-  
-    } catch (error) {
+        return res.json(user);
+      });
+    }).catch((error) => {
       res.status(500).json({ error: error.message });
-    }
+    });
 });
 
   app.use((err, req, res, next) => {

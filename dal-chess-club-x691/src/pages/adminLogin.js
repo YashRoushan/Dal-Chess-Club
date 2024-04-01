@@ -4,8 +4,8 @@ import '../styles/adminLogin.css';
 
 //Method to handle validation
 const handleLogin = (username, password) => {
-    console.log('Username: ', username);
-    console.log('Password: ', password);
+    // console.log('Username: ', username);
+    // console.log('Password: ', password);
 }
 
 const LoginForm = () => {
@@ -18,20 +18,21 @@ const LoginForm = () => {
         event.preventDefault();
         handleLogin(username, password);
         try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: { 'Content-Type': 'application/json' }
-            });
+            var response= await fetch('http://localhost:5000/api/login');
+            var data = await response.json();
+            var user = JSON.parse(data);
 
-            if (response.ok) { 
-                const data = await response.json(); 
-                console.log("Login Success:", data); 
-
-                navigate('../adminLanding');
+            if (user[0].username === username) { 
+                console.log("Username is Correct");
+                if(user[0].password === password) {
+                    console.log("Password is Correct");
+                    navigate('../adminLanding');
+                }
+                else {
+                    console.log("Password is Wrong")
+                }
             } else {
-                const errorData = await response.json();
-                console.error("Login Error:", errorData);
+                console.log("Username is Incorrect")
             }
         } catch (error) {
             console.error("Fetch Error:", error);
