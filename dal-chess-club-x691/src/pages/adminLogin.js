@@ -2,11 +2,6 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
 
-//Method to handle validation
-const handleLogin = (username, password) => {
-    // console.log('Username: ', username);
-    // console.log('Password: ', password);
-}
 
 const LoginForm = () => {
     //Checks state of the username and password
@@ -16,7 +11,6 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        handleLogin(username, password);
         try {
             var response= await fetch('http://localhost:5000/api/login');
             var data = await response.json();
