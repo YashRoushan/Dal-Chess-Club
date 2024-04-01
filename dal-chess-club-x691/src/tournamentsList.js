@@ -11,7 +11,7 @@ export const tournamentsList = [
         participantsNo: 0,
         price: 10,
         description: "This tournament is a low-pressure event open to everyone. It’s an opportunity to play against players in the local area over the board.",
-        registrationLink: "https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.office.com%2Fr%2Fm9ZB2AZCLP&h=AT02vLo7kQW0pNhO28ev21WS9ffiWUFGLVMLyTttmQ1HxmY06KDows0cdhhhseNTdT1DHNtSnkzFZknKNZNjm0PDePpVkUiAGgoVTxtkJC-zg-ySxvzRMNRBVfeecUPS1FQN0v5I9pCPtiFhM70R&__tn__=q&c[0]=AT179q0-DN5b4P7A3pqXjcQWikhnDLjWvjZMPFgWhKC86gUBCI-bsygkrrypQ-QltNA8fJNkXidE_joKqWif7gR6cFybdbjg8ZifzDS-_uDHqaWnGFumplKFN0h4JKsEUGuGerlyiXgFZw5bbWcLHH6YUSX8UTytZAc9vaebwHSkMJ6y4H9e",
+        registrationLink: "https://forms.office.com/pages/responsepage.aspx?id=mRm4YH8LLUGSo-F9iunj4DRpLS7nPQpAvB7eadzVE0ZUOFM1NkoxR0dXUTdLQ0FTRlNGRkFGRjU3Ni4u",
         prize: "Medals will be awarded to the top 3 players.",
         type: "5-Round Swiss",
         location: "Dalhousie Student Union",
@@ -23,6 +23,7 @@ export const tournamentsList = [
         participantsNo: 0,
         price: 20,
         description: "This will be an over-the-board tournament open to anyone who wants to play other local players. The winner of this tournament will be qualified to play in the Dalhousie Chess Championship, which will be hosted in March.",
+        registrationLink: "https://forms.office.com/pages/responsepage.aspx?id=mRm4YH8LLUGSo-F9iunj4DRpLS7nPQpAvB7eadzVE0ZUOFM1NkoxR0dXUTdLQ0FTRlNGRkFGRjU3Ni4u",
         type: "5-Round Swiss",
         location: "Dalhousie Student Union",
     },
@@ -33,5 +34,6 @@ export const tournamentsList = [
         participantsNo: 0,
         price: 5,
         description: "Ad laboris velit proident irure excepteur eiusmod aliquip et.",
+        registrationLink: "https://forms.office.com/pages/responsepage.aspx?id=mRm4YH8LLUGSo-F9iunj4DRpLS7nPQpAvB7eadzVE0ZUOFM1NkoxR0dXUTdLQ0FTRlNGRkFGRjU3Ni4u",
     },
 ]

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//import { tournamentsList } from '../tournamentsList.js';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
@@ -26,6 +25,7 @@ function Tournaments() {
         });
     }, []); 
 
+    //Filter and search not set up to the database yet
   const filterTournaments = () => {
     return tournamentsList.filter(tournament => {
       const tournamentDate = new Date(tournament.date);

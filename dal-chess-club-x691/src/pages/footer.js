@@ -30,9 +30,6 @@ function footer() {
             <div className='copy'>
                 <p>&copy; 2024 dalchess.com</p>
             </div>
-            <div className='admin'>
-                <Link to='/adminLogin'><p>Admin</p></Link>
-            </div>
             <div className='logo'>
                <img src={ Logo } alt='Dal Chess Club Logo' />
             </div>
