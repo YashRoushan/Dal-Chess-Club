@@ -4,6 +4,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const JWT_SECRET = "fposhrdg8943tupspgijw30949tgewg())q43fhsafnq43w98fas?2rwf[GF$WF]f4gegihfhuw43r[][)(f4o8fgdsbk";
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -14,7 +15,7 @@ var Client = require('ssh2').Client;
 var ssh = new Client();
 var mysql = require('mysql');
 
-var db = new Promise(function(resolve, reject){
+const db = new Promise(function(resolve, reject){
   ssh.on('ready', function() {
     ssh.forwardOut(
       // source address, this can usually be any valid address
@@ -27,7 +28,7 @@ var db = new Promise(function(resolve, reject){
       3306,
       function (err, stream) {
         if (err) resolve(err);
-          connection = mysql.createConnection({
+          let connection = mysql.createConnection({
             host     : 'euro.cs.dal.ca',
             user     : 'chessclub',
             password : 'Mee5shaong9kaiw4',
@@ -54,18 +55,6 @@ var db = new Promise(function(resolve, reject){
   });
 });
 
-
-//Method to test connection
-db.then((dbConnection) => {
-  dbConnection.query('SHOW TABLES', function (error, results) {
-      if (error) throw error;
-      console.log('Tables: ', results);
-  });
-}).catch((error) => {
-  console.log(error);
-});
-
-/*
 app.get('/api/data', async (req, res) => {
   try {
     const [rows] = await require('./database').query('SELECT * FROM my_table');
