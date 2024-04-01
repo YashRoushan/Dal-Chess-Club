@@ -139,7 +139,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 app.get("/api/news/getAllNews", (req, res) => {
   console.log("/api/news/getAllNews");
   
-  const sql = `SELECT news.newsTitle,news.date, news.text, event_images.image as imgurl, event_images.alt_text, event_images.content 
+  const sql = `SELECT news.newsTitle,news.date, news.text, event_images.image as imgurl, event_images.alt_text 
   FROM news
   LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID
   LIMIT 3`;
@@ -171,7 +171,7 @@ app.get("/api/news/getAllNews", (req, res) => {
 //Homepage
 
 // For getting homepage cards
-app.get("/api/home/getHomePageCards", (req, res) => {
+app.get("/api/home/homePageCards", (req, res) => {
   db.then((dbConnection) => {
     const sql = "SELECT * from event_images LIMIT 3";
     dbConnection.query(sql, (error, data) => {
@@ -184,7 +184,7 @@ app.get("/api/home/getHomePageCards", (req, res) => {
       }
 
       if (data.length > 0) {
-        console.log("/getHomePageCards data found");
+        console.log("/homePageCards data found");
         const slideData = data.map((item) => {
           return {
             id: item.event_imageID,

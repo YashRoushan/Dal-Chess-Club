@@ -26,7 +26,7 @@ function Home() {
       .catch(err => console.log(err))
   }, []);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/home/getHomePageCards`)
+    fetch(`http://localhost:5000/api/home/homePageCards`)
       .then(res => res.json())
       .then(data => setcards(data))
       .catch(err => console.log(err))
