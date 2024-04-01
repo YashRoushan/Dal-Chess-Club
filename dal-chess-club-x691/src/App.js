@@ -29,12 +29,12 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
-
+import ResetPassword from './pages/resetPassword.js';
 
 function App() {
   // Move useEffect inside the App function
   useEffect(() => {
-    fetch('http://localhost:3000/api/data')
+    fetch('http://localhost:5000/api/data')
       .then(response => response.json())
       .then(data => console.log(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -71,6 +71,7 @@ function App() {
             <Route path="/editTrainer" element={<EditTrainer />} />
             <Route path="/editEvent" element={<EditEvent />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
         <Footer/>
         </Router>

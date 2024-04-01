@@ -56,3 +56,25 @@
   .submit-button-container button:hover {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
   }
+
+  .backButton button {
+    padding: 20px 30px;
+    margin: 20px;
+    background-color: #FFD400;
+    color: #000000;
+    font-size: 14pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .backButton button:hover {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (max-width: 600px) {
+    .backButton button {
+      padding: 10px 20px;
+      font-size: 12pt;
+    }
+  }

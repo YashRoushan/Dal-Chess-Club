@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/editPage.css';
 
 function EditEvents() {
@@ -21,7 +22,10 @@ function EditEvents() {
 
     return (
         <div className='editPage-container'>
-            <h1>Edit Events</h1>
+            <div className='title'>
+                <Link to='../adminLanding' onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}><button>Back</button></Link>
+                <h1>Edit Events</h1>
+            </div>
             <div className='editing-container'>
                 {items.map(item => (
                     <div key = {item.id} className='item'>
