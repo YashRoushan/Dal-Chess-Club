@@ -14,10 +14,28 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         handleLogin(username, password);
-        navigate('../adminLanding')
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) { 
+                const data = await response.json(); 
+                console.log("Login Success:", data); 
+
+                navigate('../adminLanding');
+            } else {
+                const errorData = await response.json();
+                console.error("Login Error:", errorData);
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+        }
     };
 
 
