@@ -26,17 +26,13 @@ const LoginForm = () => {
                     var data = await response.json();
                     var user = JSON.parse(data);
                     if (user[0].username === username) { 
-                        console.log("Username is Correct");
                         if(user[0].password === password) {
-                            console.log("Password is Correct");
                             navigate('../adminLanding');
                         }
                         else {
-                            console.log("Password is Wrong");
                             toast.error("Username or Password is Incorrect");
                         }
                     } else {
-                        console.log("Username is Incorrect");
                         toast.error("Username or Password is Incorrect");
                     }
                 }
