@@ -33,7 +33,7 @@ function EditEvents() {
                             <Link to={`/editForm-events?itemId=${item.id}`}>
                                 <button>Edit</button>
                             </Link>
-                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                            <Link to={``}>
                                 <button>Delete</button>
                             </Link>
                         </div>

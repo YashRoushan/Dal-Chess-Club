@@ -33,7 +33,7 @@ function EditTournaments() {
                             <Link to={`/editForm-tournaments?itemId=${item.id}`}>
                                 <button>Edit</button>
                             </Link>
-                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                            <Link to={``}>
                                 <button>Delete</button>
                             </Link>
                         </div>
