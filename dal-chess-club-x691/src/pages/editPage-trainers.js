@@ -37,7 +37,7 @@ function EditTrainer() {
                             <Link to={`/editForm-trainers?itemId=${item.id}`}>
                                 <button>Edit</button>
                             </Link>
-                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                            <Link to={``}>
                                 <button>Delete</button>
                             </Link>
                         </div>

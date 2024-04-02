@@ -36,7 +36,7 @@ function EditFaq() {
                             <Link to={`/editForm-faq?itemId=${item.id}`}>
                                 <button>Edit</button>
                             </Link>
-                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                            <Link to={``}>
                                 <button>Delete</button>
                             </Link>
                         </div>

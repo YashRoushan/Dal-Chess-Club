@@ -36,7 +36,7 @@ function EditNews() {
                             <Link to={`/editForm-news?itemId=${item.id}`}>
                                 <button>Edit</button>
                             </Link>
-                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                            <Link to={``}>
                                 <button>Delete</button>
                             </Link>
                         </div>
