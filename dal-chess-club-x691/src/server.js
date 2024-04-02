@@ -61,23 +61,6 @@ app.get('/api/data', async (req, res) => {
   }
 });
 
-app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const user = await db.query('SELECT * FROM admin WHERE username = ?', [username]);
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
-    }
-
-    res.json({ message: 'Login successful!' });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 app.get('/api/login', (req, res) => {
   
   db.then((dbConnection) => {
