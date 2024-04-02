@@ -127,8 +127,8 @@ app.post('/api/login', async (req, res) => {
             },
           });
           var mailContent = {
-            from: "ter@gmail.com",
-            to: "them@gail.co",
+            from: "ouremail@gmail.com",
+            to: email,
             subject: "Password Reset Link",
             text: link,
           }

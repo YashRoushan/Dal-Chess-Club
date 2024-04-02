@@ -46,7 +46,6 @@ function ForgotPassword() {
         </form>
       </div>
 
-      <h1>Message:</h1>
       {message && <div className='message'>{message}</div>}
     </div>
   )
