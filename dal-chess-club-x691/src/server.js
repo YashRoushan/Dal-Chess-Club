@@ -111,6 +111,23 @@ app.post('/api/login', async (req, res) => {
   });
 });
 
+//API for displaying content on improve page
+app.get("/improve", (req, res) => {
+  db.then((dbConnection) => {
+    const eventQuery = "SELECT * FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
+    dbConnection.query(eventQuery, (err, data) => {
+        if (err) {
+            console.error("Error fetching events:", err);
+            return res.status(500).json(err);
+        }
+        return res.json(data);
+    });
+}).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).send("Failed to connect to the database");
+});
+});
+
 //Method to test connection
 // db.then((dbConnection) => {
 //   dbConnection.query('SHOW TABLES', function (error, results) {
