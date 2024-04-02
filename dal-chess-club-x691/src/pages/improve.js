@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { trainersList } from '../trainersList'
 import TrainerItem from '../trainerItem'
 import '../styles/trainer.css'
-import { eventList } from '../eventList'
+//import { eventList } from '../eventList'
 import EventItem from '../eventItem'
 import '../styles/event.css'
 import "slick-carousel/slick/slick.css";
@@ -10,7 +10,20 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import '../styles/improve.css';
 
-function improve() {
+function Improve() {
+  const [eventList, setEventsList] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/improve")
+      .then(response => response.json())
+      .then(data => {
+        setEventsList(data);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); 
+
   const settings = {
     className: "center",
     centerMode: true,
@@ -55,9 +68,11 @@ function improve() {
                 return(
                   <EventItem
                     key={key}
-                    name={eventItem.name}
+                    name={eventItem.title}
                     image={eventItem.image}
-                    date={eventItem.date}
+                    date={formatDate(eventItem.start_date)}
+                    time={formatTime(eventItem.start_date)}
+                    endTime={formatTime(eventItem.end_date)}
                     description={eventItem.description}
                   />
                 )
@@ -68,14 +83,14 @@ function improve() {
       <div className="trainer">
         <h1>Trainer List</h1>
           <div className="trainerList">
-            
-              {trainersList.map((trainerItem, key) => {
+              {eventList.map((trainerItem, key) => {
                 return(
                   <TrainerItem
                     key={key}
                     name={trainerItem.name}
                     image={trainerItem.image}
-                    description={trainerItem.description}
+                    speciality={trainerItem.speciality}
+                    description={trainerItem.bio}
                   />
                 )
               })}
@@ -85,4 +100,28 @@ function improve() {
   )
 }
 
-export default improve
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+
+function formatTime(dateString) {
+  const date = new Date(dateString);
+
+  if (!dateString) {
+    return "Finish";
+  }
+  let hours = date.getHours();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+
+  return `${hours}${ampm}`;
+}
+
+export default Improve

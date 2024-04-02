@@ -18,7 +18,7 @@ function Tournaments() {
       fetch("http://localhost:5000/tournaments")
         .then(response => response.json())
         .then(data => {
-          setTournamentsList(data); // Assuming the API returns an array of tournaments
+          setTournamentsList(data);
         })
         .catch(error => {
           console.error("Error fetching data:", error);
@@ -71,7 +71,6 @@ function Tournaments() {
                   date={formatDate(tournament.start_date)}
                   time={formatTime(tournament.start_date)}
                   endTime={formatTime(tournament.end_date)}
-                  // Assuming participantsNo is meant to be num_of_participants
                   participantsNo={tournament.num_of_participants}
                   description={tournament.description}
                   registrationLink={tournament.registration_link}
