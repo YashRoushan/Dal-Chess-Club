@@ -18,7 +18,7 @@ function LibraryAddForm() {
       <div className="form-A">
         <form className="form-element">
           <label>Images</label>
-          <input className="text-form" type="text" required />
+          <input className="file-form" type="file" accept="image/*" required />
         </form>
       </div>
 

@@ -14,10 +14,12 @@ function EditEvents() {
 
     const handleEdit = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-events?itemId=${itemId}`;
     };
 
     const handleDelete = (itemId) => {
         console.log(itemId);
+        window.location.href = `/editForm-events?itemId=${itemId}`;
     };
 
     return (
@@ -31,8 +33,12 @@ function EditEvents() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                            <Link to={`/editForm-events?itemId=${item.id}`}>
+                                <button>Edit</button>
+                            </Link>
+                            <Link to={`/deleteForm?itemId=${item.id}`}>
+                                <button>Delete</button>
+                            </Link>
                         </div>
                     </div>
                  ))}

@@ -26,7 +26,7 @@ function FAQAddForm() {
       <div className="form-B">
         <form className="form-element">
           <label>FAQ Image</label>
-          <input className="text-form" type="text" required />
+          <input className="file-form" type="file" accept="image/*" required />
         </form>
       </div>
 

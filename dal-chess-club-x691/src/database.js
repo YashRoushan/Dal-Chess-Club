@@ -1,5 +1,9 @@
 const mysql = require("mysql2");
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> develop
 const connectDB = async () => {
     try {
         const connection = await mysql.createConnection({
@@ -14,5 +18,9 @@ const connectDB = async () => {
         throw new Error("Error connecting to MySQL database: " + error.message);
     }
 };
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> develop
 module.exports = connectDB;

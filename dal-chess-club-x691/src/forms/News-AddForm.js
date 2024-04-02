@@ -25,8 +25,8 @@ function NewsAddForm() {
       {/* Second Form */}
       <div className="form-B">
         <form className="form-element">
-          <label>News Images</label>
-          <input className="text-form" type="text" required />
+          <label>News Image</label>
+          <input className="file-form" type="file" accept="image/*" required />
         </form>
       </div>
 
