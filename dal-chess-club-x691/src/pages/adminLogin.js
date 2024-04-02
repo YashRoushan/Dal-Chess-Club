@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-//Method to handle validation
-const handleLogin = (username, password) => {
-    console.log('Username: ', username);
-    console.log('Password: ', password);
-}
 
 const LoginForm = () => {
     //Checks state of the username and password
@@ -14,10 +11,35 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        handleLogin(username, password);
-        navigate('../adminLanding')
+        
+            if(!username) {
+                toast.error("Username is Empty");
+            }
+            else if(!password) {
+                toast.error("Password is Empty");
+            }
+            else {
+                try {
+                    var response= await fetch('http://localhost:5000/api/login');
+                    var data = await response.json();
+                    var user = JSON.parse(data);
+                    if (user[0].username === username) { 
+                        if(user[0].password === password) {
+                            navigate('../adminLanding');
+                        }
+                        else {
+                            toast.error("Username or Password is Incorrect");
+                        }
+                    } else {
+                        toast.error("Username or Password is Incorrect");
+                    }
+                }
+                catch (error) {
+                    console.error("Fetch Error:", error);
+                }
+        } 
     };
 
 
@@ -45,6 +67,7 @@ const LoginForm = () => {
 
                 <br></br>
                 <button type="submit">Login</button>
+                <ToastContainer />
             </form>
         </div>
     );
