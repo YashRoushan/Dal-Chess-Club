@@ -29,6 +29,19 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import MailingList from './pages/mailingList.js';
+import Subscribers from './pages/subscribers.js';
+import SubscribersDeleteForm from './pages/subscribersDeleteForm.js';
+import DeleteForm from './pages/deleteForm.js';
+
+import TrainersEditForm from './forms/editForm-trainers.js';
+import AboutUsEditForm from './forms/editForm-about.js';
+import EventsEditForm from './forms/editForm-events.js';
+import FaqEditForm from './forms/editForm-faq.js';
+import LibraryEditForm from './forms/editForm-library.js';
+import TournamentsEditForm from './forms/editForm-tournaments.js';
+import NewsEditForm from './forms/editForm-news.js';
+
 
 
 function App() {
@@ -71,6 +84,19 @@ function App() {
             <Route path="/editTrainer" element={<EditTrainer />} />
             <Route path="/editEvent" element={<EditEvent />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/mailingList" element={<MailingList />} />
+            <Route path="/subscribers" element={<Subscribers />} />
+            <Route path="/subscribersDeleteForm" element={<SubscribersDeleteForm />} />
+            <Route path="/deleteForm" element={<DeleteForm />} />
+
+            <Route path="/editForm-trainers" element={<TrainersEditForm />} />
+            <Route path="/editForm-about" element={<AboutUsEditForm />} />
+            <Route path="/editForm-events" element={<EventsEditForm />} />
+            <Route path="/editForm-faq" element={<FaqEditForm />} />
+            <Route path="/editForm-news" element={<NewsEditForm />} />
+            <Route path="/editForm-library" element={<LibraryEditForm />} />
+            <Route path="/editForm-tournaments" element={<TournamentsEditForm />} />
+
         </Routes>
         <Footer/>
         </Router>

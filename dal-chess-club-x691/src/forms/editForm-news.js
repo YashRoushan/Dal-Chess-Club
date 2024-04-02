@@ -1,14 +1,14 @@
 import React from 'react';
 import './AddForms.css';
 
-function TrainersAddForm() {
+function NewsEditForm() {
 
   return (
     <div className="add-form-container">
 
       <div className="header-info">
-        <h2 id="main-header">Trainers Page Add Form</h2>
-        <p>This is the page where you, the admin, can manipulate content in the "Trainers" page.</p>
+        <h2 id="main-header">News Page Edit Form</h2>
+        <p>This is the page where you, the admin, can edit existing content in the "News" page.</p>
       </div>
 
       <div className="form-A">
@@ -42,4 +42,4 @@ function TrainersAddForm() {
   )
 }
 
-export default TrainersAddForm;
+export default NewsEditForm;

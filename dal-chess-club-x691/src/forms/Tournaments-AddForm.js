@@ -22,7 +22,7 @@ function TournamentsAddForm() {
       <div className="form-B">
         <form className="form-element">
           <label>Tournament Image</label>
-          <input className="text-form" type="text" required />
+          <input className="file-form" type="file" accept="image/*" required />
         </form>
       </div>
 
