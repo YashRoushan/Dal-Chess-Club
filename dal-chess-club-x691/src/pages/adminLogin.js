@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../contexts/AuthContext';
 
 
 const LoginForm = () => {
@@ -10,6 +11,7 @@ const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,6 +29,7 @@ const LoginForm = () => {
                     var user = JSON.parse(data);
                     if (user[0].username === username) { 
                         if(user[0].password === password) {
+                            login(true);
                             navigate('../adminLanding');
                         }
                         else {
@@ -41,6 +44,7 @@ const LoginForm = () => {
                 }
         } 
     };
+   
 
 
     //Code for the form design
