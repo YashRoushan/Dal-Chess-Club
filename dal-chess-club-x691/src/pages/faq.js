@@ -1,41 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/faq.css';
 
-function FAQpage() {
+const FaqItem = ({ question, answer }) => (
+  <div className='question'>
+    <h2>{question}</h2>
+    <p>{answer}</p>
+  </div>
+);
+
+function FAQPage() {
+  const [faqs, setFaqs] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/faq/getAllFaqs")
+      .then(res => res.json())
+      .then(data => setFaqs(data))
+      .catch(err => console.error("Error fetching FAQs:", err));
+  }, []);
 
   return (
-    
     <div>
       <div className="faq">
         <h1>Frequently Asked Questions</h1>
-
       </div>
-
       <div className="faq-content">
-        <div className='question'>
-        <h2>Question 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus enim id ante consequat sodales. 
-            Sed consectetur tincidunt risus quis laoreet. Sed volutpat volutpat sapien, vel efficitur mauris imperdiet in. 
-            Sed ac lorem sit amet enim interdum convallis id sit amet massa. Sed consectetur turpis vitae pretium dignissim. 
-            Aenean et ex tortor. Integer pellentesque dolor in finibus efficitur.</p>
-        </div>
-        <div className='question'>
-        <h2>Question 2</h2>    
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus enim id ante consequat sodales. 
-            Sed consectetur tincidunt risus quis laoreet. Sed volutpat volutpat sapien, vel efficitur mauris imperdiet in. 
-            Sed ac lorem sit amet enim interdum convallis id sit amet massa. Sed consectetur turpis vitae pretium dignissim. 
-            Aenean et ex tortor. Integer pellentesque dolor in finibus efficitur.</p>
-        </div>
-        <div className='question'>
-        <h2>Question 3</h2>      
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus enim id ante consequat sodales. 
-            Sed consectetur tincidunt risus quis laoreet. Sed volutpat volutpat sapien, vel efficitur mauris imperdiet in. 
-            Sed ac lorem sit amet enim interdum convallis id sit amet massa. Sed consectetur turpis vitae pretium dignissim. 
-            Aenean et ex tortor. Integer pellentesque dolor in finibus efficitur.</p>    
+        {faqs.map((faq, index) => (
+          <FaqItem key={index} question={faq.question} answer={faq.answer} />
+        ))}
       </div>
-        </div>
     </div>
   )
 }
 
-export default FAQpage;
+export default FAQPage;
