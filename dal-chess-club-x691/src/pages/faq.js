@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/faq.css';
+import {BASE_URL} from '../config.js';
 
 const FaqItem = ({ question, answer }) => (
   <div className='question'>
@@ -12,7 +13,7 @@ function FAQPage() {
   const [faqs, setFaqs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/faq/getAllFaqs")
+    fetch(`${BASE_URL}/api/faq/getAllFaqs`)
       .then(res => res.json())
       .then(data => setFaqs(data))
       .catch(err => console.error("Error fetching FAQs:", err));

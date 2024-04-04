@@ -105,19 +105,34 @@ app.get("/api/login", (req, res) => {
 
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
-  db.then((dbConnection) => {
-    const tournamentQuery =
+  const tournamentQuery =
       "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
-    dbConnection.query(tournamentQuery, (err, data) => {
-      if (err) {
-        console.error("Error fetching tournaments:", err);
-        return res.status(500).json(err);
+  db.then((dbConnection) => {
+    dbConnection.query(tournamentQuery, (error, data) => {
+      if (error) {
+        console.error("Error while fetching news with images:", error);
+        return res
+          .status(500)
+          .json({ error: "Internal Server Error", message: error.message });
       }
-      return res.json(data);
+      if (data.length > 0) {
+        const newsWithImages = data.map((item) => {
+          const image = item.image ? getImageUrl(item.image) : null; // Use getImageUrl if imgurl is available
+          return {
+            ...item, // Spread the existing item object
+            image: image, // Override the imageUrl property
+          };
+        });
+        return res.json(newsWithImages);
+      } else {
+        res.status(404).json({ error: "No news articles found" });
+      }
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
-    res.status(500).send("Failed to connect to the database");
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: error.message });
   });
 });
 
@@ -186,6 +201,11 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+// Import BASE_URL and getImageUrl from config.js in server.js
+// Now you can use BASE_URL and getImageUrl in your server.js file
+const {getImageUrl } = require('./config.js');
+
+
 // News Page
 
 // Read all news
@@ -210,7 +230,7 @@ app.get("/api/news/getAllNews", (req, res) => {
           title: item.newsTitle,
           date: moment(item.date).format("MMMM DD, YYYY hh:mm A"),
           text: item.text,
-          imageUrl: `http://localhost:5000${item.imgurl}`,
+          imageUrl: getImageUrl(item.imgurl), // Use the getImageUrl function
         }));
         return res.json(newsWithImages);
       } else {
@@ -247,7 +267,7 @@ app.get("/api/home/homePageCards", (req, res) => {
             id: item.event_imageID,
             content: item.alt_text,
             title: item.alt_text,
-            image: `http://localhost:5000${item.image}`,
+            image: getImageUrl(item.image),
           };
         });
         return res.json(slideData);
@@ -281,7 +301,7 @@ app.get("/api/home/getHomePageSlides", (req, res) => {
           id: item.event_imageID,
           content: item.alt_text,
           title: item.alt_text,
-          image: `http://localhost:5000${item.image}`,
+          image: getImageUrl(item.image),
         }));
         return res.json(slideData);
       } else {
@@ -326,7 +346,7 @@ app.get("/api/about-us/getMembers", (req, res) => {
           memberId: item.memberID,
           position: item.position,
           bio: item.bio,
-          imageUrl: `http://localhost:5000${item.imageUrl}`,
+          imageUrl: getImageUrl(item.imageUrl),
         }));
         return res.json(membersData);
       } else {

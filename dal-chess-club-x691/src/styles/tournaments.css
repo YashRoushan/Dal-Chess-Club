@@ -72,6 +72,12 @@
     margin: 10px;
   }
 
+  .tournamentItem img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
   .tournament-image {
     width: 100%;
     background-size: cover;
