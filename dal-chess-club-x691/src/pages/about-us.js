@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/about-us.css';
+import { BASE_URL} from '../config.js';
 
 const Member = ({ memberId, position, bio, imageUrl }) => (
   <div className="member">
@@ -20,7 +21,7 @@ function AboutUsPage() {
 
   useEffect(() => {
     // Fetch members from API
-    fetch("http://localhost:5000/api/about-us/getMembers")
+    fetch(`${BASE_URL}/api/about-us/getMembers`)
       .then(res => res.json())
       .then(data => setMembers(data))
       .catch(err => console.error("Error fetching members:", err));

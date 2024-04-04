@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/news.css';
+// Import BASE_URL and getImageUrl from config.js
+import { BASE_URL} from '../config.js';
 
 const NewsArticle = ({ title, date, text, imageUrl }) => (
   <div className="news-article">
@@ -15,7 +17,7 @@ const NewsPage = () => {
 
   useEffect(() => {
     // Fetch news articles from API
-    fetch("http://localhost:5000/api/news/getAllNews")
+    fetch(`${BASE_URL}/api/news/getAllNews`)
       .then(res => res.json())
       .then(data => setNewsArticles(data))
       .catch(err => console.error("Error fetching news:", err));

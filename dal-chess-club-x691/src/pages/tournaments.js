@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
+// Import BASE_URL and getImageUrl from config.js
+import { BASE_URL} from '../config.js';
 
 function Tournaments() {
   const [tournamentsList, setTournamentsList] = useState([]);
@@ -15,7 +17,8 @@ function Tournaments() {
 
     // Fetch tournaments from the API
     useEffect(() => {
-      fetch("http://localhost:5000/tournaments")
+      // Fetch tournaments from API
+      fetch(`${BASE_URL}/tournaments`)
         .then(response => response.json())
         .then(data => {
           setTournamentsList(data); // Assuming the API returns an array of tournaments
