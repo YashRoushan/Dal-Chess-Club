@@ -9,14 +9,12 @@ function TournamentItem({name, image, date, time, endTime, participantsNo, price
   const togglePopUp = () => {
     setShowPopUp(!showPopUp);
   }
-  console.log({image});
-  console.log({name});
 
   return (
     <div className="tournamentItem" onClick={togglePopUp}>
       <h1> {name} </h1>
       <img src={image} alt={name}/>
-      <p> {date} | {time} - {endTime} | ${price} </p>
+      <p> {date} | {time} - {endTime} | {price} </p>
       <p> Number of Participants: {participantsNo}</p>
       {showPopUp && (
         <TournamentPopUp

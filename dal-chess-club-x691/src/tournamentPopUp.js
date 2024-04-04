@@ -8,13 +8,17 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
     <div className="popup-background" onClick={onClose}>
     <div className="popup-content" onClick={e => e.stopPropagation()}>
         <h1>{name}</h1>
-        <img className="tournament-image" src={image} alt="Tournament Logo" />
-        <p> Cost: ${price} </p>
+        <img className="tournament-image" src={image} alt={name} />
+        <p> Cost: {price} </p>
         <p> Date: {date} </p>
         <p> Time: {time} - {endTime}</p>
         <p> Number of Participants: {participantsNo} </p>
         <p> {description} </p>
-        <a href={registrationLink} id="register-button" target="_blank">Register</a> 
+        {registrationLink && (
+        <a href={registrationLink} target="_blank" rel="noopener noreferrer">
+          <button className="registerButton">Register</button>
+        </a>
+      )}
         <button id="close-button" onClick={onClose}><Close /></button>
     </div>
   </div>

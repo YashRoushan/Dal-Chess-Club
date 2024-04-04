@@ -1,75 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { trainersList } from '../trainersList'
 import TrainerItem from '../trainerItem'
 import '../styles/trainer.css'
-//import { eventList } from '../eventList'
 import EventItem from '../eventItem'
 import '../styles/event.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-import '../styles/improve.css';
+import "../styles/tournaments.css";
+import { BASE_URL} from '../config.js';
+import TournamentItem from '../tournamentItem.js';
 
 function Improve() {
   const [eventList, setEventsList] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/improve")
-      .then(response => response.json())
-      .then(data => {
-        setEventsList(data);
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-      });
-  }, []); 
+    // Fetch events from the API
+    useEffect(() => {
+      fetch(`${BASE_URL}/improve`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setEventsList(data);
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }, []); 
 
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    centerPadding: "60px",
-    slidesToShow: 3,
-    speed: 500,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
-  };
   return (
     <div className="improve">
-      <div className="event">
-        <h1>Event Tab</h1>
-          <div className="eventList">
-            <Slider {...settings}>
+      <div className="tournament">
+        <h1>Events</h1>
+          <div className="tournamentList">
               {eventList.map((eventItem, key) => {
                 return(
-                  <EventItem
+                  <TournamentItem
                     key={key}
                     name={eventItem.title}
-                    image={eventItem.image}
+                    image={eventItem.eventImage}
+                    price={formatPrice(eventItem.cost)}
                     date={formatDate(eventItem.start_date)}
                     time={formatTime(eventItem.start_date)}
                     endTime={formatTime(eventItem.end_date)}
@@ -77,18 +44,17 @@ function Improve() {
                   />
                 )
               })}
-              </Slider>
           </div>
       </div>
       <div className="trainer">
-        <h1>Trainer List</h1>
+        <h1>Speakers</h1>
           <div className="trainerList">
               {eventList.map((trainerItem, key) => {
                 return(
                   <TrainerItem
                     key={key}
                     name={trainerItem.name}
-                    image={trainerItem.image}
+                    image={trainerItem.speakerImage}
                     speciality={trainerItem.speciality}
                     description={trainerItem.bio}
                   />
@@ -98,6 +64,14 @@ function Improve() {
       </div>
     </div>
   )
+}
+
+function formatPrice(price) {
+  if (!price || price == 0) {
+    return "FREE";
+  } else {
+    return "$" + price;
+  }
 }
 
 function formatDate(dateString) {
