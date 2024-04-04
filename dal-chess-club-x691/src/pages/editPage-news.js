@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import '../styles/editPage.css';
 
 function EditNews() {
@@ -12,33 +11,57 @@ function EditNews() {
         {id: 4, title: 'Event 4'},
     ]);
 
-    const handleEdit = (itemId) => {
-        console.log(itemId);
-        window.location.href = `/editForm-news?itemId=${itemId}`;
+    const handleEdit = async (itemId, newsTitle, date, text, event_imageID) => {
+        const formData = { newsTitle, date, text, event_imageID };
+        try {
+            const response = await fetch(`/api/news/edit/${itemId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            const result = await response.json();
+            if (result) {
+                console.log(result);
+            } else {
+                console.error('Failed to update news item');
+            }
+        } catch (error) {
+            console.error('Error updating news item:', error);
+        }
     };
 
-    const handleDelete = (itemId) => {
-        console.log(itemId);
-        window.location.href = `/editForm-news?itemId=${itemId}`;
+    const handleDelete = async (itemId) => {
+        try {
+            const response = await fetch(`/api/news/delete/${itemId}`, {
+                method: 'DELETE',
+            });
+    
+            const result = await response.json();
+            if (result) {
+                console.log(result);
+                setItems(currentItems => currentItems.filter(item => item.id !== itemId));
+            } else {
+                console.error('Failed to delete news item');
+            }
+        } catch (error) {
+            console.error('Error deleting news item:', error);
+        }
     };
+    
 
     return (
         <div className='editPage-container'>
-            <div className='title'>
-                <Link to='../adminLanding' onClick={() => {window.scroll({top: 0, left: 0, behavior: "smooth",});}}><button>Back</button></Link>
-                <h1>Edit News</h1>
-            </div>
+            <h1>Edit News</h1>
             <div className='editing-container'>
                 {items.map(item => (
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <Link to={`/editForm-news?itemId=${item.id}`}>
-                                <button>Edit</button>
-                            </Link>
-                            <Link to={``}>
-                                <button>Delete</button>
-                            </Link>
+                            <button onClick={() => handleEdit(item.id)}>Edit</button>
+                            <button onClick={() => handleDelete(item.id)}>Delete</button>
                         </div>
                     </div>
                  ))}
