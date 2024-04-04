@@ -78,26 +78,25 @@ const db = new Promise(function (resolve, reject) {
     });
 });
 
-app.get("/api/data", async (req, res) => {
+/*app.get("/api/data", async (req, res) => {
   try {
     const [rows] = await require("./database").query("SELECT * FROM my_table");
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+});*/
 
 app.get("/api/login", (req, res) => {
   db.then((dbConnection) => {
     const loginQuery = "Select * from admin";
-    dbConnection.query(loginQuery, (err, result) => {
-      let user = JSON.stringify(result);
+    dbConnection.query(loginQuery, (err, data) => {
       if (err) {
         console.error("Error fetching login information:", err);
         return res.status(500).json(err);
       }
 
-      return res.json(user);
+      return res.json(data);
     });
   }).catch((error) => {
     res.status(500).json({ error: error.message });

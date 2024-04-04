@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../contexts/AuthContext';
 
 
 const LoginForm = () => {
@@ -10,37 +11,21 @@ const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-            if(!username) {
-                toast.error("Username is Empty");
-            }
-            else if(!password) {
-                toast.error("Password is Empty");
-            }
-            else {
-                try {
-                    var response= await fetch('http://localhost:5000/api/login');
-                    var data = await response.json();
-                    var user = JSON.parse(data);
-                    if (user[0].username === username) { 
-                        if(user[0].password === password) {
-                            navigate('../adminLanding');
-                        }
-                        else {
-                            toast.error("Username or Password is Incorrect");
-                        }
-                    } else {
-                        toast.error("Username or Password is Incorrect");
-                    }
-                }
-                catch (error) {
-                    console.error("Fetch Error:", error);
-                }
+        if(!username) {
+            toast.error("Username is Empty");
+        } else if(!password) {
+            toast.error("Password is Empty");
+        } else {
+            login(username, password)
+                .then(() => navigate('../adminLanding'))
+                .catch(error => toast.error(error));
         } 
     };
+   
 
 
     //Code for the form design
