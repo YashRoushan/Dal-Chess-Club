@@ -21,7 +21,7 @@ function Tournaments() {
       fetch(`${BASE_URL}/tournaments`)
         .then(response => response.json())
         .then(data => {
-          setTournamentsList(data); // Assuming the API returns an array of tournaments
+          setTournamentsList(data);
         })
         .catch(error => {
           console.error("Error fetching data:", error);
@@ -65,7 +65,9 @@ function Tournaments() {
 
         <div className="tournamentList">
             {filteredTournaments.map((tournament, key) => {
+              
               return(
+                //console.log({tournament.image});
                 <TournamentItem
                   key={key}
                   name={tournament.title}
@@ -74,7 +76,6 @@ function Tournaments() {
                   date={formatDate(tournament.start_date)}
                   time={formatTime(tournament.start_date)}
                   endTime={formatTime(tournament.end_date)}
-                  // Assuming participantsNo is meant to be num_of_participants
                   participantsNo={tournament.num_of_participants}
                   description={tournament.description}
                   registrationLink={tournament.registration_link}
@@ -87,6 +88,9 @@ function Tournaments() {
 }
 
 function formatDate(dateString) {
+  if (!dateString) {
+    return "Date TBD";
+  }
   const date = new Date(dateString);
   
   const day = date.getDate().toString().padStart(2, '0');
