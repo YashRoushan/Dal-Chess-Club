@@ -12,13 +12,14 @@ import "swiper/css/navigation";
 
 import '../styles/homestyle.css'
 import ChessPuzzle from "./chessPuzzle";
+import { BASE_URL} from '../config.js';
 
 function Home() {
   const [slides, setslides] = useState([]);
   const [cards, setcards] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/home/getHomePageSlides`)
+    fetch(`${BASE_URL}/api/home/getHomePageSlides`)
       .then(res => res.json())
       .then(data => {       
         setslides(data);
@@ -26,7 +27,7 @@ function Home() {
       .catch(err => console.log(err))
   }, []);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/home/homePageCards`)
+    fetch(`${BASE_URL}/api/home/homePageCards`)
       .then(res => res.json())
       .then(data => setcards(data))
       .catch(err => console.log(err))

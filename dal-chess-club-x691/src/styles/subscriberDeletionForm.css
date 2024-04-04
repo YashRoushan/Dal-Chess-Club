@@ -1,8 +1,10 @@
-.forgotPassword-container {
+.add-form-container {
     text-align: center;
   }
 
-  .emailFormDiv {
+  .form-A,
+  .form-B,
+  .form-C {
     width: 50%;
     margin: auto;
     margin-bottom: 20px;
@@ -11,7 +13,8 @@
     border-radius: 10px;
   }
 
-  .emailText-form {
+  .text-form,
+  .text-form-c {
     width: 100%;
     font-size: 14pt;
     padding: 10px;
@@ -20,26 +23,22 @@
     border-radius: 5px;
   }
 
-  .forgotPassword-header {
-    margin-top: 50px;
-  }
-
-
-  .forgotPassword-header p {
+  .header-info p {
     text-align: center; 
   }
 
-  .forgotPassword-header h1 {
+  .header-info h2 {
     text-align: center;
   }
 
-  .reset-submit-container {
+  .submit-button-container {
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 67px;
+    margin-bottom: 65px;
   }
   
-  .reset-submit-container button {
+  .submit-button-container button {
     width: 100px;
     padding: 10px;
     background-color: #FFD400;
@@ -54,14 +53,6 @@
     align-items: center;
   }
   
-  .reset-submit-container button:hover {
+  .submit-button-container button:hover {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-  }
-
-  .message {
-    text-align: center;
-    margin-top: -10px;
-    margin-bottom: 50px;
-    font-size: 14pt;
-    font-weight: bold;
   }

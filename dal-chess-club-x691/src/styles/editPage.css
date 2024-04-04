@@ -22,3 +22,39 @@
     cursor: pointer;
 }
 
+.title {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.title button {
+    padding: 15px 30px;
+    margin-left: 20px;
+    background-color: #FFD400;
+    color: #000000;
+    font-size: 14pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .title button:hover {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .title h1 {
+    margin-left: -30px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .title button {
+      padding: 10px 20px;
+      font-size: 12pt;
+      margin-right: 20px;
+    }
+    .title h1 {
+        margin-top: 20px;
+    }
+  }

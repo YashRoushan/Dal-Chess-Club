@@ -3,9 +3,9 @@ import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 const AuthGuard = ({ children }) => {
-    const { isAdmin } = useAuth();
+    const { user } = useAuth();
 
-    if (!isAdmin) {
+    if (!user.isAuthenticated) {
         // If user is not authenticated, they're redirect to login page
         return <Navigate to="/adminLogin" />;
     }

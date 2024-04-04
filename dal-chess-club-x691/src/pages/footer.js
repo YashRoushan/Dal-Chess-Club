@@ -23,7 +23,7 @@ function footer() {
                 </div>
             </div>
             <div className='item'>
-                <Link to='/'><h2>Mailing List</h2></Link>
+                <Link to='./mailingList'><h2>Mailing List</h2></Link>
             </div>
         </div>
         <div className='bottom'>

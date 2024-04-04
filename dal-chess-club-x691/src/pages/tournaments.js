@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
+// Import BASE_URL and getImageUrl from config.js
+import { BASE_URL} from '../config.js';
 
 function Tournaments() {
   const [tournamentsList, setTournamentsList] = useState([]);
@@ -15,7 +17,8 @@ function Tournaments() {
 
     // Fetch tournaments from the API
     useEffect(() => {
-      fetch("http://localhost:5000/tournaments")
+      // Fetch tournaments from API
+      fetch(`${BASE_URL}/tournaments`)
         .then(response => response.json())
         .then(data => {
           setTournamentsList(data);
@@ -62,7 +65,9 @@ function Tournaments() {
 
         <div className="tournamentList">
             {filteredTournaments.map((tournament, key) => {
+              
               return(
+                //console.log({tournament.image});
                 <TournamentItem
                   key={key}
                   name={tournament.title}
@@ -83,6 +88,9 @@ function Tournaments() {
 }
 
 function formatDate(dateString) {
+  if (!dateString) {
+    return "Date TBD";
+  }
   const date = new Date(dateString);
   
   const day = date.getDate().toString().padStart(2, '0');
