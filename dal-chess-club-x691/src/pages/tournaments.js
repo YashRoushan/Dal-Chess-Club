@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
-// Import BASE_URL and getImageUrl from config.js
 import { BASE_URL} from '../config.js';
 
 function Tournaments() {
@@ -21,6 +20,7 @@ function Tournaments() {
       fetch(`${BASE_URL}/tournaments`)
         .then(response => response.json())
         .then(data => {
+          console.log(data);
           setTournamentsList(data);
         })
         .catch(error => {
@@ -67,12 +67,11 @@ function Tournaments() {
             {filteredTournaments.map((tournament, key) => {
               
               return(
-                //console.log({tournament.image});
                 <TournamentItem
                   key={key}
                   name={tournament.title}
                   image={tournament.image}
-                  price={tournament.cost}
+                  price={formatPrice(tournament.cost)}
                   date={formatDate(tournament.start_date)}
                   time={formatTime(tournament.start_date)}
                   endTime={formatTime(tournament.end_date)}
@@ -85,6 +84,14 @@ function Tournaments() {
         </div>
     </div>
   )
+}
+
+function formatPrice(price) {
+  if (!price || price == 0) {
+    return "FREE";
+  } else {
+    return "$" + price;
+  }
 }
 
 function formatDate(dateString) {

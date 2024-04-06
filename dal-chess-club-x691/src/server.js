@@ -78,15 +78,6 @@ const db = new Promise(function (resolve, reject) {
     });
 });
 
-/*app.get("/api/data", async (req, res) => {
-  try {
-    const [rows] = await require("./database").query("SELECT * FROM my_table");
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});*/
-
 app.get("/api/login", (req, res) => {
   db.then((dbConnection) => {
     const loginQuery = "Select * from admin";
@@ -117,7 +108,7 @@ app.get("/tournaments", (req, res) => {
       }
       if (data.length > 0) {
         const newsWithImages = data.map((item) => {
-          const image = item.image ? getImageUrl(item.image) : null; // Use getImageUrl if imgurl is available
+          const image = item.image ? getImageUrl(item.image) : null; 
           return {
             ...item, // Spread the existing item object
             image: image, // Override the imageUrl property
@@ -186,6 +177,36 @@ app.post("/emailVer", async (req, res) => {
       } else {
         res.json({ exists: false });
       }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).send("Failed to connect to the database");
+  });
+});
+
+//API for displaying content on improve page
+app.get("/improve", (req, res) => {
+  db.then((dbConnection) => {
+    const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
+    
+    dbConnection.query(eventQuery, (err, data) => {
+        if (err) {
+            console.error("Error fetching events:", err);
+            return res.status(500).json(err);
+        }
+        
+        const eventsWithImages = data.map((item) => {
+          const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
+          const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
+          
+          return {
+            ...item,
+            eventImage: eventImage,
+            speakerImage: speakerImage,
+          };
+        });
+
+        return res.json(eventsWithImages);
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
