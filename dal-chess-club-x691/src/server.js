@@ -128,6 +128,12 @@ app.get("/tournaments", (req, res) => {
 });
 
 //check if email is in database
+/*
+FOR NEXT YEAR:
+there is placeholder data from the email info that we are sending from. (i.e. ouremail@gmail.com) this will need to be changed to
+a real email that you will use to send the emails from. because of this this API is not fully tested, the code for checking the
+email in the database is fully working tho
+*/
 app.post("/emailVer", async (req, res) => {
   db.then((dbConnection) => {
     const { email } = req.body;
@@ -141,6 +147,7 @@ app.post("/emailVer", async (req, res) => {
         console.error("Error checking email:", err);
         return res.status(500).json({ error: "Error checking email" });
       }
+      //everything below this comment is not tested
       if (rows.length > 0) {
         const user = rows[0];
         const secret = JWT_SECRET + user.password;
@@ -155,8 +162,8 @@ app.post("/emailVer", async (req, res) => {
         var transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
-            user: "this@gmail.com",
-            pass: "123123",
+            user: "ouremail@gmail.com",
+            pass: "oursecurepassword",
           },
         });
         var mailContent = {
@@ -764,3 +771,69 @@ try {
   res.status(500).json({ error: error.message });
 }
 });*/
+
+//API to verify token
+/*
+FOR NEXT YEAR:
+base code here, probably needs to be fixed
+*/
+app.get('/verifyToken', async (req,res) => {
+  try {
+    const { adminID, token } = req.query;
+
+    const query = 'SELECT * FROM admin WHERE adminID = ?';
+    dbConnection.query(query, [adminID], (err,rows) => {
+      if(err) {
+        console.error('Error verifying ID:', err);
+        return res.status(500).json({ error: 'Error verifying ID' });
+      }
+      if(rows.length === 0) {
+        return res.json({ exists: false });
+      }
+
+      const user = rows[0];
+      const secret = JWT_SECRET + user.password;
+
+      jwt.verify(token, secret, (err,decoded) => {
+        if(err) {
+          console.error('Error verifying token:', err);
+          return res.json({ exists: false });
+        }
+        if(decoded.id === adminID) {
+          return res.json({ exists: true });
+        } else {
+          return res.json({ exists: false });
+        }
+      });
+    });
+  } catch (error) {
+    console.error("Database connection error:", error);
+    res.status(500).send("Failed to connect to the database");
+  }
+});
+
+//API for resetting the password
+/*
+FOR NEXT YEAR:
+Base code here, probably needs to be fixed as well
+*/
+app.post('/resetPasswordAPI', async (req,res) => {
+  try {
+    const { adminID, token, newPassword } = req.body;
+
+    const query = 'UPDATE admin SET password = ? WHERE adminID = ?';
+    dbConnection.query(query, [newPassword, adminID], (err, result) => {
+      if(err) {
+        console.error('Error resetting password:', err);
+        return res.status(500).json({ error: 'Error resetting password' });
+      }
+      if(result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Admin not found' });
+      }
+      return res.json({ success: true });
+    })
+  } catch (error) {
+    console.error("Database connection error:", error);
+    res.status(500).send("Failed to connect to the database");
+  }
+});
