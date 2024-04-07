@@ -29,6 +29,7 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import ResetPassword from './pages/resetPassword.js';
 import AuthGuard from './components/AuthGuard.js';
 import { AuthProvider } from './contexts/AuthContext';
 import MailingList from './pages/mailingList.js';
@@ -69,6 +70,7 @@ function App() {
               <Route path="/adminLogin" element={<AdminLogin />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
 
               {/* Admin only Routes */}
