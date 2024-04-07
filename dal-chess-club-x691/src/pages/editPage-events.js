@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditEvents() {
 
@@ -11,29 +12,9 @@ function EditEvents() {
         {id: 4, title: 'Event 4'},
     ]);
 
-    const handleEdit = async (itemId, title, event_imageID, start_date, end_date, description, locationID, categoryID, speakerID, num_of_attendees, registration_deadline) => {
-        const formData = { title, event_imageID, start_date, end_date, description, locationID, categoryID, speakerID, num_of_attendees, registration_deadline };
-        try {
-            const response = await fetch(`/api/events/edit/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
     
-            const result = await response.json();
-            if (result) {
-                console.log(result);
-            } else {
-                console.error('Failed to update event');
-            }
-        } catch (error) {
-            console.error('Error updating event:', error);
-        }
-    };
     
-    const handleDelete = async (itemId) => {
+    /*const handleDelete = async (itemId) => {
         try {
             const response = await fetch(`/api/events/delete/${itemId}`, {
                 method: 'DELETE',
@@ -49,7 +30,7 @@ function EditEvents() {
         } catch (error) {
             console.error('Error deleting event:', error);
         }
-    };
+    };*/
 
     return (
         <div className='editPage-container'>
@@ -59,8 +40,9 @@ function EditEvents() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-events?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}

@@ -1,7 +1,34 @@
 import React from 'react';
 import './AddForms.css';
+import { useLocation } from 'react-router-dom';
 
 function LibraryEditForm() {
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const itemId = searchParams.get('itemId');
+
+  const handleEdit = async (itemId, title, author, image, available, description) => {
+    const formData = { title, author, image, available, description };
+    try {
+      const response = await fetch(`/api/library/edit/${itemId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await response.json();
+      if (result) {
+        console.log(result);
+      } else {
+        console.error('Failed to update library book');
+      }
+    } catch (error) {
+      console.error('Error updating library book:', error);
+    }
+  };
 
   return (
     <div className="add-form-container">
@@ -35,7 +62,7 @@ function LibraryEditForm() {
       </div>
 
       <div className="submit-button-container">
-        <button type="submit">Submit</button>
+        <button onClick={() => handleEdit(itemId)} type="submit">Submit</button>
       </div>
 
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditTournaments() {
 
@@ -11,29 +12,7 @@ function EditTournaments() {
         {id: 4, title: 'Tournament 4'},
     ]);
 
-    const handleEdit = async (itemId, title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) => {
-        const formData = { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required };
-        try {
-            const response = await fetch(`/api/tournaments/edit/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const result = await response.json();
-            if (result) {
-                console.log(result);
-            } else {
-                console.error('Failed to update tournament');
-            }
-        } catch (error) {
-            console.error('Error updating tournament:', error);
-        }
-    };
-
-    const handleDelete = async (itemId) => {
+    /*const handleDelete = async (itemId) => {
         try {
             const response = await fetch(`/api/tournaments/delete/${itemId}`, {
                 method: 'DELETE',
@@ -49,7 +28,7 @@ function EditTournaments() {
         } catch (error) {
             console.error('Error deleting tournament:', error);
         }
-    };
+    };*/
 
     return (
         <div className='editPage-container'>
@@ -59,8 +38,11 @@ function EditTournaments() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-tournaments?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
+
+                            
                         </div>
                     </div>
                  ))}

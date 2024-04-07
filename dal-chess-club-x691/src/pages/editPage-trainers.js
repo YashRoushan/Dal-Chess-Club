@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
+
 
 function EditTrainer() {
 
@@ -11,30 +13,8 @@ function EditTrainer() {
         {id: 4, title: 'Event 4'},
     ]);
 
-    const handleEdit = async (itemId, name, specialty, bio, people_imageID) => {
-        const formData = { name, specialty, bio, people_imageID };
-        try {
-            const response = await fetch(`/api/speakers/edit/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            const result = await response.json();
-            if (result) {
-                console.log(result);
-            } else {
-                console.error('Failed to update trainer');
-            }
-        } catch (error) {
-            console.error('Error updating trainer:', error);
-        }
-    };
 
-
-    const handleDelete = async (itemId) => {
+    /*const handleDelete = async (itemId) => {
         try {
             const response = await fetch(`/api/speakers/delete/${itemId}`, {
                 method: 'DELETE'
@@ -50,7 +30,7 @@ function EditTrainer() {
         } catch (error) {
             console.error('Error deleting trainer:', error);
         }
-    };
+    };*/
 
     return (
         <div className='editPage-container'>
@@ -60,8 +40,9 @@ function EditTrainer() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-trainers?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}

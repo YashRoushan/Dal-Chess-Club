@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditNews() {
 
@@ -11,29 +12,7 @@ function EditNews() {
         {id: 4, title: 'Event 4'},
     ]);
 
-    const handleEdit = async (itemId, newsTitle, date, text, event_imageID) => {
-        const formData = { newsTitle, date, text, event_imageID };
-        try {
-            const response = await fetch(`/api/news/edit/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            const result = await response.json();
-            if (result) {
-                console.log(result);
-            } else {
-                console.error('Failed to update news item');
-            }
-        } catch (error) {
-            console.error('Error updating news item:', error);
-        }
-    };
-
-    const handleDelete = async (itemId) => {
+    /*const handleDelete = async (itemId) => {
         try {
             const response = await fetch(`/api/news/delete/${itemId}`, {
                 method: 'DELETE',
@@ -49,7 +28,7 @@ function EditNews() {
         } catch (error) {
             console.error('Error deleting news item:', error);
         }
-    };
+    };*/
     
 
     return (
@@ -60,8 +39,9 @@ function EditNews() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-news?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}

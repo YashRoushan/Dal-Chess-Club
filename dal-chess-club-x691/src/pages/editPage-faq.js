@@ -11,29 +11,7 @@ function EditLibrary() {
         {id: 4, title: 'Book 4'},
     ]);
 
-    const handleEdit = async (itemId, title, author, image, available, description) => {
-        const formData = { title, author, image, available, description };
-        try {
-          const response = await fetch(`/api/library/edit/${itemId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-      
-          const result = await response.json();
-          if (result) {
-            console.log(result);
-          } else {
-            console.error('Failed to update library book');
-          }
-        } catch (error) {
-          console.error('Error updating library book:', error);
-        }
-      };
-
-      const handleDelete = async (itemId) => {
+      /*const handleDelete = async (itemId) => {
         try {
           const response = await fetch(`/api/library/delete/${itemId}`, {
             method: 'DELETE',
@@ -49,7 +27,7 @@ function EditLibrary() {
         } catch (error) {
           console.error('Error deleting library book:', error);
         }
-      };      
+      };     */ 
 
     return (
         <div className='editPage-container'>
@@ -59,8 +37,9 @@ function EditLibrary() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-faq?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}
