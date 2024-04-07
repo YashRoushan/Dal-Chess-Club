@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import TournamentPopUp from './tournamentPopUp.js';
+import "./styles/tournaments.css";
 
 function TournamentItem({name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
   
@@ -12,8 +13,8 @@ function TournamentItem({name, image, date, time, endTime, participantsNo, price
   return (
     <div className="tournamentItem" onClick={togglePopUp}>
       <h1> {name} </h1>
-      <img className="tournament-image" src={image} alt="Tournament Logo" />
-      <p> {date} | {time} - {endTime} | ${price} </p>
+      <img src={image} alt={name}/>
+      <p> {date} | {time} - {endTime} | {price} </p>
       <p> Number of Participants: {participantsNo}</p>
       {showPopUp && (
         <TournamentPopUp

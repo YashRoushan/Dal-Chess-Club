@@ -20,6 +20,7 @@ const adminLanding = () => {
         { label: 'Edit FAQ', to: '/editFaq'},
         { label: 'Add AboutUs', to: '/AboutUs-AddForm'},
         { label: 'Edit AboutUs', to: '/editAbout'},
+        { label: 'Subscribers', to: '/subscribers'},
     ];
 
     //Code for the page layout

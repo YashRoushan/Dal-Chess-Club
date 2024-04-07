@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditNews() {
 
@@ -11,13 +12,24 @@ function EditNews() {
         {id: 4, title: 'Event 4'},
     ]);
 
-    const handleEdit = (itemId) => {
-        console.log(itemId);
-    };
-
-    const handleDelete = (itemId) => {
-        console.log(itemId);
-    };
+    /*const handleDelete = async (itemId) => {
+        try {
+            const response = await fetch(`/api/news/delete/${itemId}`, {
+                method: 'DELETE',
+            });
+    
+            const result = await response.json();
+            if (result) {
+                console.log(result);
+                setItems(currentItems => currentItems.filter(item => item.id !== itemId));
+            } else {
+                console.error('Failed to delete news item');
+            }
+        } catch (error) {
+            console.error('Error deleting news item:', error);
+        }
+    };*/
+    
 
     return (
         <div className='editPage-container'>
@@ -27,8 +39,9 @@ function EditNews() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-news?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}

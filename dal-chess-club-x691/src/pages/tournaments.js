@@ -1,11 +1,12 @@
-import React from 'react';
-import {useState} from "react";
-import { tournamentsList } from '../tournamentsList.js';
+import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
+import { BASE_URL} from '../config.js';
 
 function Tournaments() {
+  const [tournamentsList, setTournamentsList] = useState([]);
+
   //Search results state
   const [filteredResults, setResults] = useState([]);
 
@@ -13,6 +14,21 @@ function Tournaments() {
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
+    // Fetch tournaments from the API
+    useEffect(() => {
+      // Fetch tournaments from API
+      fetch(`${BASE_URL}/tournaments`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setTournamentsList(data);
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }, []); 
+
+    //Filter and search not set up to the database yet
   const filterTournaments = () => {
     return tournamentsList.filter(tournament => {
       const tournamentDate = new Date(tournament.date);
@@ -48,19 +64,20 @@ function Tournaments() {
         </div>
 
         <div className="tournamentList">
-            {tournamentsList.map((tournamentItem, key) => {
+            {filteredTournaments.map((tournament, key) => {
+              
               return(
                 <TournamentItem
                   key={key}
-                  name={tournamentItem.name}
-                  image={tournamentItem.image}
-                  price={tournamentItem.price}
-                  date={formatDate(tournamentItem.date)}
-                  time={formatTime(tournamentItem.date)}
-                  endTime={formatTime(tournamentItem.endDate)}
-                  participantsNo={tournamentItem.participantsNo}
-                  description={tournamentItem.description}
-                  registrationLink={tournamentItem.registrationLink}
+                  name={tournament.title}
+                  image={tournament.image}
+                  price={formatPrice(tournament.cost)}
+                  date={formatDate(tournament.start_date)}
+                  time={formatTime(tournament.start_date)}
+                  endTime={formatTime(tournament.end_date)}
+                  participantsNo={tournament.num_of_participants}
+                  description={tournament.description}
+                  registrationLink={tournament.registration_link}
                 />
               )
             })}
@@ -69,7 +86,18 @@ function Tournaments() {
   )
 }
 
+function formatPrice(price) {
+  if (!price || price == 0) {
+    return "FREE";
+  } else {
+    return "$" + price;
+  }
+}
+
 function formatDate(dateString) {
+  if (!dateString) {
+    return "Date TBD";
+  }
   const date = new Date(dateString);
   
   const day = date.getDate().toString().padStart(2, '0');

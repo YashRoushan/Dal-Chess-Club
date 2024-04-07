@@ -1,42 +1,31 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/adminLogin.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../contexts/AuthContext';
 
-//Method to handle validation
-const handleLogin = (username, password) => {
-    console.log('Username: ', username);
-    console.log('Password: ', password);
-}
 
 const LoginForm = () => {
     //Checks state of the username and password
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        handleLogin(username, password);
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                body: JSON.stringify({ username, password }),
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            if (response.ok) { 
-                const data = await response.json(); 
-                console.log("Login Success:", data); 
-
-                navigate('../adminLanding');
-            } else {
-                const errorData = await response.json();
-                console.error("Login Error:", errorData);
-            }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-        }
+        if(!username) {
+            toast.error("Username is Empty");
+        } else if(!password) {
+            toast.error("Password is Empty");
+        } else {
+            login(username, password)
+                .then(() => navigate('../adminLanding'))
+                .catch(error => toast.error(error));
+        } 
     };
+   
 
 
     //Code for the form design
@@ -63,6 +52,7 @@ const LoginForm = () => {
 
                 <br></br>
                 <button type="submit">Login</button>
+                <ToastContainer />
             </form>
         </div>
     );

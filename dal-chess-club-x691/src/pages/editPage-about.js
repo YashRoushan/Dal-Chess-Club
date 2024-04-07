@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditAbout() {
 
@@ -11,13 +12,25 @@ function EditAbout() {
         {id: 4, title: 'Member'},
     ]);
 
-    const handleEdit = (itemId) => {
-        console.log(itemId);
-    };
+    
 
-    const handleDelete = (itemId) => {
-        console.log(itemId);
-    };
+    /*const handleDelete = async (itemId) => {
+        try {
+            const response = await fetch(`/api/members/delete/${itemId}`, {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+            if (result) {
+                console.log(result);
+                setItems((currentItems) => currentItems.filter(item => item.id !== itemId));
+            } else {
+            console.error('Failed to delete member');
+            }
+        } catch (error) {
+            console.error('Error deleting member:', error);
+        }
+    };*/
 
     return (
         <div className='editPage-container'>
@@ -27,8 +40,9 @@ function EditAbout() {
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-about?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}

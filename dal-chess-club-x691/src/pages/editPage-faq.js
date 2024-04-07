@@ -1,34 +1,46 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
-function EditFaq() {
+function EditLibrary() {
 
     const [items, setItems] = useState([
-        {id: 1, title: 'Question 1'},
-        {id: 2, title: 'Question 2'},
-        {id: 3, title: 'Question 3'},
-        {id: 4, title: 'Question 4'},
+        {id: 1, title: 'Book 1'},
+        {id: 2, title: 'Book 2'},
+        {id: 3, title: 'Book 3'},
+        {id: 4, title: 'Book 4'},
     ]);
 
-    const handleEdit = (itemId) => {
-        console.log(itemId);
-    };
-
-    const handleDelete = (itemId) => {
-        console.log(itemId);
-    };
+      /*const handleDelete = async (itemId) => {
+        try {
+          const response = await fetch(`/api/library/delete/${itemId}`, {
+            method: 'DELETE',
+          });
+      
+          const result = await response.json();
+          if (result) {
+            console.log(result);
+            setItems((currentItems) => currentItems.filter(item => item.id !== itemId));
+        } else {
+            console.error('Failed to delete library book');
+          }
+        } catch (error) {
+          console.error('Error deleting library book:', error);
+        }
+      };     */ 
 
     return (
         <div className='editPage-container'>
-            <h1>Edit Questions</h1>
+            <h1>Edit Library</h1>
             <div className='editing-container'>
                 {items.map(item => (
                     <div key = {item.id} className='item'>
                         <h3>{item.title}</h3>
                         <div className='buttons-container'>
-                            <button onClick={() => handleEdit(item.id)}>Edit</button>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        <Link to={`/editForm-faq?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
                         </div>
                     </div>
                  ))}
@@ -38,4 +50,4 @@ function EditFaq() {
 
 };
 
-export default EditFaq;
+export default EditLibrary;
