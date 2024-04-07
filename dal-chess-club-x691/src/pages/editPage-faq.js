@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import '../styles/editPage.css';
+import { Link } from 'react-router-dom';
 
 function EditLibrary() {
 

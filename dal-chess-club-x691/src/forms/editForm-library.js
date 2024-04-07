@@ -30,6 +30,24 @@ function LibraryEditForm() {
     }
   };
 
+/*const handleDelete = async (itemId) => {
+        try {
+          const response = await fetch(`/api/library/delete/${itemId}`, {
+            method: 'DELETE',
+          });
+      
+          const result = await response.json();
+          if (result) {
+            console.log(result);
+            setItems((currentItems) => currentItems.filter(item => item.id !== itemId));
+        } else {
+            console.error('Failed to delete library book');
+          }
+        } catch (error) {
+          console.error('Error deleting library book:', error);
+        }
+      };   */ 
+
   return (
     <div className="add-form-container">
 
