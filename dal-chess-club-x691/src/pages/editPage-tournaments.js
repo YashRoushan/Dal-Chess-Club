@@ -41,8 +41,6 @@ function EditTournaments() {
                         <Link to={`/editForm-tournaments?itemId=${item.id}`}>
                                 <button>Edit</button>
                         </Link>
-
-                            
                         </div>
                     </div>
                  ))}
