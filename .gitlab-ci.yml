@@ -12,6 +12,9 @@ build:
   script:
     - cd /builds/courses/csci-x691/dal-chess-club/dal-chess-club-x691  # Change to the project directory
     - npm install  # Install dependencies
+    - npm run server & # Run the server in the background
+    - npm run client & # Run the client in the background
+    - sleep 10 # Wait for the server and client to start (adjust time if necessary)
     - npm run build  # Build your website
   artifacts:
     paths:
