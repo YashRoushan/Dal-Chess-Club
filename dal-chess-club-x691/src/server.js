@@ -42,7 +42,7 @@ const db = new Promise(function (resolve, reject) {
         // source address, this can usually be any valid address
         "euro.cs.dal.ca",
         // source port, this can be any valid port number
-        5000,
+        5001,
         // destination address (localhost here refers to the SSH server)
         "euro.cs.dal.ca",
         // destination port
@@ -219,7 +219,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Import BASE_URL and getImageUrl from config.js in server.js
