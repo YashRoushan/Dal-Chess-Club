@@ -31,20 +31,8 @@ function Tournaments() {
         console.error("Error fetching data:", error);
       })
   }
+
   
-    //Filter and search not set up to the database yet
-  const filterTournaments = () => {
-    return tournamentsList.filter(tournament => {
-      const tournamentDate = new Date(tournament.date);
-      const filterDate = dateFilter ? new Date(dateFilter) : null;
-      
-      const matchesPrice = priceFilter ? tournament.price <= priceFilter : true;
-      const matchesDate = filterDate ? tournamentDate >= filterDate : true;
-
-      return matchesPrice && matchesDate;
-    });
-  };
-
   const filteredTournaments = filterTournaments();
 
   return (
