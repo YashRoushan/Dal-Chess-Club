@@ -3,6 +3,9 @@ import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
 import { BASE_URL} from '../config.js';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Tournaments() {
   const [tournamentsList, setTournamentsList] = useState([]);
