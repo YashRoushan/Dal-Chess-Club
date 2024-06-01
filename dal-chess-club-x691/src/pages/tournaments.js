@@ -31,8 +31,18 @@ function Tournaments() {
         console.error("Error fetching data:", error);
       })
   }
+  // handle functions to call state change
+  const handleNameFilter = (event) => {
+    setNameFilter(event.target.value);
+  }
+  const handlePriceFilter = (event) => {
+    setPriceFilter(event.target.value);
+  }
+  const handleDateFilter = (event) => {
+    setDateFilter(event.target.value);
+  }
 
-  
+
   const filteredTournaments = filterTournaments();
 
   return (
