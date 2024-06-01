@@ -15,20 +15,23 @@ function Tournaments() {
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
-    // Fetch tournaments from the API
-    useEffect(() => {
-      // Fetch tournaments from API
-      fetch(`${BASE_URL}/tournaments`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setTournamentsList(data);
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
-    }, []); 
-
+  // fetches data from db whenever either of the three filters change
+  useEffect(() => {
+    fetchData();
+  }, [nameFilter, priceFilter, dateFilter]);
+  
+  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
+  const fetchData = () => {
+    const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
+    axios.get(serverUrl)
+      .then(response => {
+        setTournamentsList(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      })
+  }
+  
     //Filter and search not set up to the database yet
   const filterTournaments = () => {
     return tournamentsList.filter(tournament => {
