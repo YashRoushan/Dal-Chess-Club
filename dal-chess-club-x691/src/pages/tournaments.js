@@ -9,11 +9,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Tournaments() {
   const [tournamentsList, setTournamentsList] = useState([]);
-
-  //Search results state
-  const [filteredResults, setResults] = useState([]);
-
-  //Filter inputs state
+  
+  // Search results state
+  const [nameFilter, setNameFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
