@@ -43,30 +43,34 @@ function Tournaments() {
   }
 
 
-  const filteredTournaments = filterTournaments();
+  
 
   return (
     <div className="tournament">
       <h1>Tournaments</h1>
       <div className="filters-container">
-        <div>
-        <TournamentSearch setResults={setResults}/>
+        
+        <div className='input-wrapper'>
+          <FontAwesomeIcon icon={faSearch} id="search-icon" />
+          <input placeholder='Type to search...' 
+          value={nameFilter} 
+          onChange={handleNameFilter}/>
         </div>
         <input className='filter'
             type="number" 
             placeholder="Max Price" 
             value={priceFilter} 
-            onChange={(e) => setPriceFilter(e.target.value)} 
+            onChange={handlePriceFilter}
           />
           <input className='filter' 
             type="date" 
             value={dateFilter} 
-            onChange={(e) => setDateFilter(e.target.value)} 
+            onChange={handleDateFilter} 
           />
         </div>
 
         <div className="tournamentList">
-            {filteredTournaments.map((tournament, key) => {
+            {tournamentsList.map((tournament, key) => {
               
               return(
                 <TournamentItem
@@ -89,7 +93,7 @@ function Tournaments() {
 }
 
 function formatPrice(price) {
-  if (!price || price == 0) {
+  if (!price || price === 0) {
     return "FREE";
   } else {
     return "$" + price;
@@ -123,4 +127,4 @@ function formatTime(dateString) {
   return `${hours}${ampm}`;
 }
 
-export default Tournaments
+export default Tournaments;
