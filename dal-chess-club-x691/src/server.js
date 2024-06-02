@@ -108,6 +108,10 @@ app.get("/tournaments", (req, res) => {
     tournamentQuery+= ' AND title LIKE ?';
     queryParams.push(`%${name}%`);
   }
+  if(price) {
+    tournamentQuery += ' AND cost <= ?';
+    queryParams.push(price);
+  }
   db.then((dbConnection) => {
     dbConnection.query(tournamentQuery, queryParams, (error, data) => {
       if (error) {
