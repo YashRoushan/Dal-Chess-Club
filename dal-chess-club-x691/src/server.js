@@ -33,7 +33,7 @@ app.options("*", cors());
 
 var Client = require("ssh2").Client;
 var ssh = new Client();
-var mysql = require("mysql");
+var mysql = require("mysql2");
 
 const db = new Promise(function (resolve, reject) {
   ssh
@@ -96,10 +96,20 @@ app.get("/api/login", (req, res) => {
 
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
-  const tournamentQuery =
+  //query parameters if filters were used
+  const{name, price, date} = req.query;
+
+  let tournamentQuery =
       "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+  
+  const queryParams = [];
+  //altering query by adding query parameters if filters were used
+  if(name){
+    tournamentQuery+= ' AND title LIKE ?';
+    queryParams.push(`%${name}%`);
+  }
   db.then((dbConnection) => {
-    dbConnection.query(tournamentQuery, (error, data) => {
+    dbConnection.query(tournamentQuery, queryParams, (error, data) => {
       if (error) {
         console.error("Error while fetching news with images:", error);
         return res
