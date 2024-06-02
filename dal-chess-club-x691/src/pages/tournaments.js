@@ -3,7 +3,7 @@ import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
 import { BASE_URL} from '../config.js';
-import axios from 'axios';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,13 +23,20 @@ function Tournaments() {
   // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
   const fetchData = () => {
     const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
-    axios.get(serverUrl)
+    fetch(serverUrl)
       .then(response => {
-        setTournamentsList(response.data);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
       })
-      .catch(error => {
-        console.error("Error fetching data:", error);
+      .then(data => {
+      setTournamentsList(data);
       })
+    .catch(error => {
+      console.error("Error fetching data:", error);
+    });
+
   }
   // handle functions to call state change
   const handleNameFilter = (event) => {
@@ -41,9 +48,6 @@ function Tournaments() {
   const handleDateFilter = (event) => {
     setDateFilter(event.target.value);
   }
-
-
-  
 
   return (
     <div className="tournament">
