@@ -25,19 +25,24 @@ function Tournaments() {
     const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
     fetch(serverUrl)
       .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
       })
       .then(data => {
-      setTournamentsList(data);
+        if (data.length === 0) {
+          setTournamentsList([]); // Clear the list if no data is returned
+        } else {
+          setTournamentsList(data);
+        }
       })
-    .catch(error => {
-      console.error("Error fetching data:", error);
-    });
-
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setTournamentsList([]); // Clear the list if there is an error
+      });
   }
+  
   // handle functions to call state change
   const handleNameFilter = (event) => {
     setNameFilter(event.target.value);
