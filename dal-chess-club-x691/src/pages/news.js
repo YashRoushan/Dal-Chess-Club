@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../styles/news.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-// Import BASE_URL and getImageUrl from config.js
 import { BASE_URL} from '../config.js';
 
 const NewsArticle = ({ title, date, text, imageUrl }) => (
@@ -17,46 +16,49 @@ const NewsArticle = ({ title, date, text, imageUrl }) => (
 const NewsPage = () => {
     const [newsArticles, setNewsArticles] = useState([]);
     const [input, setInput] = useState("");
+    const [dateFilter, setDateFilter] = useState('');
 
-
-    const fetchData = (value) => {
+    const fetchData = () => {
         fetch(`${BASE_URL}/api/news/getAllNews`)
             .then((response) => response.json())
             .then((json) => {
-                // Filter the json data to match the input value
-                const filteredResults = json.filter(user => {
-                        return (
-                            user.title.toLowerCase().includes(value.toLowerCase())
-                        );
-                    }
-
-                );
-                // console.log("The result is : " , filteredResults[0]);
+                const filteredResults = json.filter(article => {
+                    const matchesTitle = article.title.toLowerCase().includes(input.toLowerCase());
+                    const matchesDate = dateFilter ? new Date(article.date) >= new Date(dateFilter) : true;
+                    return matchesTitle && matchesDate;
+                });
                 setNewsArticles(filteredResults);
             });
     };
 
     useEffect(() => {
-        // Fetch news articles from API
-        fetch(`${BASE_URL}/api/news/getAllNews`)
-            .then(res => res.json())
-            .then(data => setNewsArticles(data))
-            .catch(err => console.error("Error fetching news:", err));
-    }, []);
+        fetchData();
+    }, [input, dateFilter]);
 
-    const handleChange = (value) => {
-        setInput(value);
-        fetchData(value);
+    const handleInputChange = (event) => {
+        setInput(event.target.value);
+    };
+
+    const handleDateFilterChange = (event) => {
+        setDateFilter(event.target.value);
     };
 
     return (
         <div className="news-page">
             <h1 className="news-header">News</h1>
             <div className='input-wrapper'>
-                <FontAwesomeIcon icon={faSearch} id="search-icon"/>
-                <input placeholder='Type to search...'
-                       value={input}
-                       onChange={(e) => handleChange(e.target.value)}/>
+                <FontAwesomeIcon icon={faSearch} id="search-icon" />
+                <input
+                    placeholder='Type to search...'
+                    value={input}
+                    onChange={handleInputChange}
+                />
+                <input
+                    className='filter'
+                    type="date"
+                    value={dateFilter}
+                    onChange={handleDateFilterChange}
+                />
             </div>
             <div className="news-container">
                 {newsArticles.map((article, index) => (
