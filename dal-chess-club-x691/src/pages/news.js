@@ -15,7 +15,26 @@ const NewsArticle = ({ title, date, text, imageUrl }) => (
 );
 
 const NewsPage = () => {
-  const [newsArticles, setNewsArticles] = useState([]);
+    const [newsArticles, setNewsArticles] = useState([]);
+    const [input, setInput] = useState("");
+
+
+    const fetchData = (value) => {
+        fetch(`${BASE_URL}/api/news/getAllNews`)
+            .then((response) => response.json())
+            .then((json) => {
+                // Filter the json data to match the input value
+                const filteredResults = json.filter(user => {
+                        return (
+                            user.title.toLowerCase().includes(value.toLowerCase())
+                        );
+                    }
+
+                );
+                // console.log("The result is : " , filteredResults[0]);
+                setNewsArticles(filteredResults);
+            });
+    };
 
     useEffect(() => {
         // Fetch news articles from API
@@ -25,13 +44,19 @@ const NewsPage = () => {
             .catch(err => console.error("Error fetching news:", err));
     }, []);
 
+    const handleChange = (value) => {
+        setInput(value);
+        fetchData(value);
+    };
 
     return (
         <div className="news-page">
             <h1 className="news-header">News</h1>
             <div className='input-wrapper'>
                 <FontAwesomeIcon icon={faSearch} id="search-icon"/>
-                <input placeholder='Type to search...'/>
+                <input placeholder='Type to search...'
+                       value={input}
+                       onChange={(e) => handleChange(e.target.value)}/>
             </div>
             <div className="news-container">
                 {newsArticles.map((article, index) => (
