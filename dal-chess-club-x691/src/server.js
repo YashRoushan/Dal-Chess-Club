@@ -31,6 +31,8 @@ app.use((req, res, next) => {
 app.use(cors());
 app.options("*", cors());
 
+
+
 var Client = require("ssh2").Client;
 var ssh = new Client();
 var mysql = require("mysql");
@@ -93,6 +95,8 @@ app.get("/api/login", (req, res) => {
     res.status(500).json({ error: error.message });
   });
 });
+
+
 
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
@@ -764,3 +768,16 @@ try {
   res.status(500).json({ error: error.message });
 }
 });*/
+
+app.post('/api/subscribe', async (req, res) => {
+  try {
+    const { first_name, last_name, email } = req.body;
+    const sqlInsert = "INSERT INTO mailing_list (first_name, last_name, email) VALUES (?, ?, ?)";
+    const [result] = await require('./database').query(sqlInsert, [first_name, last_name, email]);
+
+    res.status(201).json({ message: 'Subscription successful', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
