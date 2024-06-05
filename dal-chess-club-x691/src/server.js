@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const moment = require("moment");
 const app = express();
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -36,7 +37,7 @@ app.options("*", cors());
 var Client = require("ssh2").Client;
 var ssh = new Client();
 var mysql = require("mysql");
-
+// 41 - 75 not working, reason?
 const db = new Promise(function (resolve, reject) {
   ssh
     .on("ready", function () {
@@ -191,6 +192,7 @@ app.post("/emailVer", async (req, res) => {
 //API for displaying content on improve page
 app.get("/improve", (req, res) => {
   db.then((dbConnection) => {
+    console.log(dbConnection);
     const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
     
     dbConnection.query(eventQuery, (err, data) => {
@@ -769,15 +771,50 @@ try {
 }
 });*/
 
-app.post('/api/subscribe', async (req, res) => {
-  try {
-    const { first_name, last_name, email } = req.body;
-    const sqlInsert = "INSERT INTO mailing_list (first_name, last_name, email) VALUES (?, ?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [first_name, last_name, email]);
-
-    res.status(201).json({ message: 'Subscription successful', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+app.post('/api/subscribe/add', async (req, res) => {
+  const { first_name, last_name, email } = req.body;
+  if (!first_name || !last_name || !email) {
+      return res.status(400).json({ message: 'All fields are required' });
   }
+
+  const insertQuery = `INSERT INTO mailing_list (first_name, last_name, email) VALUES (?, ?, ?)`;
+
+  // Using the pool from db.js
+  db.then((dbConnection) => {
+    dbConnection.query(insertQuery, [first_name, last_name, email], (error, data) => {
+      if (error) {
+        console.error('Failed to insert subscriber:', error);
+        return res.status(500).json({ error: 'Database insertion failed' });
+    }
+    res.status(200).json({ message: 'Subscription successful', id: data.insertId });
+    })
+      
+  });
 });
+
+app.get('/api/subscribe/list', async (req, res) => {
+  const sql = "SELECT * FROM mailing_list";
+   db.then((dbConnection) => {
+    dbConnection.query(sql, (error, data) => {
+      if (error) {
+        console.error("Error while fetching FAQs:", error);
+        return res
+          .status(500)
+          .json({ error: "Internal Server Error", message: error.message });
+      }
+      if (data.length > 0) {
+        
+        return res.json(data);
+      } else {
+        res.status(404).json({ error: "No FAQs found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: error.message });
+  });
+  
+})
 

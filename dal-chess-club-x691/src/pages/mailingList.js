@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/forgotPassword.css';
+import { BASE_URL } from '../config';
 
 
 function MailingList() {
@@ -9,9 +10,9 @@ function MailingList() {
     const email = document.getElementById('email').value;
 
     const data = { first_name, last_name, email };
-
+    console.log(data);
     try {
-      const response = await fetch('/api/subscribe', {
+      const response = await fetch(`${BASE_URL}/api/subscribe/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -20,12 +21,12 @@ function MailingList() {
       });
 
       if (response.ok) {
-        alert('Subscription successful');
+        console.log('Subscription successful' + '\n' + first_name + '\n' + last_name + '\n' + email);
       } else {
-        alert('Subscription failed');
+        console.log('Subscription failed');
       }
     } catch (error) {
-      alert('Error submitting data');
+      console.log('Error submitting data');
       console.error('Error:', error);
     }
   };
