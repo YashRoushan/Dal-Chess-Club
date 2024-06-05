@@ -24,7 +24,7 @@ const NewsPage = () => {
             .then((json) => {
                 const filteredResults = json.filter(article => {
                     const matchesTitle = article.title.toLowerCase().includes(input.toLowerCase());
-                    const matchesDate = dateFilter ? new Date(article.date) >= new Date(dateFilter) : true;
+                    const matchesDate = dateFilter ? new Date(article.date) <= new Date(dateFilter) : true;
                     return matchesTitle && matchesDate;
                 });
                 setNewsArticles(filteredResults);
@@ -46,13 +46,15 @@ const NewsPage = () => {
     return (
         <div className="news-page">
             <h1 className="news-header">News</h1>
-            <div className='input-wrapper'>
-                <FontAwesomeIcon icon={faSearch} id="search-icon" />
-                <input
-                    placeholder='Type to search...'
-                    value={input}
-                    onChange={handleInputChange}
-                />
+            <div className="filters-container">
+                <div className='input-wrapper'>
+                    <FontAwesomeIcon icon={faSearch} id="search-icon"/>
+                    <input
+                        placeholder='Type to search...'
+                        value={input}
+                        onChange={handleInputChange}
+                    />
+                </div>
                 <input
                     className='filter'
                     type="date"
@@ -60,6 +62,7 @@ const NewsPage = () => {
                     onChange={handleDateFilterChange}
                 />
             </div>
+
             <div className="news-container">
                 {newsArticles.map((article, index) => (
                     <NewsArticle key={index} {...article} />
