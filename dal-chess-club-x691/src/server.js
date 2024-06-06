@@ -779,7 +779,7 @@ app.post('/api/subscribe/add', async (req, res) => {
 
   const insertQuery = `INSERT INTO mailing_list (first_name, last_name, email) VALUES (?, ?, ?)`;
 
-  // Using the pool from db.js
+  
   db.then((dbConnection) => {
     dbConnection.query(insertQuery, [first_name, last_name, email], (error, data) => {
       if (error) {
@@ -792,6 +792,7 @@ app.post('/api/subscribe/add', async (req, res) => {
   });
 });
 
+// Test
 app.get('/api/subscribe/list', async (req, res) => {
   const sql = "SELECT * FROM mailing_list";
    db.then((dbConnection) => {
@@ -817,4 +818,60 @@ app.get('/api/subscribe/list', async (req, res) => {
   });
   
 })
+
+// Subscribers List
+app.get('/api/subscribers', async (req, res) => {
+  const sql = "SELECT first_name, last_name FROM mailing_list";
+  db.then((dbConnection) => {
+      dbConnection.query(sql, (error, results) => {
+          if (error) {
+              console.error("Error fetching subscribers:", error);
+              return res.status(500).json({ error: "Internal Server Error", message: error.message });
+          }
+          if (results.length > 0) { 
+              const subscribers = results.map(subscriber => ({
+                  id: subscriber.id,
+                  name: `${subscriber.first_name} ${subscriber.last_name}`
+              }));
+              res.json(subscribers);
+          } else {
+              res.status(404).json({ error: "No subscribers found" });
+          }
+      });
+  }).catch((error) => {
+      console.error("Database connection error:", error);
+      res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Delete subscriber by email
+app.delete('/api/subscribers/delete', (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const deleteQuery = "DELETE FROM mailing_list WHERE email = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(deleteQuery, [email], (err, result) => {
+      if (err) {
+        console.error("Error deleting subscriber:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "Subscriber not found" });
+      }
+      res.status(200).json({ message: "Subscriber deleted successfully" });
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+
+
+
+
+
 
