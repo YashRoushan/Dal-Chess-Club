@@ -1,16 +1,17 @@
 import React from 'react';
 import '../styles/forgotPassword.css';
 import { BASE_URL } from '../config';
-
+import { useNavigate } from 'react-router-dom';
 
 function MailingList() {
+  const navigate = useNavigate();
   const submitForm = async () => {
     const first_name = document.getElementById('fName').value;
     const last_name = document.getElementById('lName').value;
     const email = document.getElementById('email').value;
 
     const data = { first_name, last_name, email };
-    console.log(data);
+    
     try {
       const response = await fetch(`${BASE_URL}/api/subscribe/add`, {
         method: 'POST',
@@ -21,12 +22,13 @@ function MailingList() {
       });
 
       if (response.ok) {
-        console.log('Subscription successful' + '\n' + first_name + '\n' + last_name + '\n' + email);
+        alert('Subscription successful!');
+        navigate(`/subscribers`);
       } else {
-        console.log('Subscription failed');
+        alert('Subscription failed');
       }
     } catch (error) {
-      console.log('Error submitting data');
+      alert('Error submitting data');
       console.error('Error:', error);
     }
   };

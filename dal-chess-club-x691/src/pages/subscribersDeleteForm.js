@@ -1,26 +1,33 @@
 import React from 'react';
 import '../styles/subscriberDeletionForm.css';
-import axios from 'axios';
 import { BASE_URL } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 function SubscribersDeleteForm() {
+  const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const id  = params.get('id');
   const email  = params.get('email');
-  console.log(id + " " + email);
+  
   
   function onDelete () {
     let iEmail = document.getElementById("email").value;
-    console.log(iEmail);
+    
     if (email === iEmail && id) {
-      console.log(JSON.stringify({ id: id } ));
+      
       fetch(`${BASE_URL}/api/subscribers/delete`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ id: id })
-      });
+      }).then((res)=>{alert("Deleted subscriber successfully!");
+      navigate(`/subscribers`);
+      })
+      
+    }
+    else {
+      alert("Email doesn't match");
     }
   }
   return (
