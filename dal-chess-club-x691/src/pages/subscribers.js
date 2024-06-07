@@ -20,9 +20,9 @@ function Subscribers() {
                 // Handle errors here, such as displaying a notification or setting error messages in state
             });
     }, []);  // The empty array ensures this effect runs only once after initial render
-
-    const handleDelete = (email) => {
-        navigate(`/subscribersDeleteForm?email=${email}`);
+    console.log(items);
+    const handleDelete = (item) => {
+        navigate(`/subscribersDeleteForm?email=${item.email}&id=${item.id}`);
     };
 
     return (
@@ -33,7 +33,7 @@ function Subscribers() {
                     <div key={item.id} className='item'>
                         <h3>{item.name}</h3>  {/* Display the subscriber's full name */}
                         <div className='buttons-container'>
-                            <button onClick={() => handleDelete(item.email)}>Delete</button>
+                            <button onClick={() => handleDelete(item)}>Delete</button>
                         </div>
                     </div>
                 ))}

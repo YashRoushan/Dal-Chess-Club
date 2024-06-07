@@ -821,17 +821,20 @@ app.get('/api/subscribe/list', async (req, res) => {
 
 // Subscribers List
 app.get('/api/subscribers', async (req, res) => {
-  const sql = "SELECT first_name, last_name FROM mailing_list";
+  const sql = "SELECT id, first_name, last_name, email FROM mailing_list";
   db.then((dbConnection) => {
       dbConnection.query(sql, (error, results) => {
           if (error) {
               console.error("Error fetching subscribers:", error);
               return res.status(500).json({ error: "Internal Server Error", message: error.message });
           }
+          console.log(results);
           if (results.length > 0) { 
               const subscribers = results.map(subscriber => ({
-                  id: subscriber.id,
-                  name: `${subscriber.first_name} ${subscriber.last_name}`
+                  
+                  id: `${subscriber.id}`,
+                  name: `${subscriber.first_name} ${subscriber.last_name}`,
+                  email: `${subscriber.email}`,
               }));
               res.json(subscribers);
           } else {
@@ -846,14 +849,14 @@ app.get('/api/subscribers', async (req, res) => {
 
 // Delete subscriber by email
 app.delete('/api/subscribers/delete', (req, res) => {
-  const { email } = req.body;
-  if (!email) {
+  const { id } = req.body;
+  if (!id) {
     return res.status(400).json({ error: "Email is required" });
   }
 
-  const deleteQuery = "DELETE FROM mailing_list WHERE email = ?";
+  const deleteQuery = "DELETE FROM mailing_list WHERE id = ?";
   db.then((dbConnection) => {
-    dbConnection.query(deleteQuery, [email], (err, result) => {
+    dbConnection.query(deleteQuery, [id], (err, result) => {
       if (err) {
         console.error("Error deleting subscriber:", err);
         return res.status(500).json({ error: "Database error" });
