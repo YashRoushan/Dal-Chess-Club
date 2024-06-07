@@ -23,7 +23,6 @@ function MailingList() {
 
       if (response.ok) {
         alert('Subscription successful!');
-        navigate(`/subscribers`);
       } else {
         alert('Subscription failed');
       }
