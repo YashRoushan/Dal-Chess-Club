@@ -31,8 +31,8 @@ function Subscribers() {
             <div className='editing-container'>
                 {items.map(item => (
                     <div key={item.id} className='item'>
-                        <h3>{item.name}</h3>  {/* Display the subscriber's full name */}
-                        <h3>{item.email}</h3>
+                        <h3>Name: {item.name}</h3>  {/* Display the subscriber's full name */}
+                        <h3>Email: {item.email}</h3>
                         <div className='buttons-container'>
                             <button onClick={() => handleDelete(item)}>Delete</button>
                         </div>
