@@ -35,7 +35,7 @@ function SubscribersDeleteForm() {
 
       <div className="header-info">
         <h2 id="main-header">Subscriber Deletion Page</h2>
-        <p>This is the page where you, the admin, can individual subscribers from the database.</p>
+        <p>This is the page where you, the admin, can delete individual subscribers from the database.</p>
       </div>
 
       <div className="form-A">
