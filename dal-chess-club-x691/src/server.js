@@ -36,8 +36,8 @@ app.options("*", cors());
 
 var Client = require("ssh2").Client;
 var ssh = new Client();
-var mysql = require("mysql");
-// 41 - 75 not working, reason?
+var mysql = require("mysql2");
+
 const db = new Promise(function (resolve, reject) {
   ssh
     .on("ready", function () {
@@ -45,7 +45,7 @@ const db = new Promise(function (resolve, reject) {
         // source address, this can usually be any valid address
         "euro.cs.dal.ca",
         // source port, this can be any valid port number
-        5000,
+        5001,
         // destination address (localhost here refers to the SSH server)
         "euro.cs.dal.ca",
         // destination port
@@ -101,10 +101,28 @@ app.get("/api/login", (req, res) => {
 
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
-  const tournamentQuery =
-    "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+  //query parameters if filters were used
+  const{name, price, date} = req.query;
+
+  let tournamentQuery =
+      "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+  
+  const queryParams = [];
+  //altering query by adding query parameters if filters were used
+  if(name){
+    tournamentQuery+= ' AND title LIKE ?';
+    queryParams.push(`%${name}%`);
+  }
+  if(price) {
+    tournamentQuery += ' AND cost <= ?';
+    queryParams.push(price);
+  }
+  if (date) {
+    tournamentQuery += ' AND start_date LIKE ?';
+    queryParams.push(`%${date}%`);
+  }
   db.then((dbConnection) => {
-    dbConnection.query(tournamentQuery, (error, data) => {
+    dbConnection.query(tournamentQuery, queryParams, (error, data) => {
       if (error) {
         console.error("Error while fetching news with images:", error);
         return res
@@ -225,7 +243,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Import BASE_URL and getImageUrl from config.js in server.js
