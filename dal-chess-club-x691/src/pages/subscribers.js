@@ -24,10 +24,22 @@ function Subscribers() {
     const handleDelete = (item) => {
         navigate(`/subscribersDeleteForm?email=${item.email}&id=${item.id}`);
     };
+        const mailingList = items.map(item => item.email).join(';');
 
+        const copyToClipboard = () => {
+            navigator.clipboard.writeText(mailingList).then(() => {
+                alert('Mailing list copied to clipboard!');
+            }).catch(error => {
+                console.error('Failed to copy text:', error);
+            });
+        };
+        
     return (
         <div className='editPage-container'>
             <h1>Subscribers List</h1>
+            <div className='mailingList-container'>
+                <button onClick={copyToClipboard} className='copy-button'>Copy All the Emails</button>
+            </div>
             <div className='editing-container'>
                 {items.map(item => (
                     <div key={item.id} className='item'>
