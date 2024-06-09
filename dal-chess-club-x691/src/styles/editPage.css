@@ -4,6 +4,29 @@
     flex-direction: column;
 }
 
+.mailingList-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.copy-button {
+  background-color: #FFD400;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: #000000;
+  color: #FFD400;
+}
+
 .item {
     padding: 10px;
 }
