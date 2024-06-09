@@ -22,6 +22,11 @@
   cursor: pointer;
 }
 
+.copy-button:hover {
+  background-color: #000000;
+  color: #FFD400;
+}
+
 .item {
     padding: 10px;
 }
