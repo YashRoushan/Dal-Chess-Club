@@ -64,9 +64,9 @@ const NewsPage = () => {
             </div>
 
             <div className="news-container">
-                {newsArticles.map((article, index) => (
+                {newsArticles.length !== 0 ? newsArticles.map((article, index) => (
                     <NewsArticle key={index} {...article} />
-                ))}
+                )) : <h2>No News Articles Found...</h2>}
             </div>
         </div>
     );
