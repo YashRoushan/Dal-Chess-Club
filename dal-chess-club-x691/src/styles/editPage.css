@@ -97,7 +97,7 @@
     background-color: #f4f4f4;
 }
 
-.button, .copy-button {
+.button, .copy-button, .search-button, .sort-dropdown {
     background-color: #ffc107; /* Yellow color */
     color: black; /* Text color */
     border: none;
@@ -108,7 +108,47 @@
     transition: background-color 0.3s ease;
 }
 
-.button:hover, .copy-button:hover {
-    background-color: #e0a800; /* Slightly darker yellow on hover */
+
+.copy-button:hover, .search-button:hover, .sort-dropdown:hover {
+  background-color: #000000;
+  color: #FFD400;
+}
+.editPage-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+.search-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 8px 15px;
+  width: 200px; /* Adjust as needed */
+}
+
+.search-button, .sort-dropdown {
+  padding: 8px 15px;
+  
+}
+
+.subscribers-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.copy-button, .search-button, .sort-dropdown {
+  padding: 8px 15px;
+}
