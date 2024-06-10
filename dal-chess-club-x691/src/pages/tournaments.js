@@ -1,66 +1,98 @@
-import React from 'react';
-import {useState} from "react";
-import { tournamentsList } from '../tournamentsList.js';
+import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
+import { BASE_URL} from '../config.js';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Tournaments() {
-  //Search results state
-  const [filteredResults, setResults] = useState([]);
-
-  //Filter inputs state
+  const [tournamentsList, setTournamentsList] = useState([]);
+  
+  // Search results state
+  const [nameFilter, setNameFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
-  const filterTournaments = () => {
-    return tournamentsList.filter(tournament => {
-      const tournamentDate = new Date(tournament.date);
-      const filterDate = dateFilter ? new Date(dateFilter) : null;
-      
-      const matchesPrice = priceFilter ? tournament.price <= priceFilter : true;
-      const matchesDate = filterDate ? tournamentDate >= filterDate : true;
-
-      return matchesPrice && matchesDate;
-    });
-  };
-
-  const filteredTournaments = filterTournaments();
+  // fetches data from db whenever either of the three filters change
+  useEffect(() => {
+    fetchData();
+  }, [nameFilter, priceFilter, dateFilter]);
+  
+  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
+  const fetchData = () => {
+    const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
+    fetch(serverUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.length === 0) {
+          setTournamentsList([]); // Clear the list if no data is returned
+        } else {
+          setTournamentsList(data);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setTournamentsList([]); // Clear the list if there is an error
+      });
+  }
+  
+  // handle functions to call state change
+  const handleNameFilter = (event) => {
+    setNameFilter(event.target.value);
+  }
+  const handlePriceFilter = (event) => {
+    setPriceFilter(event.target.value);
+  }
+  const handleDateFilter = (event) => {
+    setDateFilter(event.target.value);
+  }
 
   return (
     <div className="tournament">
       <h1>Tournaments</h1>
       <div className="filters-container">
-        <div>
-        <TournamentSearch setResults={setResults}/>
+        
+        <div className='input-wrapper'>
+          <FontAwesomeIcon icon={faSearch} id="search-icon" />
+          <input placeholder='Type to search...' 
+          value={nameFilter} 
+          onChange={handleNameFilter}/>
         </div>
         <input className='filter'
             type="number" 
             placeholder="Max Price" 
             value={priceFilter} 
-            onChange={(e) => setPriceFilter(e.target.value)} 
+            onChange={handlePriceFilter}
           />
           <input className='filter' 
             type="date" 
             value={dateFilter} 
-            onChange={(e) => setDateFilter(e.target.value)} 
+            onChange={handleDateFilter} 
           />
         </div>
 
         <div className="tournamentList">
-            {tournamentsList.map((tournamentItem, key) => {
+            {tournamentsList.map((tournament, key) => {
+              
               return(
                 <TournamentItem
                   key={key}
-                  name={tournamentItem.name}
-                  image={tournamentItem.image}
-                  price={tournamentItem.price}
-                  date={formatDate(tournamentItem.date)}
-                  time={formatTime(tournamentItem.date)}
-                  endTime={formatTime(tournamentItem.endDate)}
-                  participantsNo={tournamentItem.participantsNo}
-                  description={tournamentItem.description}
-                  registrationLink={tournamentItem.registrationLink}
+                  name={tournament.title}
+                  image={tournament.image}
+                  price={formatPrice(tournament.cost)}
+                  date={formatDate(tournament.start_date)}
+                  time={formatTime(tournament.start_date)}
+                  endTime={formatTime(tournament.end_date)}
+                  participantsNo={tournament.num_of_participants}
+                  description={tournament.description}
+                  registrationLink={tournament.registration_link}
                 />
               )
             })}
@@ -69,7 +101,18 @@ function Tournaments() {
   )
 }
 
+function formatPrice(price) {
+  if (!price || price === 0) {
+    return "FREE";
+  } else {
+    return "$" + price;
+  }
+}
+
 function formatDate(dateString) {
+  if (!dateString) {
+    return "Date TBD";
+  }
   const date = new Date(dateString);
   
   const day = date.getDate().toString().padStart(2, '0');
@@ -93,4 +136,4 @@ function formatTime(dateString) {
   return `${hours}${ampm}`;
 }
 
-export default Tournaments
+export default Tournaments;

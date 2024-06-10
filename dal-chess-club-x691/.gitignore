@@ -9,7 +9,6 @@
 /coverage
 
 # production
-/build
 
 # misc
 .DS_Store
@@ -25,6 +24,6 @@ yarn-error.log*
 // .env
 DB_HOST=euro.cs.dal.ca
 DB_USER=chessclub
-DB_PASS=Mee5shaong9kaiw4
+DB_PASS=eshooRi9oofaVah0
 DB_NAME=chessclub
-PORT=3000
+PORT=5000
