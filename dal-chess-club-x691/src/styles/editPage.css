@@ -81,3 +81,34 @@
         margin-top: 20px;
     }
   }
+
+  .subscribers-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.subscribers-table th, .subscribers-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.subscribers-table th {
+    background-color: #f4f4f4;
+}
+
+.button, .copy-button {
+    background-color: #ffc107; /* Yellow color */
+    color: black; /* Text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px; /* Spacing around the button */
+    transition: background-color 0.3s ease;
+}
+
+.button:hover, .copy-button:hover {
+    background-color: #e0a800; /* Slightly darker yellow on hover */
+}
+
