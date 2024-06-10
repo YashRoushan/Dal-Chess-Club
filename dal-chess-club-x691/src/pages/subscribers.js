@@ -5,6 +5,31 @@ import '../styles/editPage.css';
 import { BASE_URL } from '../config';
 
 function Subscribers() {
+
+    const [currPage, setCurrPage] = useState(1);  // Initialize currPage as 1
+    const [itemsPerPage] = useState(5);  // Initialize itemsPerPage as 5
+
+    const indexOfLastItem = currPage * itemsPerPage;  // Index of the last item on the current page
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;  // Index of the first item on the current page
+
+    const currItems = data.slice(indexOfFirstItem, indexOfLastItem);  // Items to be displayed on the current page
+
+    const numOfPages = Math.ceil(data.length / itemsPerPage);  // Calculate the number of pages
+    
+    const pageNumbers = [...Array(numOfPages + 1).keys()].slice(1);  // Array of page numbers [1, 2, 3, ...
+
+    const nextPage = () => {
+        if(currPage !== numOfPages) {
+            setCurrPage(currPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if(currPage !== 1) {
+            setCurrPage(currPage - 1);
+        }
+    };
+
     const [items, setItems] = useState([]);  // Initialize items as an empty array
     const navigate = useNavigate();
 
