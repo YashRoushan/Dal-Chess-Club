@@ -71,8 +71,9 @@ function Tournaments() {
             value={priceFilter} 
             onChange={handlePriceFilter}
           />
+          <label>Select Date: (Month - Year):</label>
           <input className='filter' 
-            type="date" 
+            type="month" 
             value={dateFilter} 
             onChange={handleDateFilter} 
           />
