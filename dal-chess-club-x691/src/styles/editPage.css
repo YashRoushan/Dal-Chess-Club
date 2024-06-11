@@ -129,6 +129,9 @@
 .search-input {
   padding: 8px 15px;
   width: 200px; /* Adjust as needed */
+  border: 2px solid #FFD400; /* Yellow border to match your button colors */
+  border-radius: 5px; /* Rounded corners for the border */
+  margin: 5px; /* Optional: Adds spacing around the input field */
 }
 
 .search-button, .sort-dropdown {

@@ -72,7 +72,8 @@ function Subscribers() {
             <table className="subscribers-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Email</th>
                         <th>Actions</th>
                     </tr>
@@ -80,7 +81,8 @@ function Subscribers() {
                 <tbody>
                     {displayItems.map(item => (
                         <tr key={item.id}>
-                            <td>{item.name}</td>
+                            <td>{item.first_name}</td>
+                            <td>{item.last_name}</td>
                             <td>{item.email}</td>
                             <td>
                                 <button onClick={() => navigate(`/subscribersDeleteForm?email=${item.email}&id=${item.id}`)} className='copy-button'>Delete</button>
