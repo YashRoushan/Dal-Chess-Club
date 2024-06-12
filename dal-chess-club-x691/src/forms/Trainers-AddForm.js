@@ -48,8 +48,9 @@ function TrainersAddForm() {
         <form className="form-element">
           <label>Images</label>
           <input 
-          className="text-form" 
-          type="text" 
+          className="file-form" 
+          type="file"
+          accept='image/*' 
           value={trainersImage} 
           onChange={(e) => setTrainersImage(e.target.value)} 
           required 
