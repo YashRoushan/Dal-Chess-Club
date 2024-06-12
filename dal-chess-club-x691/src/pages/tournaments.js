@@ -80,7 +80,9 @@ function Tournaments() {
         </div>
 
         <div className="tournamentList">
-            {tournamentsList.map((tournament, key) => {
+          {tournamentsList.length === 0 ?
+            (<h3>No Tournaments Found...</h3>) :
+            (tournamentsList.map((tournament, key) => {
               
               return(
                 <TournamentItem
@@ -96,7 +98,8 @@ function Tournaments() {
                   registrationLink={tournament.registration_link}
                 />
               )
-            })}
+            }))
+          }
         </div>
     </div>
   )
