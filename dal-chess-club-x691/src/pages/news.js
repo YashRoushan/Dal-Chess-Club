@@ -24,7 +24,7 @@ const NewsPage = () => {
             .then((json) => {
                 const filteredResults = json.filter(article => {
                     const matchesTitle = article.title.toLowerCase().includes(input.toLowerCase());
-                    const matchesDate = dateFilter ? new Date(article.date) <= new Date(dateFilter) : true;
+                    const matchesDate = dateFilter ? new Date(article.date).getMonth() === (1 + (new Date(dateFilter).getMonth()))%12 : true;
                     return matchesTitle && matchesDate;
                 });
                 setNewsArticles(filteredResults);
@@ -57,7 +57,7 @@ const NewsPage = () => {
                 </div>
                 <input
                     className='filter'
-                    type="date"
+                    type="month"
                     value={dateFilter}
                     onChange={handleDateFilterChange}
                 />
@@ -66,7 +66,7 @@ const NewsPage = () => {
             <div className="news-container">
                 {newsArticles.length !== 0 ? newsArticles.map((article, index) => (
                     <NewsArticle key={index} {...article} />
-                )) : <h2>No News Articles Found...</h2>}
+                )) : <h3>No News Articles Found...</h3>}
             </div>
         </div>
     );
