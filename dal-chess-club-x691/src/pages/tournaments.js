@@ -65,18 +65,22 @@ function Tournaments() {
           value={nameFilter} 
           onChange={handleNameFilter}/>
         </div>
-        <input className='filter'
-            type="number" 
-            placeholder="Max Price" 
-            value={priceFilter} 
-            onChange={handlePriceFilter}
-          />
-          <label>Select Date: (Month - Year):</label>
-          <input className='filter' 
+        <div className='filter'>
+          <input 
+              type="number" 
+              placeholder="Max Price" 
+              value={priceFilter} 
+              onChange={handlePriceFilter}
+            />
+        </div>
+        <div className='filter' >
+          <label>Select Date Month - Year:</label>
+          <input 
             type="month" 
             value={dateFilter} 
             onChange={handleDateFilter} 
           />
+        </div>
         </div>
 
         <div className="tournamentList">
