@@ -851,6 +851,8 @@ app.get('/api/subscribers', async (req, res) => {
         const subscribers = results.map(subscriber => ({
 
           id: `${subscriber.id}`,
+          first_name: `${subscriber.first_name}`,
+          last_name: `${subscriber.last_name}`,
           name: `${subscriber.first_name} ${subscriber.last_name}`,
           email: `${subscriber.email}`,
         }));
