@@ -45,6 +45,7 @@
     background-color: #ddd;
     width: fit-content;
       min-width: fit-content;
+      color: rgb(115, 115, 115);
     border-radius: 10px;
     height: 2.5rem;
     padding: 0 15px;

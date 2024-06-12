@@ -55,12 +55,14 @@ const NewsPage = () => {
                         onChange={handleInputChange}
                     />
                 </div>
-                <input
-                    className='filter'
-                    type="month"
-                    value={dateFilter}
-                    onChange={handleDateFilterChange}
-                />
+                <div className='filter'>
+                    <label>Select Date Month - Year:</label>
+                    <input
+                        type="month"
+                        value={dateFilter}
+                        onChange={handleDateFilterChange}
+                    />
+                </div>
             </div>
 
             <div className="news-container">
