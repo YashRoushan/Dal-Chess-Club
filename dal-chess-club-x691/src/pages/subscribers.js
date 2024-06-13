@@ -22,6 +22,40 @@ function Subscribers() {
             });
     }, []);
 
+    /* Pagination Logic - Start */
+    // Pagination Logic also contained in nav tag
+    const [currPage, setCurrPage] = useState(1);  // Initialize currPage as 1
+    const [recordsPerPage] = useState(20);  // Initialize recordsPerPage as 20
+
+    const indexOfLastRecord = currPage * recordsPerPage;  // Index of the last record on the current page
+    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;  // Index of the first record on the current page
+    const currRecords = displayItems.slice(indexOfFirstRecord, indexOfLastRecord);  // Records displayed on the current page
+
+    const numOfPages = Math.ceil(displayItems.length / recordsPerPage);  // Total number of pages
+
+    // Change page
+    const paginate = (pageNumber) => setCurrPage(pageNumber);
+
+    const nextPage = () => {
+        if(currPage !== numOfPages) {
+            setCurrPage(currPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if(currPage !== 1) {
+            setCurrPage(currPage - 1);
+        }
+    };
+
+    // Page numbers to be displayed
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(displayItems.length / recordsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+    /* Pagination Logic - End */
+
     const handleSortChange = (e) => {
         setSortOrder(e.target.value);
         applySortAndFilter(e.target.value, searchTerm);
@@ -79,7 +113,7 @@ function Subscribers() {
                     </tr>
                 </thead>
                 <tbody>
-                    {displayItems.map(item => (
+                    {currRecords.map(item => (
                         <tr key={item.id}>
                             <td>{item.first_name}</td>
                             <td>{item.last_name}</td>
@@ -91,6 +125,24 @@ function Subscribers() {
                     ))}
                 </tbody>
             </table>
+            <br></br>
+            <nav>
+                <div className='toolbar'>
+                    <div className='search-button'>
+                        <a className='page-link' onClick={prevPage}>Back</a>
+                    </div>
+                    {
+                    pageNumbers.map(number => (
+                        <div key={number} className='search-button'>
+                            <a className='page-link' onClick={() => paginate(number)}>{number}</a>
+                        </div>
+                    ))
+                    }
+                    <div className='search-button'>
+                        <a className='page-link' onClick={nextPage}>Next</a>
+                    </div>
+                </div>
+            </nav>
         </div>
     );
 };
