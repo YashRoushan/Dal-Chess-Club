@@ -35,6 +35,8 @@ import MailingList from './pages/mailingList.js';
 import Subscribers from './pages/subscribers.js';
 import SubscribersDeleteForm from './pages/subscribersDeleteForm.js';
 import DeleteForm from './pages/deleteForm.js';
+import RegistrationForm from './pages/tournamentRegistration.js';
+import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
@@ -43,6 +45,7 @@ import FaqEditForm from './forms/editForm-faq.js';
 import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import NewsEditForm from './forms/editForm-news.js';
+
 
 
 function App() {
@@ -70,6 +73,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
+              <Route path="/tournamentRegistration" element={<RegistrationForm />} />
+              <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />

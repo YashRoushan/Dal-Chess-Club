@@ -1,9 +1,11 @@
 import React from 'react'
 import {Close} from '@mui/icons-material';
 import './styles/Popup.css'
+import { Navigate } from 'react-router-dom';
 
 function TournamentPopUp({ name, image, date, time, endTime, participantsNo, price, description, registrationLink, onClose }) {
   let embedLink = registrationLink + "&embed=true";
+ 
   return (
     <div className="popup-background" onClick={onClose}>
     <div className="popup-content" onClick={e => e.stopPropagation()}>
@@ -25,4 +27,4 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
   );
 }
 
-export default TournamentPopUp
+export default TournamentPopUp;
