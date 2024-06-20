@@ -1,6 +1,5 @@
 .popup-background {
     position: fixed;
-    border-radius: 0 !important;
     top: 0;
     left: 0;
     width: 100%;
@@ -17,17 +16,16 @@
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background-color: white;
     width: auto;
     max-width: 600px;
     min-width: 300px;
     max-height: 75%;
-    z-index: 1000;
-    background-color: white;
     overflow-y: auto;
     cursor: default;
 }
 
-.popup-content #close-button {
+.popup-content .close-button {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -36,23 +34,22 @@
     cursor: pointer;
 }
 
-#register-button {
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #FFD400;
-    color: black;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
+.popup-content::-webkit-scrollbar {
+    width: 8px;
 }
 
-#register-button:hover {
-    background-color: #242424;
-    color: #FFD400;
-  }
+.popup-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
 
-.popup-content::-webkit-scrollbar {
-    border-radius: 15px;
-  }
+.popup-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.popup-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+  

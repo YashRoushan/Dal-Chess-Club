@@ -1,5 +1,6 @@
 import React from 'react';
-import '../styles/forgotPassword.css'; 
+import '../styles/tournamentRegistration.css'; 
+
 
 function RegistrationForm() {
   const handleSubmit = () => {
