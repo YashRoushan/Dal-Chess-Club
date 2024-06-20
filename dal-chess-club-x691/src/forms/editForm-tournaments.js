@@ -39,7 +39,7 @@ const handleEdit = async (itemId, title, description, cost, event_imageID, regis
         <p>This is the page where you, the admin, can edit existing content in the "Tournaments" page.</p>
       </div>
 
-      <div className="form-A">
+      <div className="form-container">
         <form className="form-element">
           <label>Images</label>
           <input className="file-form" type="file" accept="image/*" required />
@@ -47,24 +47,67 @@ const handleEdit = async (itemId, title, description, cost, event_imageID, regis
       </div>
 
       {/* Second Form */}
-      <div className="form-B">
+      <div className="form-container">
         <form className="form-element">
-          <label>Text</label>
+          <label>Player 1 Name:</label>
           <input className="text-form" type="text" required />
         </form>
       </div>
 
       {/* Third Form */}
-      <div className="form-C">
+      <div className="form-container">
         <form className="form-element">
-          <label>Other Content</label>
+          <label>Player 2 Name:</label>
           <input className="text-form-c" type="text" required />
         </form>
       </div>
 
-      <div className="submit-button-container">
-        <button onClick={() => handleEdit(itemId)} type="submit">Submit</button>
-      </div>
+        {/* Fourth Form */}
+        <div className="form-container">
+            <form className="form-element">
+                <label>Player 1 Time Taken:</label>
+                <input className="text-form" type="number" required />
+            </form>
+        </div>
+
+        {/* Fifth Form */}
+        <div className="form-container">
+            <form className="form-element">
+                <label>Player 2 Time Taken:</label>
+                <input className="text-form" type="number" required />
+            </form>
+        </div>
+
+        {/* Sixth Form */}
+        <div className="form-container">
+            <h3>Outcome: </h3>
+            <form className="form-element">
+                <label>Player 1 Score: </label>
+                <input className="text-form" type="number" defaultValue={0} required/>
+
+                <label>Player 2 Score: </label>
+                <input className="text-form" type="number" defaultValue={0} required/>
+
+            </form>
+        </div>
+
+        {/* Seventh Form */}
+        <div className="form-container">
+            <form className="form-element">
+                <label>Winner: </label>
+                <select className="text-form" required>
+                    <option value="">Select Winner:</option>
+                    <option value="player1">Player 1 wins</option>
+                    <option value="player2">Player 2 wins</option>
+                    <option value="draw">Draw</option>
+                </select>
+            </form>
+        </div>
+
+
+        <div className="submit-button-container">
+            <button onClick={() => handleEdit(itemId)} type="submit">Submit</button>
+        </div>
 
     </div>
   )
