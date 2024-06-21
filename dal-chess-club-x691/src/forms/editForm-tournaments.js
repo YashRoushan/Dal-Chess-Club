@@ -91,20 +91,6 @@ const handleEdit = async (itemId, title, description, cost, event_imageID, regis
             </form>
         </div>
 
-        {/* Seventh Form */}
-        <div className="form-container">
-            <form className="form-element">
-                <label>Winner: </label>
-                <select className="text-form" required>
-                    <option value="">Select Winner:</option>
-                    <option value="player1">Player 1 wins</option>
-                    <option value="player2">Player 2 wins</option>
-                    <option value="draw">Draw</option>
-                </select>
-            </form>
-        </div>
-
-
         <div className="submit-button-container">
             <button onClick={() => handleEdit(itemId)} type="submit">Submit</button>
         </div>
