@@ -66,7 +66,7 @@ const handleEdit = async (itemId, title, description, cost, event_imageID, regis
         <div className="form-container">
             <form className="form-element">
                 <label>Player 1 Time Taken:</label>
-                <input className="text-form" type="number" required />
+                <input className="text-form" type="time" required />
             </form>
         </div>
 
@@ -74,7 +74,7 @@ const handleEdit = async (itemId, title, description, cost, event_imageID, regis
         <div className="form-container">
             <form className="form-element">
                 <label>Player 2 Time Taken:</label>
-                <input className="text-form" type="number" required />
+                <input className="text-form" type="time" required />
             </form>
         </div>
 
