@@ -65,21 +65,28 @@ function Tournaments() {
           value={nameFilter} 
           onChange={handleNameFilter}/>
         </div>
-        <input className='filter'
-            type="number" 
-            placeholder="Max Price" 
-            value={priceFilter} 
-            onChange={handlePriceFilter}
-          />
-          <input className='filter' 
-            type="date" 
+        <div className='filter'>
+          <input 
+              type="number" 
+              placeholder="Max Price" 
+              value={priceFilter} 
+              onChange={handlePriceFilter}
+            />
+        </div>
+        <div className='filter' >
+          <label>Select Date Month - Year:</label>
+          <input 
+            type="month" 
             value={dateFilter} 
             onChange={handleDateFilter} 
           />
         </div>
+        </div>
 
         <div className="tournamentList">
-            {tournamentsList.map((tournament, key) => {
+          {tournamentsList.length === 0 ?
+            (<h3>No Tournaments Found...</h3>) :
+            (tournamentsList.map((tournament, key) => {
               
               return(
                 <TournamentItem
@@ -95,7 +102,8 @@ function Tournaments() {
                   registrationLink={tournament.registration_link}
                 />
               )
-            })}
+            }))
+          }
         </div>
     </div>
   )
