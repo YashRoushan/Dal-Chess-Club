@@ -50,7 +50,7 @@ const AdminLanding = () => {
                             {category.charAt(0).toUpperCase() + category.slice(1)} Options
                         </button>
                         {visibleDropdown === category && (
-                            <div className="dropdown-content">
+                            <div className="dropdown-content show">
                                 {categorizedLinks[category].map((link, index) => (
                                     <Link key={index} className='dropdown-link' to={link.to}>
                                         {link.label}

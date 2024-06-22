@@ -1,139 +1,116 @@
-/* General reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Basic body styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    background-image: url();
-}
-
-/* Styling for the main page container */
 .page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    padding: 20px;
-}
-
-/* Styling for the main heading */
-h1 {
-    margin-bottom: 20px;
     text-align: center;
+    margin: 20px;
 }
 
-/* Container for the buttons */
 .button-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the buttons horizontally */
-    gap: 10px; /* Gap between buttons */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-/* Base styling for dropdowns and redirect links */
-.dropdown,
-.redirectLink {
-    position: relative;
-    display: inline-block;
+h1 {
+    margin-bottom: 20px;
+    font-size: 36px;
+    color: #333;
 }
 
-/* Styling for the dropdown buttons and redirect links */
-.dropdown-button,
-.redirectLink {
+.redirectLink,
+.dropdown-button {
     background-color: #FFD400;
     color: black;
-    padding: 15px 30px;
+    padding: 15px 35px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    min-width: 350px;
+    margin: 10px;
+    display: inline-block;
+    width: 300px;
+    /* Set a fixed width to ensure consistent alignment */
 }
 
-/* Hover effect for buttons and links */
-.dropdown-button:hover,
-.redirectLink:hover {
-    background-color: #ffd000;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.dropdown {
+    position: relative;
+    /* Add this line */
 }
 
-/* Styling for the dropdown content */
 .dropdown-content {
     display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    width: 100%; /* Match width of the button */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    /* Change background color to white */
     border-radius: 10px;
-    z-index: 1;
+    margin-top: 5px;
     padding: 10px;
-    left: 0; /* Align dropdown with the left edge of the button */
-    top: calc(100% + 10px); /* Constant 10px gap between the button and the dropdown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    /* Match the width of the buttons */
+    position: absolute;
+    /* Add this line */
+    top: 100%;
+    /* Add this line */
+    left: 0;
+    /* Add this line */
+    z-index: 1;
+    /* Add this line */
 }
 
-/* Styling for links inside dropdown content */
-.dropdown-content .dropdown-link {
+.dropdown-content.show {
+    display: flex;
+}
+
+.dropdown-link {
     color: black;
-    padding: 12px 16px;
     text-decoration: none;
-    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 290px;
+    text-align: center;
+    font-size: 18px;
+    background-color: white;
+    /* Ensure background color is white */
+    border: none;
+    /* Remove border */
     border-radius: 5px;
-    transition: background-color 0.3s;
-    min-width: 150px; /* Minimum width for each option in the dropdown */
+    /* Add border radius for rounded corners */
 }
 
-/* Hover effect for dropdown links */
-.dropdown-content .dropdown-link:hover {
-    background-color: #f1f1f1;
+.dropdown-link:hover {
+    background-color: #f0c400;
 }
 
-/* Show dropdown on hover and focus with a slide down animation */
-.dropdown:hover .dropdown-content,
-.dropdown:focus-within .dropdown-content {
-    display: block;
-}
+@media only screen and (max-width: 768px) {
 
-/* Slide down animation for dropdown */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
+    .redirectLink,
+    .dropdown-button {
+        padding: 10px 20px;
+        font-size: 18px;
+        width: auto;
+        /* Adjust width for smaller screens */
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    h1 {
+        font-size: 28px;
     }
-}
 
-/* Apply margin and animation for adjacent elements */
-.button-container > .dropdown + .dropdown,
-.button-container > .dropdown + .redirectLink {
-    margin-top: 20px;
-    animation: slideDown 0.3s ease-in-out;
-}
+    .dropdown .dropdown-button .dropdown-link {
+        max-width: 190px;
+    }
 
-/* Add arrow beside the dropdown buttons */
-.dropdown .dropdown-button::after {
-    content: '▼'; /* Unicode character for a down arrow */
-    margin-left: 10px; /* Space between the button text and the arrow */
-    font-size: 12px; /* Adjust the size of the arrow */
-    color: black; /* Arrow color */
-    transition: transform 0.3s ease; /* Smooth transition for the arrow */
-}
+    .dropdown-link {
+        background-color: #FFD400;
+        max-width: 185px;
+    }
 
-/* Rotate arrow when dropdown is open */
-.dropdown:hover .dropdown-button::after,
-.dropdown:focus-within .dropdown-button::after {
-    transform: rotate(180deg); /* Rotate the arrow */
+    .dropdown-content a {
+        background-color: #FFD400;
+        margin-bottom: 5px;
+    }
 }
