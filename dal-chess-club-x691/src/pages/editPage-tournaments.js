@@ -73,8 +73,11 @@ function EditTournaments() {
                         />
                         <div className='buttons-container'>
                         <Link to={`/editForm-tournaments?itemId=${tournament.id}`}>
-                                <button>Edit</button>
+                                <button>Edit Tournament</button>
                         </Link>
+                            <Link to={`/editForm-liveTournament?itemId=${tournament.id}`}>
+                                <button>Update Live</button>
+                            </Link>
                         </div>
                     </div>
                  ))}

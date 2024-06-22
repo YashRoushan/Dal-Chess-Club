@@ -41,15 +41,8 @@
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
-    /*margin-right: 5px;*/
+    margin-right: 5px;
     cursor: pointer;
-    max-width: 60%;
-    font-size: 30px;
-    flex: 1 0 30%;
-    text-align: center;
-    margin-left: 75px;
-    margin-right: 75px;
-    text-decoration: none;
 }
 
 .title {
