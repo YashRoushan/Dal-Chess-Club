@@ -636,6 +636,89 @@ try {
 }
 });*/
 
+
+// Live Tournament Page
+app.get('/api/live-tournaments', (req, res) => {
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM tournament_scores', (error, rows) => {
+      if (error) {
+        console.error('Error fetching live tournaments:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.json(rows);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+app.get('/api/live-tournaments/:id', (req, res) => {
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM tournament_scores WHERE game_id = ?', [req.params.id], (error, rows) => {
+      if (error) {
+        console.error('Error fetching tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else if (rows.length === 0) {
+        res.status(404).json({ error: 'Tournament not found' });
+      } else {
+        res.json(rows[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Adding live tournaments data in live Tournaments page
+app.post('/api/live-tournaments/add', (req, res) => {
+  const { game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date } = req.body;
+  const sqlInsert = `
+  INSERT INTO tournament_scores 
+  (game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date], (error, result) => {
+      if (error) {
+        console.error('Error adding live tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Editing live-tournaments data in live-Tournaments page
+app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
+  const { Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date } = req.body;
+  const { game_id } = req.params;
+  const sqlUpdate = `
+  UPDATE tournament_scores
+  SET Player1 = ?, Player2 = ?, Player1_time = ?, Player2_time = ?, Player1_score = ?, Player2_score = ?, game_date = ?
+  WHERE game_id = ?`;
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdate, [Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date, game_id], (error, result) => {
+      if (error) {
+        console.error('Error editing live tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 //Events Page
 
 // Getting events data

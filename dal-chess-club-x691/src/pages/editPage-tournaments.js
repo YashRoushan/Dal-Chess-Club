@@ -29,7 +29,6 @@ function EditTournaments() {
                 throw new Error('Error fetching tournaments');
             }
             response.json().then(data => {
-                console.log(data);
                 setItems(data);
             })
         })
