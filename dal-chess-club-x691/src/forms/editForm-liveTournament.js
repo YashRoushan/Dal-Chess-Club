@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './AddForms.css';
 import { useLocation } from 'react-router-dom';
 
@@ -8,11 +8,12 @@ function LiveTournamentsEditForm() {
     const searchParams = new URLSearchParams(location.search);
     const itemId = searchParams.get('itemId');
 
-    const handleEdit = async (itemId, title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) => {
+
+    const handleEdit = async (tournamentID, title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) => {
         const formData = { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required };
         try {
 
-            const response = await fetch(`/api/tournaments/edit/${itemId}`, {
+            const response = await fetch(`/api/tournaments/edit/${tournamentID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
