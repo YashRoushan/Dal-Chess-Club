@@ -2,98 +2,112 @@ import React, { useState } from 'react';
 import './AddForms.css';
 
 function LibraryAddForm() {
- const [libraryImage, setLibraryImage] = useState('');
- const [libraryText, setLibraryText] = useState('');
- const [libraryContent, setLibraryContent] = useState('');
-
- const handleSubmit = async (event) => {
-  event.preventDefault();
-  try {
-    const formData = {
-      libraryImage: 1,
-      text: libraryText,
-      content: libraryContent
-    };
-
-
-    const response = await fetch('/api/library/add', { // change the path if the ports are not same (yet to decide)
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-
-    const result = await response.json();
-    if (result) {
-      console.log(result);
-    } else {
-      console.error('Failed to add member');
+  const [libraryImage, setLibraryImage] = useState('');
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [available, setAvailable] = useState('');
+  const [description, setDescription] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = {
+        title,
+        author,
+        image: libraryImage,
+        available,
+        description,
+      };
+      const response = await fetch('http://localhost:5001/api/library/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Failed to add book:', errorText);
+        setSuccessMessage(''); 
+        return;
+      }
+      const result = await response.json();
+      if (result) {
+        console.log(result);
+        setSuccessMessage('Book added successfully!'); 
+      } else {
+        console.error('Failed to add book');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSuccessMessage(''); 
     }
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
-};
-
+  };
   return (
     <div className="add-form-container">
-
       <div className="header-info">
         <h2 id="main-header">Library Page Add Form</h2>
         <p>This is the page where you, the admin, can manipulate content in the "Library" page.</p>
       </div>
-
-      <form onSubmit={handleSubmit} className="form-combined"></form>
-
-      <div className="form-A">
-        <form className="form-element">
-          <label>Images</label>
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      <form onSubmit={handleSubmit} className="form-combined">
+        <div className="form-element">
+          <label>Title</label>
           <input
-          className="file-form"
-          type="file"
-          accept='image/*'
-          value={libraryImage}
-          onChange={(e) => setLibraryImage(e.target.value)}
-          required
+            className="text-form"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
           />
-        </form>
-      </div>
-
-      {/* Second Form */}
-      <div className="form-B">
-        <form className="form-element">
-          <label>Text</label>
+        </div>
+        <div className="form-element">
+          <label>Author</label>
           <input
-          className="text-form"
-          type="text"
-          value={libraryText}
-          onChange={(e) => setLibraryText(e.target.value)}
-          required
+            className="text-form"
+            type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            required
           />
-        </form>
-      </div>
-
-      {/* Third Form */}
-      <div className="form-C">
-        <form className="form-element">
-          <label>Other Content</label>
+        </div>
+        <div className="form-element">
+          <label>Image</label>
           <input
-          className="text-form"
-          type="text"
-          value={libraryContent}
-          onChange={(e) => setLibraryContent(e.target.value)}
-          required
+            className="text-form"
+            type="file"
+            accept="image/*"
+            value={libraryImage}
+            onChange={(e) => setLibraryImage(e.target.value)}
+            required
           />
-        </form>
-      </div>
-
-      <div className="submit-button-container">
-        <button type="submit">Submit</button>
-      </div>
-
+        </div>
+        <div className="form-element">
+          <label>Available</label>
+          <input
+            className="text-form"
+            type="number"
+            value={available}
+            onChange={(e) => setAvailable(e.target.value)}
+            required
+            min="0"
+          />
+        </div>
+        <div className="form-element">
+          <label>Description</label>
+          <textarea
+            className="text-form"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div className="submit-button-container">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
 
 export default LibraryAddForm;

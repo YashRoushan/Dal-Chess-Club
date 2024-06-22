@@ -1,58 +1,74 @@
 .add-form-container {
-  text-align: center;
-}
-
-.form-A,
-.form-B,
-.form-C {
-  width: 50%;
-  margin: auto;
-  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  
   border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-
-.text-form,
-.text-form-c {
-  width: 100%;
-  font-size: 14pt;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.header-info p {
-  text-align: center; 
+.header-info {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .header-info h2 {
-  text-align: center;
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #333;
 }
-
-.submit-button-container {
+.header-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+.form-combined {
   display: flex;
-  justify-content: center;
-  margin-top: 10px;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-element {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 15px;
 }
-
-.submit-button-container button {
-  width: 100px;
+.form-element label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+.text-form {
   padding: 10px;
-  background-color: #FFD400;
-  color: #000000;
-  font-weight: 550;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.text-form:focus {
+  border-color: #ffdd00;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+.submit-button-container {
+  text-align: center;
+}
+.submit-button-container button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 7px;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-
-  display: flex;
-  justify-content: center; 
-  align-items: center;
+  transition: background-color 0.3s;
 }
 
 .submit-button-container button:hover {
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: #0056b3;
+}
+.success-message {
+  margin: 10px 0;
+  padding: 10px;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  border-radius: 5px;
 }
