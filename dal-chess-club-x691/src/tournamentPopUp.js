@@ -57,20 +57,20 @@ function TournamentPopUp({ tournamentsID,name, image, date, time, endTime, parti
         <div className="form-container">
         <form className="form-element">
           <label>Player 1 Name:</label>
-          <input className="text-form" type="text" value={Player1} />
+          <input className="text-form" type="text" value={Player1} readOnly/>
         </form>
       </div>
       <div className="form-container">
         <form className="form-element">
           <label>Player 2 Name:</label>
-          <input className="text-form-c" type="text" value={Player2} />
+          <input className="text-form-c" type="text" value={Player2} readOnly/>
         </form>
       </div>
 
         <div className="form-container">
             <form className="form-element">
                 <label>Player 1 Time Taken:</label>
-                <input className="text-form" type="time" value={Player1_time} />
+                <input className="text-form" type="time" value={Player1_time} readOnly/>
             </form>
         </div>
 
@@ -78,7 +78,7 @@ function TournamentPopUp({ tournamentsID,name, image, date, time, endTime, parti
         <div className="form-container">
             <form className="form-element">
                 <label>Player 2 Time Taken:</label>
-                <input className="text-form" type="time" value={Player2_time} />
+                <input className="text-form" type="time" value={Player2_time} readOnly/>
             </form>
         </div>
 
@@ -86,10 +86,10 @@ function TournamentPopUp({ tournamentsID,name, image, date, time, endTime, parti
             <h3>Outcome: </h3>
             <form className="form-element">
                 <label>Player 1 Score: </label>
-                <input className="text-form" type="number" defaultValue={0} value={Player1_score} />
+                <input className="text-form" type="number" defaultValue={0} value={Player1_score} readOnly/>
 
                 <label>Player 2 Score: </label>
-                <input className="text-form" type="number" defaultValue={0} value={Player2_score} />
+                <input className="text-form" type="number" defaultValue={0} value={Player2_score} readOnly/>
 
             </form>
         </div>
