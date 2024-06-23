@@ -21,13 +21,13 @@ function LiveTournamentsAddForm() {
 
     useEffect(()=>{
         fetchData();
-    })
+    }, []);
 
     const fetchData = () =>{
         const tournamentURL = `${BASE_URL}/api/live-tournaments/${gameId}`;
         fetch(tournamentURL).then(response => {
             if(!response.ok){
-                throw new Error('Error fetching tournaments');
+                // Show the default page.
             }
             response.json().then(data => {
                 setPlayer1(data.Player1);
@@ -36,7 +36,8 @@ function LiveTournamentsAddForm() {
                 setPlayer2_time(data.Player2_time);
                 setPlayer1_score(data.Player1_score)
                 setPlayer2_score(data.Player2_score);
-                setGame_date(data.game_date);
+                const formattedDate = new Date(data.game_date).toISOString().slice(0, 19).replace('T', ' ');
+                setGame_date(formattedDate);
             })
         })
     }
@@ -82,60 +83,51 @@ function LiveTournamentsAddForm() {
                 <p>This is the page where you, the admin, can add new tournaments.</p>
             </div>
 
-            {/* First Form */}
-            <div className="form-container">
-                <form className="form-element" onSubmit={handleAdd}>
+
+            <form className="form-element" onSubmit={handleAdd}>
+                {/* Player 1 Name */}
+                <div className="form-container">
                     <label>Player 1 Name:</label>
                     <input className="text-form" type="text" value={Player1} onChange={(e) => setPlayer1(e.target.value)} required />
-                </form>
-            </div>
+                </div>
 
-            {/* Second Form */}
-            <div className="form-container">
-                <form className="form-element">
+                {/* Player 2 Name */}
+                <div className="form-container">
                     <label>Player 2 Name:</label>
-                    <input className="text-form-c" type="text" value={Player2} onChange={(e) => setPlayer2(e.target.value)} required />
-                </form>
-            </div>
+                    <input className="text-form" type="text" value={Player2} onChange={(e) => setPlayer2(e.target.value)} required />
+                </div>
 
-            {/* Third Form */}
-            <div className="form-container">
-                <form className="form-element">
+                {/* Player 1 Time Taken */}
+                <div className="form-container">
                     <label>Player 1 Time Taken:</label>
                     <input className="text-form" type="time" value={Player1_time} onChange={(e) => setPlayer1_time(e.target.value)} required />
-                </form>
-            </div>
+                </div>
 
-            {/* Fourth Form */}
-            <div className="form-container">
-                <form className="form-element">
+                {/* Player 2 Time Taken */}
+                <div className="form-container">
                     <label>Player 2 Time Taken:</label>
                     <input className="text-form" type="time" value={Player2_time} onChange={(e) => setPlayer2_time(e.target.value)} required />
-                </form>
-            </div>
+                </div>
 
-            {/* Fifth Form */}
-            <div className="form-container">
-                <h3>Outcome: </h3>
-                <form className="form-element">
+                {/* Outcome */}
+                <div className="form-container">
+                    <h3>Outcome: </h3>
                     <label>Player 1 Score: </label>
                     <input className="text-form" type="number" value={Player1_score} onChange={(e) => setPlayer1_score(parseInt(e.target.value, 10))} required />
                     <label>Player 2 Score: </label>
                     <input className="text-form" type="number" value={Player2_score} onChange={(e) => setPlayer2_score(parseInt(e.target.value, 10))} required />
-                </form>
-            </div>
+                </div>
 
-            {/* Sixth Form */}
-            <div className="form-container">
-                <form className="form-element">
+                {/* Game Date */}
+                <div className="form-container">
                     <label>Game Date:</label>
                     <input className="text-form" type="datetime-local" value={game_date} onChange={(e) => setGame_date(e.target.value)} required />
-                </form>
-            </div>
+                </div>
 
-            <div className="submit-button-container">
-                <button onClick={handleAdd} type="button">Submit</button>
-            </div>
+                <div className="submit-button-container">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
             {successMessage && <p>{successMessage}</p>}
         </div>
     )
