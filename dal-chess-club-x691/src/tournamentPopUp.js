@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {Close} from '@mui/icons-material';
 import './styles/Popup.css'
 
@@ -19,6 +19,12 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
           <button className="registerButton">Register</button>
         </a>
       )}
+        <div className="form-container">
+        <form className="form-element">
+          <label>Player 1 Name:</label>
+          <input className="text-form" type="text" required />
+        </form>
+      </div>
         <button id="close-button" onClick={onClose}><Close /></button>
     </div>
   </div>
