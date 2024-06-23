@@ -91,6 +91,7 @@ function Tournaments() {
               return(
                 <TournamentItem
                   key={key}
+                  tournamentsID={tournament.tournamentsID}
                   name={tournament.title}
                   image={tournament.image}
                   price={formatPrice(tournament.cost)}

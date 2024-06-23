@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import TournamentPopUp from './tournamentPopUp.js';
 import "./styles/tournaments.css";
 
-function TournamentItem({name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
+function TournamentItem({tournamentsID, name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
   
   const [showPopUp, setShowPopUp] = useState(false);
   
@@ -18,6 +18,7 @@ function TournamentItem({name, image, date, time, endTime, participantsNo, price
       <p> Number of Participants: {participantsNo}</p>
       {showPopUp && (
         <TournamentPopUp
+            tournamentsID={tournamentsID}
           name={name}
           image={image}
           date={date}
