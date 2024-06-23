@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddForms.css';
+import {BASE_URL} from "../config";
 
 function LiveTournamentsAddForm() {
-    const [gameId, setGameId] = useState(0);
+    const parameters = new URLSearchParams(window.location.search);
+    // console.log(parameters.get("itemId"));
+    const currentGameId = parameters.get('itemId');
+    const [gameId, setGameId] = useState(currentGameId);
     const [Player1, setPlayer1] = useState('');
     const [Player2, setPlayer2] = useState('');
     const [Player1_time, setPlayer1_time] = useState('');
@@ -13,11 +17,36 @@ function LiveTournamentsAddForm() {
     const [successMessage, setSuccessMessage] = useState('');
 
 
+
+
+    useEffect(()=>{
+        fetchData();
+    })
+
+    const fetchData = () =>{
+        const tournamentURL = `${BASE_URL}/api/live-tournaments/${gameId}`;
+        fetch(tournamentURL).then(response => {
+            if(!response.ok){
+                throw new Error('Error fetching tournaments');
+            }
+            response.json().then(data => {
+                setPlayer1(data.Player1);
+                setPlayer2(data.Player2);
+                setPlayer1_time(data.Player1_time);
+                setPlayer2_time(data.Player2_time);
+                setPlayer1_score(data.Player1_score)
+                setPlayer2_score(data.Player2_score);
+                setGame_date(data.game_date);
+            })
+        })
+    }
+
+
     const handleAdd = async (event) => {
         event.preventDefault();
         const formData = { gameId, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date };
         try {
-            const response = await fetch('http://localhost:5001/api/live-tournaments/add', {
+            const response = await fetch(`${BASE_URL}/api/live-tournaments/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
