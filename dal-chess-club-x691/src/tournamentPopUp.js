@@ -54,45 +54,28 @@ function TournamentPopUp({ tournamentsID,name, image, date, time, endTime, parti
       )}
         <h1>LIVE!</h1>
       {/* displaying the live scores form to show tournament results*/}
-        <div className="form-container">
-        <form className="form-element">
-          <label>Player 1 Name:</label>
-          <input className="text-form" type="text" value={Player1} readOnly/>
-        </form>
-      </div>
-      <div className="form-container">
-        <form className="form-element">
-          <label>Player 2 Name:</label>
-          <input className="text-form-c" type="text" value={Player2} readOnly/>
-        </form>
-      </div>
-
-        <div className="form-container">
-            <form className="form-element">
-                <label>Player 1 Time Taken:</label>
-                <input className="text-form" type="time" value={Player1_time} readOnly/>
-            </form>
-        </div>
-
-       
-        <div className="form-container">
-            <form className="form-element">
-                <label>Player 2 Time Taken:</label>
-                <input className="text-form" type="time" value={Player2_time} readOnly/>
-            </form>
-        </div>
-
-        <div className="form-container">
-            <h3>Outcome: </h3>
-            <form className="form-element">
-                <label>Player 1 Score: </label>
-                <input className="text-form" type="number" defaultValue={0} value={Player1_score} readOnly/>
-
-                <label>Player 2 Score: </label>
-                <input className="text-form" type="number" defaultValue={0} value={Player2_score} readOnly/>
-
-            </form>
-        </div>
+        <table className="live-scores">
+          <thead>
+                <tr>
+                  <th>Players</th>
+                  <th>Time</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{Player1}</td>
+                  <td>{Player1_time}</td>
+                  <td>{Player1_score}</td>
+                </tr>
+                <tr>
+                  <td>{Player2}</td>
+                  <td>{Player2_time}</td>
+                  <td>{Player2_score}</td>
+                </tr>
+               
+              </tbody>
+      </table>
 
         <button id="close-button" onClick={onClose}><Close /></button>
     </div>

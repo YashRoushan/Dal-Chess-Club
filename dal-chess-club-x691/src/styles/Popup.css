@@ -56,3 +56,30 @@
 .popup-content::-webkit-scrollbar {
     border-radius: 15px;
   }
+
+  .live-scores {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .live-scores th, .live-scores td {
+    padding: 10px 15px;
+    text-align: left;
+  }
+  
+  .live-scores th {
+    background-color: #FFD400;
+    color: black;
+  }
+  
+  .live-scores tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .live-scores tr:hover {
+    background-color: #ddd;
+  }
+  
+  
