@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AddForms.css';
-import {BASE_URL} from "../config";
+import { BASE_URL } from "../config";
 
 function LiveTournamentsAddForm() {
     const parameters = new URLSearchParams(window.location.search);
@@ -19,14 +19,14 @@ function LiveTournamentsAddForm() {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData();
     }, []);
 
-    const fetchData = () =>{
+    const fetchData = () => {
         const tournamentURL = `${BASE_URL}/api/live-tournaments/${gameId}`;
         fetch(tournamentURL).then(response => {
-            if(!response.ok){
+            if (!response.ok) {
                 // Show the default page.
             }
             response.json().then(data => {
@@ -36,8 +36,7 @@ function LiveTournamentsAddForm() {
                 setPlayer2_time(data.Player2_time);
                 setPlayer1_score(data.Player1_score)
                 setPlayer2_score(data.Player2_score);
-                const formattedDate = new Date(data.game_date).toISOString().slice(0, 19).replace('T', ' ');
-                setGame_date(formattedDate);
+                data.game_date !== undefined && setGame_date(new Date(data.game_date).toISOString().slice(0, 19).replace('T', ' '));
             })
         })
     }
@@ -47,8 +46,8 @@ function LiveTournamentsAddForm() {
         event.preventDefault();
         const formData = { gameId, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date };
         try {
-            const response = await fetch(`${BASE_URL}/api/live-tournaments/add`, {
-                method: 'POST',
+            const response = await fetch(`${BASE_URL}/api/live-tournaments/edit/${gameId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },

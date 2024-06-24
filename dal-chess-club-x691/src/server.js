@@ -102,18 +102,18 @@ app.get("/api/login", (req, res) => {
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
   //query parameters if filters were used
-  const{name, price, date} = req.query;
+  const { name, price, date } = req.query;
 
   let tournamentQuery =
-      "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
-  
+    "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+
   const queryParams = [];
   //altering query by adding query parameters if filters were used
-  if(name){
-    tournamentQuery+= ' AND title LIKE ?';
+  if (name) {
+    tournamentQuery += ' AND title LIKE ?';
     queryParams.push(`%${name}%`);
   }
-  if(price) {
+  if (price) {
     tournamentQuery += ' AND cost <= ?';
     queryParams.push(price);
   }
@@ -699,18 +699,41 @@ app.post('/api/live-tournaments/add', (req, res) => {
 app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
   const { Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date } = req.body;
   const { game_id } = req.params;
+
+  const sqlCheckTournamentPresent = `SELECT * FROM tournament_scores WHERE game_id = ?`;
   const sqlUpdate = `
   UPDATE tournament_scores
   SET Player1 = ?, Player2 = ?, Player1_time = ?, Player2_time = ?, Player1_score = ?, Player2_score = ?, game_date = ?
   WHERE game_id = ?`;
+  const sqlInsert = `
+  INSERT INTO tournament_scores (game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlUpdate, [Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date, game_id], (error, result) => {
+    dbConnection.query(sqlCheckTournamentPresent, [game_id], (error, result) => {
       if (error) {
-        console.error('Error editing live tournament data:', error);
+        console.error('Error checking live tournament data:', error);
         res.status(500).json({ error: error.message });
+      } else if (result.length > 0) {
+        // Tournament already exists, therefore performing an update
+        dbConnection.query(sqlUpdate, [Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date, game_id], (error, result) => {
+          if (error) {
+            console.error('Error editing live tournament data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(200).json(result);
+          }
+        });
       } else {
-        res.status(200).json(result);
+        // Tournament not present, performing insert
+        dbConnection.query(sqlInsert, [game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date], (error, result) => {
+          if (error) {
+            console.error('Error adding live tournament data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(201).json(result);
+          }
+        });
       }
     });
   }).catch((error) => {
