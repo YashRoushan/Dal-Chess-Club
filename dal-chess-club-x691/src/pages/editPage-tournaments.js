@@ -56,36 +56,45 @@ function EditTournaments() {
         <div className='editPage-container'>
             <h1>Edit Tournaments</h1>
             <div className='editing-container'>
-                {items.map(tournament => (
-                    <div key = {tournament.tournamentsID} className='item'>
-                        {/*<h3>{item.title}</h3>*/}
-                        <h3>{tournament.id}</h3>
-                        <TournamentItem
-                            key={tournament.tournamentsID}
-                            name={tournament.title}
-                            image={tournament.image}
-                            price={formatPrice(tournament.cost)}
-                            date={formatDate(tournament.start_date)}
-                            time={formatTime(tournament.start_date)}
-                            endTime={formatTime(tournament.end_date)}
-                            participantsNo={tournament.num_of_participants}
-                            description={tournament.description}
-                            registrationLink={tournament.registration_link}
-                        />
-                        <div className='buttons-container'>
-                        <Link to={`/editForm-tournaments?itemId=${tournament.tournamentsID}`}>
-                                <button>Edit Tournament</button>
-                        </Link>
-                            <Link to={`/editForm-liveTournament?itemId=${tournament.tournamentsID}`}>
-                                <button>Update Live</button>
-                            </Link>
-                        </div>
-                    </div>
-                 ))}
+                <table className="tournament-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>End Time</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {items.map(tournament => (
+                        <tr key={tournament.tournamentsID}>
+                            <td>{tournament.tournamentsID}</td>
+                            <td>{tournament.title}</td>
+                            <td><img src={tournament.image} alt={tournament.title} className="tournament-image" /></td>
+                            <td>{formatPrice(tournament.cost)}</td>
+                            <td>{formatDate(tournament.start_date)}</td>
+                            <td>{formatTime(tournament.start_date)}</td>
+                            <td>{formatTime(tournament.end_date)}</td>
+                            <td>{tournament.description}</td>
+                            <td>
+                                <Link to={`/editForm-tournaments?itemId=${tournament.tournamentsID}`}>
+                                    <button>Edit Tournament</button>
+                                </Link>
+                                <Link to={`/editForm-liveTournament?itemId=${tournament.tournamentsID}`}>
+                                    <button>Update Live</button>
+                                </Link>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
-
-};
-
+}
 export default EditTournaments;

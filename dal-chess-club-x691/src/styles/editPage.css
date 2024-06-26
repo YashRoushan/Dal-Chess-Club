@@ -155,3 +155,46 @@
 .copy-button, .search-button, .sort-dropdown {
   padding: 8px 15px;
 }
+
+.editPage-container {
+    padding: 20px;
+}
+
+.editing-container {
+    margin-top: 20px;
+}
+
+.tournament-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tournament-table th, .tournament-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.tournament-table th {
+    background-color: #f2f2f2;
+}
+
+.tournament-table img {
+    max-width: 100px;
+    height: auto;
+}
+
+.tournament-table a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.tournament-table a:hover {
+    text-decoration: underline;
+}
+
+.tournament-table button {
+    background-color: #FFD400;
+    border: 2px solid black;
+}
+
