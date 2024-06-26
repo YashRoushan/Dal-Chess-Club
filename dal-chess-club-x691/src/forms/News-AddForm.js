@@ -2,98 +2,133 @@ import React, { useState } from 'react';
 import './AddForms.css';
 
 function NewsAddForm() {
- const [newsTitle, setNewsTitle] = useState('');
- const [newsImage, setNewsImage] = useState('');
- const [newsContent, setNewsContent] = useState('');
+  const [newsTitle, setNewsTitle] = useState('');
+  const [newsImage, setNewsImage] = useState('');
+  const [newsContent, setNewsContent] = useState('');
+  const [altText, setAltText] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
- const handleSubmit = async (event) => {
-  event.preventDefault();
-  try {
-    const formData = {
-      newsImage: 1,
-      title: newsTitle,
-      content: newsContent
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      // First, add the event image to the event_images table
+      const imageData = {
+        image: newsImage,
+        alt_text: altText,
+      };
 
+      const imageResponse = await fetch('http://localhost:5001/api/event_images/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(imageData),
+      });
 
-    const response = await fetch('/api/news/add', { // change the path if the ports are not same (yet to decide)
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+      if (!imageResponse.ok) {
+        const errorText = await imageResponse.text();
+        console.error('Failed to add event image:', errorText);
+        setSuccessMessage('');
+        return;
+      }
 
+      const imageResult = await imageResponse.json();
+      const eventImageID = imageResult.event_imageID;
 
-    const result = await response.json();
-    if (result) {
-      console.log(result);
-    } else {
-      console.error('Failed to add member');
+      // Now, create the news record with the event_imageID
+      const newsData = {
+        title: newsTitle,
+        text: newsContent,
+        event_imageID: eventImageID,
+      };
+
+      const newsResponse = await fetch('http://localhost:5001/api/news/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newsData),
+      });
+
+      if (!newsResponse.ok) {
+        const errorText = await newsResponse.text();
+        console.error('Failed to add news:', errorText);
+        setSuccessMessage('');
+        return;
+      }
+
+      const newsResult = await newsResponse.json();
+      if (newsResult) {
+        console.log(newsResult);
+        setSuccessMessage('News added successfully!');
+      } else {
+        console.error('Failed to add news');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSuccessMessage('');
     }
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
-};
+  };
 
   return (
     <div className="add-form-container">
-
       <div className="header-info">
         <h2 id="main-header">News Page Add Form</h2>
         <p>This is the page where you, the admin, can manipulate content in the "News" page.</p>
       </div>
-
-      <form onSubmit={handleSubmit} className="form-combined"></form>
-
-      <div className="form-A">
-        <form className="form-element">
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      <form onSubmit={handleSubmit} className="form-combined">
+        <div className="form-element">
           <label>News Title</label>
-          <input 
-          className="text-form" 
-          type="text" 
-          value={newsTitle} 
-          onChange={(e) => setNewsTitle(e.target.value)} 
-          required 
-        />
-        </form>
-      </div>
-
-      {/* Second Form */}
-      <div className="form-B">
-        <form className="form-element">
-          <label>News Images</label>
-          <input 
-          className="file-form" 
-          type="file"
-          accept='image/*' 
-          value={newsImage} 
-          onChange={(e) => setNewsImage(e.target.value)} 
-          required 
-        />
-        </form>
-      </div>
-
-      {/* Third Form */}
-      <div className="form-C">
-        <form className="form-element">
+          <input
+            className="text-form"
+            type="text"
+            value={newsTitle}
+            onChange={(e) => setNewsTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>News Image Path</label>
+          <input
+            className="text-form"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0].name;
+              const filepath = "/src/images/" + file;
+              if (filepath) {
+                setNewsImage(filepath);
+              }}
+            }
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>Alt Text</label>
+          <input
+            className="text-form"
+            type="text"
+            value={altText}
+            onChange={(e) => setAltText(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
           <label>News Content</label>
-          <input 
-          className="text-form" 
-          type="text" 
-          value={newsContent} 
-          onChange={(e) => setNewsContent(e.target.value)} 
-          required 
-        />
-        </form>
-      </div>
-
-      <div className="submit-button-container">
-        <button type="submit">Submit</button>
-      </div>
-
+          <textarea
+            className="text-form"
+            value={newsContent}
+            onChange={(e) => setNewsContent(e.target.value)}
+            required
+          />
+        </div>
+        <div className="submit-button-container">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
 
 export default NewsAddForm;

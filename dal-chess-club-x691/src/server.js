@@ -495,17 +495,47 @@ app.get('/api/news', async (req, res) => {
   }
 });
 
-//Adding news data in News page
-app.post('/api/news/add', async (req, res) => {
-  try {
-    const { newsTitle, date, text, event_imageID } = req.body;
-    const sqlInsert = "INSERT INTO news (newsTitle, date, text, event_imageID) VALUES (?, ?, ?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [newsTitle, date, text, event_imageID]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Adding event images
+app.post('/api/event_images/add', (req, res) => {
+  const { image, alt_text } = req.body;
+  const sqlInsertImage = "INSERT INTO event_images (image, alt_text) VALUES (?, ?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertImage, [image, alt_text], (error, result) => {
+      if (error) {
+        console.error('Error adding event image:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'Event image added successfully', event_imageID: result.insertId });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
+
+
+// Adding news data
+app.post('/api/news/add', (req, res) => {
+  const { title, text, event_imageID } = req.body;
+  const sqlInsertNews = "INSERT INTO news (newsTitle, date, text, event_imageID) VALUES (?, NOW(), ?, ?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertNews, [title, text, event_imageID], (error, result) => {
+      if (error) {
+        console.error('Error adding news:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'News added successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 
 // Editing news data in News page
 app.put('/api/members/edit/:newsID', async (req, res) => {
