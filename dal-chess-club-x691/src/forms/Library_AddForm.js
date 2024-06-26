@@ -77,8 +77,13 @@ function LibraryAddForm() {
             className="text-form"
             type="file"
             accept="image/*"
-            value={libraryImage}
-            onChange={(e) => setLibraryImage(e.target.value)}
+            onChange={(e) => {
+              const file = e.target.files[0].name;
+              const filepath = "./images/" + file;
+              if (filepath) {
+                setLibraryImage(filepath);
+              }
+            }}
             required
           />
         </div>
