@@ -38,7 +38,9 @@ import DeleteForm from './pages/deleteForm.js';
 import RegistrationForm from './pages/tournamentRegistration.js';
 import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
 import TournamentInfo from './pages/tournamentInfo.js';
-
+import Champions from './pages/champions.js';
+import ChampionsAddForm from './forms/Champions-AddForm.js';
+import ChampionsEditForm from './forms/Champions-EditForm.js';
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
@@ -78,6 +80,7 @@ function App() {
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
               <Route path="/tournamentInfo" element={<TournamentInfo />} />
+              <Route path="/champions" element={<Champions />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
@@ -107,6 +110,10 @@ function App() {
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
+              <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
+              <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
+              
+
             </Routes>
           <Footer/>
           </Router>
