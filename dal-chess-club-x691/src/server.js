@@ -859,16 +859,25 @@ app.get('/api/library', async (req, res) => {
 });
 
 // Adding books data in Library page
-app.post('/api/library/add', async (req, res) => {
-  try {
-    const { title, author, image, available, description } = req.body;
-    const sqlInsert = "INSERT INTO library (title, author, image, available, description) VALUES (?, ?, ?, ?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [title, author, image, available, description]);
-    res.status(201).json({ message: 'Book added successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.post('/api/library/add', (req, res) => {
+  const { title, author, image, available, description } = req.body;
+  const sqlInsert = "INSERT INTO library (title, author, image, available, description) VALUES (?, ?, ?, ?, ?)";
+  
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [title, author, image, available, description], (error, result) => {
+      if (error) {
+        console.error('Error adding book:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'Book added successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
+
 
 // Editing books data in Library page
 app.put('/api/library/edit/:booksID', async (req, res) => {
