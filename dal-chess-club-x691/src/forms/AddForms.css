@@ -38,7 +38,25 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
-
+.form-element label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+.text-form, .date-form {
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.text-form:focus, .date-form:focus {
+  border-color: #ffdd00;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+.submit-button-container {
+  text-align: center;
+}
 .submit-button-container button {
   width: 250%;
   padding: 10px;
