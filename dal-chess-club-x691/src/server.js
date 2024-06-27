@@ -515,6 +515,26 @@ app.post('/api/event_images/add', (req, res) => {
   });
 });
 
+// Adding people images
+app.post('/api/people_images/add', (req, res) => {
+  const { speakerImage, alt_text } = req.body;
+  const sqlInsertImage = "INSERT INTO people_images (image, alt_text) VALUES (?, ?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertImage, [speakerImage, alt_text], (error, result) => {
+      if (error) {
+        console.error('Error adding people image:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'People image added successfully', people_imageID: result.insertId });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 
 // Adding news data
 app.post('/api/news/add', (req, res) => {
@@ -528,6 +548,26 @@ app.post('/api/news/add', (req, res) => {
         res.status(500).json({ error: error.message });
       } else {
         res.status(201).json({ message: 'News added successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Adding speaker data
+app.post('/api/speaker/add', (req, res) => {
+  const { name, specialty, bio, people_imageID } = req.body;
+  const sqlInsertNews = "INSERT INTO speaker (name, speciality, bio, people_imageID) VALUES (?, ?, ?, ?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertNews, [name, specialty, bio, people_imageID], (error, result) => {
+      if (error) {
+        console.error('Error adding Speaker:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'Speaker added successfully', result });
       }
     });
   }).catch((error) => {
