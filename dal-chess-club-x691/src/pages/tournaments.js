@@ -91,6 +91,7 @@ function Tournaments() {
               return(
                 <TournamentItem
                   key={key}
+                  tournamentsID={tournament.tournamentsID}
                   name={tournament.title}
                   image={tournament.image}
                   price={formatPrice(tournament.cost)}
@@ -109,7 +110,7 @@ function Tournaments() {
   )
 }
 
-function formatPrice(price) {
+export function formatPrice(price) {
   if (!price || price === 0) {
     return "FREE";
   } else {
@@ -117,7 +118,7 @@ function formatPrice(price) {
   }
 }
 
-function formatDate(dateString) {
+export function formatDate(dateString) {
   if (!dateString) {
     return "Date TBD";
   }
@@ -130,7 +131,7 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
-function formatTime(dateString) {
+export function formatTime(dateString) {
   const date = new Date(dateString);
 
   if (!dateString) {

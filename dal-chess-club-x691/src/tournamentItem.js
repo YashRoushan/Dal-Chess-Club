@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import TournamentPopUp from './tournamentPopUp.js';
 import './styles/tournamentRegistration.css'; 
 
-function TournamentItem({name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
+function TournamentItem({tournamentsID, name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
+  
   const [showPopUp, setShowPopUp] = useState(false);
   const navigate = useNavigate(); // Instantiate the navigate function
 
@@ -28,6 +29,7 @@ function TournamentItem({name, image, date, time, endTime, participantsNo, price
       </div>
       {showPopUp && (
         <TournamentPopUp
+            tournamentsID={tournamentsID}
           name={name}
           image={image}
           date={date}

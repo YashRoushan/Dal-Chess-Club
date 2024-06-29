@@ -44,6 +44,7 @@ import EventsEditForm from './forms/editForm-events.js';
 import FaqEditForm from './forms/editForm-faq.js';
 import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
+import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import NewsEditForm from './forms/editForm-news.js';
 
 
@@ -100,6 +101,7 @@ function App() {
               <Route path="/editForm-news" element={<AuthGuard><NewsEditForm /></AuthGuard>} />
               <Route path="/editForm-library" element={<AuthGuard><LibraryEditForm /></AuthGuard>} />
               <Route path="/editForm-tournaments" element={<AuthGuard><TournamentsEditForm /></AuthGuard>} />
+              <Route path="/editForm-liveTournament" element={<AuthGuard><LiveTournamentsEditForm /></AuthGuard>} />
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
