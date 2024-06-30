@@ -42,7 +42,11 @@ const AdminLanding = () => {
             <h1>Welcome!</h1>
             <div className='admin-button-container'>
                 {Object.keys(categorizedLinks).map((category, index) => (
-                    <div key={index} className="admin-dropdown">
+                    <div
+                        key={index}
+                        className="admin-dropdown"
+                        onMouseLeave={() => setVisibleDropdown(null)}
+                    >
                         <button
                             className="admin-dropdown-button"
                             onClick={() => toggleDropdown(category)}
