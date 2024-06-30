@@ -14,6 +14,8 @@ function LiveTournamentsAddForm() {
     const [Player1_score, setPlayer1_score] = useState(0);
     const [Player2_score, setPlayer2_score] = useState(0);
     const [game_date, setGame_date] = useState('');
+    const [pairingsIframe, setPairingsIframe] = useState('');
+    const [standingsIframe, setStandingsIframe] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
 
@@ -80,47 +82,27 @@ function LiveTournamentsAddForm() {
             <div className="header-info">
                 <h2 id="main-header">Add Live Tournament</h2>
                 <p>This is the page where you, the admin, can add new tournaments.</p>
+                <p>To add pairings and standings tables, publish the respective <a href="https://support.google.com/docs/answer/183965?hl=en&co=GENIE.Platform%3DDesktop#zippy=%2Cstop-publishing-a-file%2Cembed-a-document-spreadsheet-or-presentation." target="_blank">Google Spreadsheet</a> as a web page and embed here:</p>
+                <ul className="list-group">
+                    <li>Open your Google Spreadsheet.</li>
+                    <li>Click on File > Publish to the web.</li>
+                    <li>Choose the Embed option and select the sheet you want to embed.</li>
+                    <li>Click on 'Publish', then copy the HTML code provided.</li>
+                </ul>
             </div>
 
 
             <form className="form-element" onSubmit={handleAdd}>
-                {/* Player 1 Name */}
-                <div className="form-container">
-                    <label>Player 1 Name:</label>
-                    <input className="text-form" type="text" value={Player1} onChange={(e) => setPlayer1(e.target.value)} required />
-                </div>
 
-                {/* Player 2 Name */}
-                <div className="form-container">
-                    <label>Player 2 Name:</label>
-                    <input className="text-form" type="text" value={Player2} onChange={(e) => setPlayer2(e.target.value)} required />
-                </div>
 
-                {/* Player 1 Time Taken */}
                 <div className="form-container">
-                    <label>Player 1 Time Taken:</label>
-                    <input className="text-form" type="time" value={Player1_time} onChange={(e) => setPlayer1_time(e.target.value)} required />
-                </div>
+                    {/* Pairings Iframe Input */}
+                    <label>Pairings Table (iframe):</label>
+                    <textarea className="text-form" value={pairingsIframe} onChange={(e) => setPairingsIframe(e.target.value)} required />
 
-                {/* Player 2 Time Taken */}
-                <div className="form-container">
-                    <label>Player 2 Time Taken:</label>
-                    <input className="text-form" type="time" value={Player2_time} onChange={(e) => setPlayer2_time(e.target.value)} required />
-                </div>
-
-                {/* Outcome */}
-                <div className="form-container">
-                    <h3>Outcome: </h3>
-                    <label>Player 1 Score: </label>
-                    <input className="text-form" type="number" value={Player1_score} onChange={(e) => setPlayer1_score(parseInt(e.target.value, 10))} required />
-                    <label>Player 2 Score: </label>
-                    <input className="text-form" type="number" value={Player2_score} onChange={(e) => setPlayer2_score(parseInt(e.target.value, 10))} required />
-                </div>
-
-                {/* Game Date */}
-                <div className="form-container">
-                    <label>Game Date:</label>
-                    <input className="text-form" type="datetime-local" value={game_date} onChange={(e) => setGame_date(e.target.value)} required />
+                    {/* Standing Iframe Input */}
+                    <label>Standings Table (iframe):</label>
+                    <textarea className="text-form" value={standingsIframe} onChange={(e) => setStandingsIframe(e.target.value)} required />
                 </div>
 
                 <div className="submit-button-container">
