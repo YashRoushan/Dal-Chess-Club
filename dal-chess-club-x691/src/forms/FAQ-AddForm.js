@@ -3,20 +3,19 @@ import './AddForms.css';
 
 function FAQAddForm() {
  const [FAQQuestion, setFAQQuestion] = useState('');
- const [FAQImage, setFAQImage] = useState('');
  const [FAQAnswer, setFAQAnswer] = useState('');
+ const [successMessage, setSuccessMessage] = useState('');
 
  const handleSubmit = async (event) => {
   event.preventDefault();
   try {
     const formData = {
-      faqID: 1,
       question: FAQQuestion,
       answer: FAQAnswer
     };
 
 
-    const response = await fetch('/api/faq/add', { // change the path if the ports are not same (yet to decide)
+    const response = await fetch('http://localhost:5001/api/faq/add', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,10 +23,18 @@ function FAQAddForm() {
       body: JSON.stringify(formData),
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to add FAQ:', errorText);
+      setSuccessMessage(''); 
+      return;
+    }
+
 
     const result = await response.json();
     if (result) {
       console.log(result);
+      setSuccessMessage('FAQ added successfully!');
     } else {
       console.error('Failed to add member');
     }
@@ -43,40 +50,32 @@ function FAQAddForm() {
         <h2 id="main-header">FAQ Page Add Form</h2>
         <p>This is the page where you, the admin, can manipulate content in the "FAQ" page.</p>
       </div>
-
-      <form onSubmit={handleSubmit} className="form-combined"></form>
-
-      <label>FAQ Question</label>
-       <input
-         className="text-form"
-         type="text"
-         value={FAQQuestion}
-         onChange={(e) => setFAQQuestion(e.target.value)}
-         required
-       />
-
-      <label>FAQ Image</label>
-       <input
-         className="file-form"
-         type="file"
-         accept='image/*'
-         value={FAQImage}
-         onChange={(e) => setFAQImage(e.target.value)}
-         required
-       />
-
-      <label>FAQ Answer</label>
-       <input
-         className="text-form-c"
-         type="text"
-         value={FAQAnswer}
-         onChange={(e) => setFAQAnswer(e.target.value)}
-         required
-       />
-
-      <div className="submit-button-container">
-        <button type="submit">Submit</button>
-      </div>
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      <form onSubmit={handleSubmit} className="form-combined">
+        <div className="form-element">
+          <label>Question</label>
+          <input
+            className="text-form"
+            type="text"
+            value={FAQQuestion}
+            onChange={(e) => setFAQQuestion(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>Answer</label>
+          <input
+            className="text-form"
+            type="text"
+            value={FAQAnswer}
+            onChange={(e) => setFAQAnswer(e.target.value)}
+            required
+          />
+        </div>
+        <div className="submit-button-container">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
 
     </div>
   )

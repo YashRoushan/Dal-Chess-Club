@@ -615,15 +615,23 @@ app.get('/api/faq', async (req, res) => {
 });
 
 // Adding faq data in faq page
-app.post('/api/faq/add', async (req, res) => {
-  try {
-    const { question, answer } = req.body;
-    const sqlInsert = "INSERT INTO faq (question, answer) VALUES (?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [question, answer]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.post('/api/faq/add', (req, res) => {
+  const {question, answer} = req.body;
+  const sqlInsertNews = "INSERT INTO faq (question, answer) VALUES (?, ?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertNews, [question, answer], (error, result) => {
+      if (error) {
+        console.error('Error adding FAQ:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'FAQ added successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Editing faq data in faq page
