@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/adminLanding.css';
+import tournamentIcon from '../images/tournament.png';
+import bookIcon from '../images/book.png';
+import championIcon from '../images/championship.png';
+import newsIcon from '../images/newspaper.png';
+import trainerIcon from '../images/trainer.png';
+import eventIcon from '../images/event.png';
+import faqIcon from '../images/FAQ.png';
+import aboutUsIcon from '../images/aboutUs.png';
+import subscribersIcon from '../images/subscribe.jpg';
 
 const AdminLanding = () => {
     const [visibleDropdown, setVisibleDropdown] = useState(null);
@@ -24,6 +33,8 @@ const AdminLanding = () => {
         { label: 'Edit FAQ', to: '/editFAQ', category: 'FAQ' },
         { label: 'Add AboutUs', to: '/AboutUs-AddForm', category: 'aboutUs' },
         { label: 'Edit AboutUs', to: '/editAbout', category: 'aboutUs' },
+        { label: 'Add Champion', to: '/Champions-AddForm', category: 'champion' },
+        { label: 'Edit Champion', to: '/editChampion', category: 'champion' },
         { label: 'Subscribers', to: '/subscribers' },
     ];
 
@@ -35,13 +46,26 @@ const AdminLanding = () => {
         event: redirectLink.filter(link => link.category === 'event'),
         FAQ: redirectLink.filter(link => link.category === 'FAQ'),
         aboutUs: redirectLink.filter(link => link.category === 'aboutUs'),
+        champion: redirectLink.filter(link => link.category === 'champion'),
+    };
+
+    const icons = {
+        tournament: tournamentIcon,
+        book: bookIcon,
+        news: newsIcon,
+        trainer: trainerIcon,
+        event: eventIcon,
+        FAQ: faqIcon,
+        aboutUs: aboutUsIcon,
+        champion: championIcon,
+        subscribers: subscribersIcon
     };
 
     return (
         <div className="admin-page">
             <h1>Welcome!</h1>
-            <div className='admin-button-container'>
-                {Object.keys(categorizedLinks).map((category, index) => (
+            <div className='admin-button-container-row1'>
+                {['tournament', 'book', 'news', 'trainer'].map((category, index) => (
                     <div
                         key={index}
                         className="admin-dropdown"
@@ -51,7 +75,8 @@ const AdminLanding = () => {
                             className="admin-dropdown-button"
                             onClick={() => toggleDropdown(category)}
                         >
-                            {category.charAt(0).toUpperCase() + category.slice(1)} Options
+                            <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
+                            <img src={icons[category]} alt={`${category} icon`} className="icon" />
                         </button>
                         {visibleDropdown === category && (
                             <div className="admin-dropdown-content admin-show">
@@ -64,7 +89,32 @@ const AdminLanding = () => {
                         )}
                     </div>
                 ))}
-                <Link className='admin-redirect-link' to='/subscribers'>Subscribers</Link>
+            </div>
+            <div className='admin-button-container-row2'>
+                {['event', 'FAQ', 'aboutUs', 'champion', 'subscribers'].map((category, index) => (
+                    <div
+                        key={index}
+                        className="admin-dropdown"
+                        onMouseLeave={() => setVisibleDropdown(null)}
+                    >
+                        <button
+                            className="admin-dropdown-button"
+                            onClick={() => toggleDropdown(category)}
+                        >
+                            <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
+                            <img src={icons[category]} alt={`${category} icon`} className="icon" />
+                        </button>
+                        {visibleDropdown === category && (
+                            <div className="admin-dropdown-content admin-show">
+                                {categorizedLinks[category].map((link, index) => (
+                                    <Link key={index} className='admin-dropdown-link' to={link.to}>
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );
