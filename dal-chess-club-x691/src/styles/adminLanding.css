@@ -3,12 +3,20 @@
     margin: 20px;
 }
 
-.admin-button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+.admin-button-container-row1,
+.admin-button-container-row2 {
+    display: grid;
+    gap: 30px;
+    justify-items: center;
     margin-bottom: 20px;
+}
+
+.admin-button-container-row1 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.admin-button-container-row2 {
+    grid-template-columns: repeat(5, 1fr);
 }
 
 h1 {
@@ -19,24 +27,42 @@ h1 {
 
 .admin-redirect-link,
 .admin-dropdown-button {
-    background-color: #FFD400;
+    background-color: white;
     color: black;
-    padding: 15px 35px;
-    border: none;
+    padding: 5px;
+    border: 2px solid #FFD400;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     text-decoration: none;
-    margin: 10px;
-    display: inline-block;
-    width: 300px;
-    /* Set a fixed width to ensure consistent alignment */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 190px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.admin-dropdown-button:hover,
+.admin-redirect-link:hover {
+    transform: scale(1.05);
+}
+
+.label {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.icon {
+    width: 100px; 
+    height: 70px; 
 }
 
 .admin-dropdown {
     position: relative;
-    /* Add this line */
 }
 
 .admin-dropdown-content {
@@ -44,20 +70,15 @@ h1 {
     flex-direction: column;
     align-items: center;
     background-color: white;
-    /* Change background color to white */
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    /* Match the width of the buttons */
+    width: 200px;
     position: absolute;
-    /* Add this line */
     top: 100%;
-    /* Add this line */
-    left: 0;
-    /* Add this line */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
-    /* Add this line */
 }
 
 .admin-dropdown-content.admin-show {
@@ -70,46 +91,63 @@ h1 {
     margin: 5px 0;
     padding: 10px;
     width: 100%;
-    max-width: 290px;
     text-align: center;
     font-size: 18px;
     background-color: white;
-    /* Ensure background color is white */
     border: none;
-    /* Remove border */
     border-radius: 5px;
-    /* Add border radius for rounded corners */
 }
 
 .admin-dropdown-link:hover {
     background-color: #f0c400;
 }
 
+@media only screen and (max-width: 1200px) {
+    .admin-button-container-row1 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-button-container-row2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media only screen and (max-width: 768px) {
+    .admin-button-container-row1,
+    .admin-button-container-row2 {
+        grid-template-columns: 1fr;
+    }
 
     .admin-redirect-link,
     .admin-dropdown-button {
-        padding: 10px 20px;
-        font-size: 18px;
-        width: auto;
-        /* Adjust width for smaller screens */
+        padding: 10px;
+        font-size: 14px;
+        width: 150px;
+        height: 150px;
     }
 
     h1 {
         font-size: 28px;
     }
 
-    .admin-dropdown .admin-dropdown-button .admin-dropdown-link {
-        max-width: 190px;
+    .admin-dropdown-content {
+        width: auto;
     }
 
     .admin-dropdown-link {
-        background-color: #FFD400;
-        max-width: 185px;
+        max-width: 150px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .admin-button-container-row1,
+    .admin-button-container-row2 {
+        grid-template-columns: 1fr;
     }
 
-    .admin-dropdown-content a {
-        /* background-color: #FFD400; */
-        margin-bottom: 5px;
+    .admin-redirect-link,
+    .admin-dropdown-button {
+        width: 100%;
+        height: auto;
     }
 }
