@@ -202,3 +202,34 @@
   display: flex;
   gap: 10px; 
 }
+
+.library-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.library-table th, .library-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.library-table th {
+  background-color: #f4f4f4;
+}
+
+.library-table button, .faq-table button {
+  background-color: #FFD400;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.library-table button:hover, .faq-table button:hover {
+  background-color: #000000;
+  color: #FFD400;
+}
