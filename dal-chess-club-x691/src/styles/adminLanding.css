@@ -1,14 +1,17 @@
+/* CSS for Admin Landing Page */
+
+/* Default styles for admin page */
 .admin-page {
     text-align: center;
     margin: 20px;
 }
 
+/* Grid layout for button containers */
 .admin-button-container-row1,
 .admin-button-container-row2 {
     display: grid;
-    gap: 30px;
     justify-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
 }
 
 .admin-button-container-row1 {
@@ -17,20 +20,27 @@
 
 .admin-button-container-row2 {
     grid-template-columns: repeat(5, 1fr);
+    gap: 30px; /* Default gap for the second row */
 }
 
+/* Header styling */
 h1 {
     margin-bottom: 20px;
     font-size: 36px;
     color: #333;
 }
 
-.admin-redirect-link,
+/* Button and dropdown container */
+.admin-dropdown {
+    position: relative;
+}
+
+/* Button styling */
 .admin-dropdown-button {
     background-color: white;
     color: black;
     padding: 5px;
-    border: 2px solid #FFD400;
+    border: 3px solid #FFD400;
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
@@ -46,25 +56,146 @@ h1 {
     transition: transform 0.2s;
 }
 
-.admin-dropdown-button:hover,
-.admin-redirect-link:hover {
+.admin-dropdown-button:hover {
     transform: scale(1.05);
 }
 
+/* Label styling */
 .label {
-    font-size: 18px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 501;
 }
 
-.icon {
-    width: 100px; 
-    height: 70px; 
-}
+/* Icon styling */
 
-.admin-dropdown {
+/* Specific styles for each category */
+
+/* Tournament */
+.admin-dropdown-button.tournament .icon {
+    width: 110px;
+    height: 80px;
     position: relative;
+    top: 6px;
+}
+.admin-dropdown-button.tournament .label {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 501;
 }
 
+/* Book  NEEDS FIXING*/
+.admin-dropdown-button.book .icon {
+    width: 180px;
+    height: 200px;
+    position: relative;
+    top: -40px;
+}
+.admin-dropdown-button.book .label {
+    font-size: 20px;
+    margin-top: 102px;
+    font-weight: 501;
+}
+
+/* News */
+.admin-dropdown-button.news .icon {
+    width: 110px;
+    height: 80px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+.admin-dropdown-button.news .label {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 501;
+}
+
+/* Trainer */
+.admin-dropdown-button.trainer .icon {
+    width: 90px;
+    height: 70px;
+    position: relative;
+    top: 0;
+    right: -6px;
+}
+.admin-dropdown-button.trainer .label {
+    font-size: 20px;
+    margin-bottom: 22px;
+    font-weight: 501;
+}
+
+/* Event */
+.admin-dropdown-button.event .icon {
+    width: 85px;
+    height: 80px;
+    position: relative;
+    top: 6px;
+    left: 5px;
+}
+.admin-dropdown-button.event .label {
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: 501;
+}
+
+/* FAQ */
+.admin-dropdown-button.FAQ .icon {
+    width: 85px;
+    height: 65px;
+    position: relative;
+    top: 3px;
+    left: 5px;
+}
+.admin-dropdown-button.FAQ .label {
+    font-size: 20px;
+    margin-bottom: 18px;
+    font-weight: 501;
+}
+
+/* About Us */
+.admin-dropdown-button.aboutUs .icon {
+    width: 110px;
+    height: 90px;
+    position: relative;
+    top: 10px;
+    left: 12px;
+}
+.admin-dropdown-button.aboutUs .label {
+    font-size: 20px;
+    margin-bottom: 5px;
+    font-weight: 501;
+}
+
+/* Champion */
+.admin-dropdown-button.champion .icon {
+    width: 90px;
+    height: 70px;
+    position: relative;
+    top: 0;
+    right: -8px;
+}
+.admin-dropdown-button.champion .label {
+    font-size: 20px;
+    margin-bottom: 25px;
+    font-weight: 501;
+}
+
+/* Subscribers */
+.admin-dropdown-button.subscribers .icon {
+    width: 150px;
+    height: 35px;
+    position: relative;
+    top: -25px;
+    left: 9px;
+}
+.admin-dropdown-button.subscribers .label {
+    font-size: 20px;
+    margin-bottom: 58px;
+    font-weight: 501;
+}
+
+/* Dropdown content */
 .admin-dropdown-content {
     display: none;
     flex-direction: column;
@@ -85,6 +216,7 @@ h1 {
     display: flex;
 }
 
+/* Dropdown link styling */
 .admin-dropdown-link {
     color: black;
     text-decoration: none;
@@ -102,6 +234,8 @@ h1 {
     background-color: #f0c400;
 }
 
+/* Media queries for responsiveness */
+
 @media only screen and (max-width: 1200px) {
     .admin-button-container-row1 {
         grid-template-columns: repeat(2, 1fr);
@@ -118,12 +252,11 @@ h1 {
         grid-template-columns: 1fr;
     }
 
-    .admin-redirect-link,
     .admin-dropdown-button {
-        padding: 10px;
-        font-size: 14px;
         width: 150px;
         height: 150px;
+        font-size: 14px;
+        padding: 10px;
     }
 
     h1 {
@@ -145,7 +278,6 @@ h1 {
         grid-template-columns: 1fr;
     }
 
-    .admin-redirect-link,
     .admin-dropdown-button {
         width: 100%;
         height: auto;
