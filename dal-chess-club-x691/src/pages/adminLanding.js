@@ -72,7 +72,7 @@ const AdminLanding = () => {
                         onMouseLeave={() => setVisibleDropdown(null)}
                     >
                         <button
-                            className="admin-dropdown-button"
+                            className={`admin-dropdown-button ${category}`}
                             onClick={() => toggleDropdown(category)}
                         >
                             <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
@@ -98,7 +98,7 @@ const AdminLanding = () => {
                         onMouseLeave={() => setVisibleDropdown(null)}
                     >
                         <button
-                            className="admin-dropdown-button"
+                            className={`admin-dropdown-button ${category}`}
                             onClick={() => toggleDropdown(category)}
                         >
                             <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
