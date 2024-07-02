@@ -872,15 +872,25 @@ try {
 
 //Library Page
 
-// Getting books data
-app.get('/api/library', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM library');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Fetch all books from the library
+app.get('/api/library', (req, res) => {
+  const sqlSelectAllBooks = "SELECT booksID, title, author, image, available, description FROM library";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllBooks, (error, result) => {
+      if (error) {
+        console.error('Error fetching library books:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
+
 
 // Adding books data in Library page
 app.post('/api/library/add', (req, res) => {
@@ -903,30 +913,74 @@ app.post('/api/library/add', (req, res) => {
 });
 
 
-// Editing books data in Library page
-app.put('/api/library/edit/:booksID', async (req, res) => {
-  try {
-    const { booksID } = req.params;
-    const { title, author, image, available, description } = req.body;
-    const sqlUpdate = "UPDATE library SET title = ?, author = ?, image = ?, available = ?, description = ? WHERE booksID = ?";
-    const [result] = await require('./database').query(sqlUpdate, [title, author, image, available, description, booksID]);
-    res.status(200).json({ message: 'Book updated successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Fetch a single library item by id
+app.get('/api/library/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlSelectLibraryItem = "SELECT booksID, title, author, image, available, description FROM library WHERE id = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectLibraryItem, [id], (error, result) => {
+      if (error) {
+        console.error('Error fetching library item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
-/* Deleting books data in Library page
-app.delete('/api/library/delete/:booksID', async (req, res) => {
-try {
-  const { booksID } = req.params;
-  const sqlDelete = "DELETE FROM library WHERE booksID = ?";
-  const [result] = await require('./database').query(sqlDelete, [booksID]);
-  res.status(200).json({ message: 'Book deleted successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
-});*/
+// Update a library item
+app.put('/api/library/update/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, author, image, available, description } = req.body;
+  const sqlUpdateLibrary = "UPDATE library SET title = ?, author = ?, image = ?, available = ?, description = ? WHERE booksID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdateLibrary, [title, author, image, available, description, id], (error, result) => {
+      if (error) {
+        console.error('Error updating library item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else {
+        res.status(200).json({ message: 'Library item updated successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+
+// Delete a book from the library
+app.delete('/api/library/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlDeleteBook = "DELETE FROM library WHERE booksID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlDeleteBook, [id], (error, result) => {
+      if (error) {
+        console.error('Error deleting library book:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'Book not found' });
+      } else {
+        res.status(200).json({ success: true, message: 'Book deleted successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 
 app.post('/api/subscribe/add', async (req, res) => {
   const { first_name, last_name, email } = req.body;

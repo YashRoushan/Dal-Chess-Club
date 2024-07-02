@@ -1,54 +1,112 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/editPage.css';
-import { Link } from 'react-router-dom';
+import LibraryEditForm from '../forms/editForm-library'; 
 
 function EditLibrary() {
+  const [items, setItems] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
 
-    const [items, setItems] = useState([
-        {id: 1, title: 'Book 1'},
-        {id: 2, title: 'Book 2'},
-        {id: 3, title: 'Book 3'},
-        {id: 4, title: 'Book 4'},
-    ]);
-
-
-      /*const handleDelete = async (itemId) => {
-        try {
-          const response = await fetch(`/api/library/delete/${itemId}`, {
-            method: 'DELETE',
-          });
-      
-          const result = await response.json();
-          if (result) {
-            console.log(result);
-            setItems((currentItems) => currentItems.filter(item => item.id !== itemId));
-        } else {
-            console.error('Failed to delete library book');
-          }
-        } catch (error) {
-          console.error('Error deleting library book:', error);
+  // Fetch data from the backend
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/library'); 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      };   */   
+        const data = await response.json();
+        console.log('Fetched data:', data); 
+        setItems(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    return (
-        <div className='editPage-container'>
-            <h1>Edit Library</h1>
-            <div className='editing-container'>
-                {items.map(item => (
-                    <div key = {item.id} className='item'>
-                        <h3>{item.title}</h3>
-                        <div className='buttons-container'>
-                        <Link to={`/editForm-library?itemId=${item.id}`}>
-                                <button>Edit</button>
-                        </Link>
-                        </div>
-                    </div>
-                 ))}
-            </div>
-        </div>
-    );
+    fetchItems();
+  }, []);
 
+  const handleDelete = async (itemId) => {
+    const confirmed = window.confirm('Are you sure you want to delete this item?');
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5001/api/library/delete/${itemId}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+      console.log('Delete result:', result); // Debugging log
+      if (result.success) {
+        setItems((currentItems) => currentItems.filter(item => item.booksID !== itemId));
+      } else {
+        console.error('Failed to delete library book');
+      }
+    } catch (error) {
+      console.error('Error deleting library book:', error);
+    }
+  };
+
+  const handleEditClick = (item) => {
+    setEditingItem(item);
+  };
+
+  const handleUpdate = () => {
+    setEditingItem(null);
+    
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/library'); 
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchItems();
+  };
+
+  return (
+    <div className='editPage-container'>
+      <h1>Edit Library</h1>
+      <div className='editing-container'>
+        {editingItem ? (
+          <LibraryEditForm libraryItem={editingItem} onCancel={() => setEditingItem(null)} onUpdate={handleUpdate} />
+        ) : (
+          <table className='library-table'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Image</th>
+                <th>Available</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map(item => (
+                <tr key={item.booksID}>
+                  <td>{item.booksID}</td>
+                  <td>{item.title}</td>
+                  <td>{item.author}</td>
+                  <td>{item.image}</td>
+                  <td>{item.available}</td>
+                  <td>{item.description}</td>
+                  <td className='buttons-container'>
+                    <button onClick={() => handleEditClick(item)}>Edit</button>
+                    <button onClick={() => handleDelete(item.booksID)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default EditLibrary;
