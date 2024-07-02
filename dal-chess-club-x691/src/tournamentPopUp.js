@@ -5,10 +5,17 @@ import './styles/Popup.css';
 import './styles/tournamentRegistration.css';
 
 function TournamentPopUp({ name, image, date, time, endTime, participantsNo, price, description, handleRegisterNow, onClose }) {
+<<<<<<< HEAD
   const navigate = useNavigate(); 
    handleRegisterNow = (e) => {
     e.stopPropagation();  
     navigate('/tournamentRegistration'); 
+=======
+  const navigate = useNavigate(); // Instantiate the navigate function
+   handleRegisterNow = (e) => {
+    e.stopPropagation();  // Prevents the popup from opening when the button is clicked
+    navigate('/tournamentRegistration'); // Navigate to the registration page
+>>>>>>> 554f3a38f648393f7a7149d04782f65a4dc5b19e
   }
   return (
     <div className="popup-background" onClick={onClose}>
