@@ -892,6 +892,68 @@ app.delete('/api/subscribers/delete', (req, res) => {
   });
 });
 
+// Registration test
+app.get('/api/registration', async (req, res) => {
+  const sql = "SELECT id, tournamentsID, username, fullname, email, cfcID, entry_date FROM user";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (error, results) => {
+      if (error) {
+        console.error("Error fetching user:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+      console.log(results);
+      if (results.length > 0) {
+        const users = results.map(user => ({
+
+          id: `${user.id}`,
+          tournamentsID: `${user.tournamentsID}`,
+          username: `${user.username}`,
+          fullname: `${user.fullname}`,
+          email: `${user.email}`,
+          cfcID: `${user.cfcID}`,
+          entry_date: `${user.entry_date}`,
+        }));
+        res.json(users);
+      } else {
+        res.status(404).json({ error: "No users found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+app.post('/api/registration/add', async (req, res) => {
+  const { fullname, email, entryDate } = req.body;
+
+  if (!fullname || !email || !entryDate) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    const insertQuery = `
+      INSERT INTO user (fullname, email, entry_date)
+      VALUES (?, ?, ?)
+    `;
+
+    const results = await db.query(insertQuery, [fullname, email, entryDate]);
+    res.status(200).json({ message: 'Registration successful', id: results.insertId });
+  } catch (error) {
+    console.error('Failed to insert registration:', error);
+    res.status(500).json({ error: 'Database insertion failed', message: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
 
 
