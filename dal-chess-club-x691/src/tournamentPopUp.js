@@ -34,45 +34,36 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
     <div className="popup-content" onClick={e => e.stopPropagation()}>
         <h1>{name}</h1>
         <img className="tournament-image" src={image} alt={name} />
-        
-        <p>Cost: {price}</p>
-        <p>Date: {date}</p>
-        <p>Time: {time} - {endTime}</p>
-        <p>Number of Participants: {participantsNo}</p>
-        <p>{description}</p>
-        
-        <h2>Registered Participants:</h2>
-        <ul>
-          {participants.map(participant => (
-            <li key={participant.id}>{participant.fullname}</li>
-          ))}
-        </ul>
-        
+        <p> Cost: {price} </p>
+        <p> Date: {date} </p>
+        <p> Time: {time} - {endTime}</p>
+        <p> Number of Participants: {participantsNo} </p>
+        <p> {description} </p>
         <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
-        <button className="close-button" onClick={onClose}><Close /></button>
-      </div>
+      
+
+      <h2>Registered Participants:</h2>
+      <ul>
+        {participants.map(participant => (
+          <li key={participant.id}>{participant.fullname}</li>
+        ))}
+      </ul>
+
+      <h3>Standings</h3>
+      <div className="standings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
+      
+      <h3>Pairings</h3>
+      <div className="pairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
+       
+ 
+
+        <button id="close-button" onClick={onClose}><Close /></button>
     </div>
-  
+  </div>
   );
 }
 
+
 export default TournamentPopUp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
