@@ -608,14 +608,68 @@ app.delete('/api/news/delete/:newsID', async (req, res) => {
 
 //faq Page
 
-//Getting faq data
-app.get('/api/faq', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM faq');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Fetch a single FAQ by id
+app.get('/api/faq/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlSelectFAQ = "SELECT faqID, question, answer FROM faq WHERE faqID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectFAQ, [id], (error, result) => {
+      if (error) {
+        console.error('Error fetching FAQ:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length === 0) {
+        res.status(404).json({ error: 'FAQ not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+
+// Get all items from the faq table
+app.get('/api/faq', (req, res) => {
+  const sqlSelect = "SELECT faqID, question, answer FROM faq";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelect, (error, result) => {
+      if (error) {
+        console.error('Error fetching faq:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Delete an item from the faq table
+app.delete('/api/faq/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlDelete = "DELETE FROM faq WHERE faqID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlDelete, [id], (error, result) => {
+      if (error) {
+        console.error('Error deleting faq item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'Item not found' });
+      } else {
+        res.status(200).json({ success: true, message: 'Item deleted successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Adding faq data in faq page
@@ -638,30 +692,28 @@ app.post('/api/faq/add', (req, res) => {
   });
 });
 
-// Editing faq data in faq page
-app.put('/api/faq/edit/:faqID', async (req, res) => {
-  try {
-    const { question, answer } = req.body;
-    const { faqID } = req.params;
-    const sqlUpdate = "UPDATE faq SET question = ?, answer = ? WHERE faqID = ?";
-    const [result] = await require('./database').query(sqlUpdate, [question, answer, faqID]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// Updating faq data
+app.put('/api/faq/update/:id', (req, res) => {
+  const { id } = req.params;
+  const { question, answer } = req.body;
+  const sqlUpdateFAQ = "UPDATE faq SET question = ?, answer = ? WHERE faqID = ?";
 
-/* Deleting faq data in faq page
-app.delete('/api/faq/delete/:faqID', async (req, res) => {
-  try {
-    const { faqID } = req.params;
-    const sqlDelete = "DELETE FROM faq WHERE faqID = ?";
-    const [result] = await require('./database').query(sqlDelete, [faqID]);
-    res.status(200).json({ message: 'FAQ entry deleted successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});*/
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdateFAQ, [question, answer, id], (error, result) => {
+      if (error) {
+        console.error('Error updating FAQ:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'FAQ not found' });
+      } else {
+        res.status(200).json({ message: 'FAQ updated successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
 //Tournaments Page
 
