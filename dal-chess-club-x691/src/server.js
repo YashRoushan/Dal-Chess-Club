@@ -924,26 +924,38 @@ app.get('/api/registration', async (req, res) => {
   });
 });
 
+
 app.post('/api/registration/add', async (req, res) => {
-  const { fullname, email, entryDate } = req.body;
+  const { fullname, email, cfcID, cfcRating, entry_date } = req.body;
 
-  if (!fullname || !email || !entryDate) {
-    return res.status(400).json({ message: 'All fields are required' });
+  console.log('Received data:', req.body); // Add this line for debugging
+
+  // Check for required fields
+  if (!fullname || !email) {
+      return res.status(400).json({ message: 'Fullname and email are required' });
   }
 
-  try {
-    const insertQuery = `
-      INSERT INTO user (fullname, email, entry_date)
-      VALUES (?, ?, ?)
-    `;
+  // SQL Query to insert the new registration into the 'user' table
+  const insertQuery = `
+      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating)
+      VALUES (?, ?, ?, ?, ?)
+  `;
 
-    const results = await db.query(insertQuery, [fullname, email, entryDate]);
-    res.status(200).json({ message: 'Registration successful', id: results.insertId });
-  } catch (error) {
-    console.error('Failed to insert registration:', error);
-    res.status(500).json({ error: 'Database insertion failed', message: error.message });
-  }
+  db.then((dbConnection) => {
+      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null], (error, results) => {
+          if (error) {
+              console.error('Failed to insert registration:', error);
+              return res.status(500).json({ error: 'Database insertion failed', message: error.message });
+          }
+          res.status(200).json({ message: 'Registration successful', id: results.insertId });
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
 });
+
+
 
 
 
