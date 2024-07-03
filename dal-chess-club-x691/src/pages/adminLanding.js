@@ -35,7 +35,6 @@ const AdminLanding = () => {
         { label: 'Edit AboutUs', to: '/editAbout', category: 'aboutUs' },
         { label: 'Add Champion', to: '/Champions-AddForm', category: 'champion' },
         { label: 'Edit Champion', to: '/editChampion', category: 'champion' },
-        { label: 'Subscribers', to: '/subscribers' },
     ];
 
     const categorizedLinks = {
@@ -91,7 +90,7 @@ const AdminLanding = () => {
                 ))}
             </div>
             <div className='admin-button-container-row2'>
-                {['event', 'FAQ', 'aboutUs', 'champion', 'subscribers'].map((category, index) => (
+                {['event', 'FAQ', 'aboutUs', 'champion'].map((category, index) => (
                     <div
                         key={index}
                         className="admin-dropdown"
@@ -115,6 +114,12 @@ const AdminLanding = () => {
                         )}
                     </div>
                 ))}
+                <div className="admin-dropdown">
+                    <Link to="/subscribers" className={`admin-dropdown-button subscribers`}>
+                        <span className="label">Subscribers Options</span>
+                        <img src={icons.subscribers} alt="subscribers icon" className="icon" />
+                    </Link>
+                </div>
             </div>
         </div>
     );
