@@ -9,16 +9,12 @@ import { useEffect } from 'react';
 function NavBar() {    
     const [showDropdowns, setShowDropdowns] = useState(false);
     const [showDropdownAbout, setShowDropdownAbout] = useState(false);
-    const [showDropdownImprove, setShowDropdownImprove] = useState(false);
 
     const toggleDropdowns = () => {
         setShowDropdowns(!showDropdowns);
     };
-    const toggleDropdownsAbout = () => {    
+    const setShowDropdownsAbout = () => {    
         setShowDropdownAbout(!showDropdownAbout);
-    }
-    const toggleDropdownsImprove = () => {
-        setShowDropdownImprove(!showDropdownImprove);
     }
 
     //checking if the user is in mobile or desktop
@@ -46,8 +42,8 @@ function NavBar() {
                 <Link to='/'><button className='dropbtn'>Home</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/about-us'><button onClick={toggleDropdownsAbout} className='dropbtn'>About Us</button></Link>
-            {showDropdownAbout && <div className='dropdown-content'>
+            <Link to='/about-us'><button onClick={setShowDropdownsAbout} className='dropbtn'>About Us</button></Link>
+            {setShowDropdownsAbout && <div className='dropdown-content'>
                 <Link to='/our-members'><button  className='content'>Our Members</button></Link>
                 <Link to='/faq'><button className='content'>FAQ</button></Link>
             </div>}
@@ -59,9 +55,9 @@ function NavBar() {
                 <Link to='/news'><button className='dropbtn'>News</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/improve'><button onClick={toggleDropdownsImprove} className='dropbtn' >Improve</button></Link>
+            <Link to='/improve'><button className='dropbtn' >Improve</button></Link>
                 <div className='dropdown-content'>
-                    {showDropdownImprove && <Link to='/library'><button className='content'>Library</button></Link> }
+                    {userIsDesktop ? <Link to='/library'><button className='content'>Library</button></Link> : <Link to='/library'><button className='content'>{'>'} Library</button></Link>}
                 </div>
             </div>
             
