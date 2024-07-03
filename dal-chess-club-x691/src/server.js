@@ -924,7 +924,7 @@ app.get('/api/registration', async (req, res) => {
   });
 });
 
-
+// Tournament Registration Form
 app.post('/api/registration/add', async (req, res) => {
   const { fullname, email, cfcID, cfcRating, entry_date } = req.body;
 
@@ -954,6 +954,26 @@ app.post('/api/registration/add', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error', message: error.message });
   });
 });
+
+// Count number of Participants
+app.get('/api/tournaments/:id/participants', async (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT COUNT(*) as participantCount FROM user WHERE tournamentsID = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [id], (error, results) => {
+      if (error) {
+        console.error("Error fetching participants:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+      const participantCount = results[0].participantCount;
+      res.json({ participantCount });
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 
 
 
