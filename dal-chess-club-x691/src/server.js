@@ -102,13 +102,17 @@ app.get("/api/login", (req, res) => {
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
   //query parameters if filters were used
-  const { name, price, date } = req.query;
+  const { id, name, price, date } = req.query;
 
   let tournamentQuery =
     "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
+  if (id) {
+    tournamentQuery += ' AND tournamentsID LIKE ?';
+    queryParams.push(`%${id}%`);
+  }
   if (name) {
     tournamentQuery += ' AND title LIKE ?';
     queryParams.push(`%${name}%`);

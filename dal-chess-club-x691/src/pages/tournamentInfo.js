@@ -1,36 +1,26 @@
-import React from 'react'
-import {Close} from '@mui/icons-material';
-//import './styles/Popup.css'
-import TournamentItem from '../tournamentItem';
-import { BASE_URL } from '../config';
-import { useState, useEffect } from 'react';
-import TournamentInfoItem from '../tournamentInfoItem';
+import React,  { useState, useEffect } from 'react'
+import { BASE_URL } from '../config.js';
 
-function TournamentInfo({ name, image, date, time, endTime, participantsNo, price, description, registrationLink, }) {
+import TournamentInfoItem from '../tournamentInfoItem.js';
+
+function TournamentInfo() {
 
   const [tournamentsList, setTournamentsList] = useState([]);
-  
-  // Search results state
-  const [nameFilter, setNameFilter] = useState('');
-  const [priceFilter, setPriceFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
+  const [tournamentID, setTournamentID] = useState(0);
+
   const parameters = new URLSearchParams(window.location.search);
-  const id = parameters.get('tournamentID');
+  const id = Number(parameters.get('itemId'));
 
+  console.log(id);
 
-  // fetches data from db whenever either of the three filters change
-  // useEffect(() => {
-  //   fetchData();
-  // }, [nameFilter, priceFilter, dateFilter]);
-
-  // fetches data from db whenever the tournament id changes
   useEffect(() => {
-    fetchData();
-  }, []);
-  
-  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
-  const fetchData = () => {
-    const serverUrl =  `${BASE_URL}/tournaments/${id}`;
+    fetchData(tournamentID);
+  }, [tournamentID]);
+
+  const fetchData =  (tournamentID) => {
+    setTournamentID(id);
+    const serverUrl =  `${BASE_URL}/tournaments?id=${tournamentID}`;
+    console.log(serverUrl);
     fetch(serverUrl)
       .then(response => {
         if (!response.ok) {
@@ -40,75 +30,32 @@ function TournamentInfo({ name, image, date, time, endTime, participantsNo, pric
       })
       .then(data => {
         if (data.length === 0) {
-          setTournamentsList([]); // Clear the list if no data is returned
+          // setTournamentsList([]); // Clear the list if no data is returned
         } else {
-          setTournamentsList(data);
+          setTournamentsList(data[0]);
         }
       })
       .catch(error => {
         console.error("Error fetching data:", error);
-        setTournamentsList([]); // Clear the list if there is an error
+        // Clear the list if there is an error
       });
   }
-  
-  // handle functions to call state change
-  const handleNameFilter = (event) => {
-    setNameFilter(event.target.value);
-  }
-  const handlePriceFilter = (event) => {
-    setPriceFilter(event.target.value);
-  }
-  const handleDateFilter = (event) => {
-    setDateFilter(event.target.value);
-  }
 
-  // let tournament = '';
-  // tournament = tournamentsList.find(tournament => tournament.name === name);
+  console.log(tournamentsList)
 
-  // if (!tournament) {
-  //   return <div>Loading...</div>;
-  // }
-
-  let embedLink = registrationLink + "&embed=true";
-
-  //tournamentsList.map(() => {
     return (
-
       <TournamentInfoItem
-                  name={tournamentsList.title}
-                  image={tournamentsList.image}
-                  price={formatPrice(tournamentsList.cost)}
-                  date={formatDate(tournamentsList.start_date)}
-                  time={formatTime(tournamentsList.start_date)}
-                  endTime={formatTime(tournamentsList.end_date)}
-                  participantsNo={tournamentsList.num_of_participants}
-                  description={tournamentsList.description}
-                  registrationLink={tournamentsList.registration_link}
-                />
-
-      // <div className='editPage-container'>
-      //     <h1>{tournament.name}</h1>
-      //     <img className="tournament-image" src={tournament.image} alt={tournament.title} />
-      //     <p> Cost: {formatPrice(tournament.cost)} </p>
-      //     <p> Date: {formatDate(tournament.start_date)} </p>
-      //     <p> Time: {formatTime(tournament.start_date)} - {formatTime(tournament.end_date)}</p>
-      //     <p> Number of Participants: {tournament.num_of_participants} </p>
-      //     <p> {tournament.description} </p>
-      //     {/* <TournamentItem
-      //       name={name}
-      //       image={image}
-      //       date={date}
-      //       time={time}
-      //       endTime={endTime}
-      //       participantsNo={participantsNo}
-      //       price={price}
-      //       description={description}
-      //       registrationLink={registrationLink}
-      //       //onClose={togglePopUp}
-      //     /> */}
-      // </div>
+        name={tournamentsList.title}
+        image={tournamentsList.image}
+        price={formatPrice(tournamentsList.cost)}
+        date={formatDate(tournamentsList.start_date)}
+        time={formatTime(tournamentsList.start_date)}
+        endTime={formatTime(tournamentsList.end_date)}
+        participantsNo={tournamentsList.num_of_participants}
+        description={tournamentsList.description}
+        registrationLink={tournamentsList.registration_link}
+      />
     );
-  //})
 }
 
 function formatPrice(price) {
@@ -124,7 +71,7 @@ function formatDate(dateString) {
     return "Date TBD";
   }
   const date = new Date(dateString);
-  
+
   const day = date.getDate().toString().padStart(2, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear();
@@ -147,3 +94,4 @@ function formatTime(dateString) {
 }
 
 export default TournamentInfo;
+ 
