@@ -581,18 +581,6 @@ app.put('/api/members/update/:id', (req, res) => {
 
 
 
-//News page
-
-//Getting news data 
-app.get('/api/news', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM news');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // Adding event images
 app.post('/api/event_images/add', (req, res) => {
   const { image, alt_text } = req.body;
@@ -1112,6 +1100,116 @@ app.delete('/api/library/delete/:id', (req, res) => {
   });
 });
 
+
+// APIs for news page
+
+//getting all news
+app.get('/api/news', (req, res) => {
+  const sqlSelectAllNews = "select * from news";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllNews, (error, result) => {
+      if (error) {
+        console.error('Error deleting news item:', error);
+        res.status(500).json({ error: error.message });
+      }
+      else{
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  })
+})
+
+// adding news
+app.post('/api/news/add', (req, res) => {
+  const { newsTitle, date, text, event_imageID } = req.body;
+  console.log(req.body);
+  const sqlInsert = "insert into news (newsTitle, date, text, event_imageID) values (?,?,?,?)";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [newsTitle, date, text, event_imageID], (error, result) => {
+      if (error) {
+        console.error('Error adding news item:', error);
+        res.status(500).json({ error: error.message });
+      } else{
+        res.status(201).json(result);
+        console.log('Successfully added new item:', result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// fetching a single news
+app.get('/api/news/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlSelectNewsItem = "select * from news where newsID = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectNewsItem, [id], (error, result) => {
+      if (error) {
+        console.error('Error fetching news item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// updating news
+
+app.put('/api/news/update/:id', (req, res) => {
+  const { id } = req.params;
+  const { newsTitle, date, text, event_imageID } = req.body;
+  const slicedDate = date.slice(0,10);
+  const sqlUpdateNews = "update news set newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdateNews, [newsTitle, slicedDate, text, event_imageID, id], (error, result) => {
+      if (error) {
+        console.error('Error updating news item:', error);
+        res.status(500).json({ error: error.message });
+      } else if(result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else{
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+app.delete('/api/news/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlDeleteNews = "delete from news where newsID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlDeleteNews, [id], (error, result) => {
+      if (error) {
+        console.error('Error deleting news item:', error);
+        res.status(500).json({ error: error.message });
+      } else if(result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else{
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
 app.post('/api/subscribe/add', async (req, res) => {
   const { first_name, last_name, email } = req.body;
