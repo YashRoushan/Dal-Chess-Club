@@ -116,7 +116,7 @@ const AdminLanding = () => {
                 ))}
                 <div className="admin-dropdown">
                     <Link to="/subscribers" className={`admin-dropdown-button subscribers`}>
-                        <span className="label">Subscribers Options</span>
+                        <span className="label">Subscribers</span>
                         <img src={icons.subscribers} alt="subscribers icon" className="icon" />
                     </Link>
                 </div>

@@ -277,13 +277,186 @@ h1 {
     .admin-dropdown-link {
         max-width: 150px;
     }
+
+    /* Specific styles for each category */
+
+/* Tournament */
+.admin-dropdown-button.tournament .icon {
+    width: 100px;
+    height: 70px;
+    position: relative;
+    top: 2px;
+    left: 8px;
+}
+.admin-dropdown-button.tournament .label {
+    font-size: 17px;
+    margin-bottom: 15px;
+    font-weight: 501;
+}
+.admin-dropdown-button.tournament{
+    height: 145px;
+    width: 180px;
+    margin-bottom: 10px;
+}
+
+/* Book */
+.admin-dropdown-button.book .icon {
+    width: 180px;
+    height: 200px;
+    position: relative;
+    top: -50px;
+    left: 6px;
+}
+.admin-dropdown-button.book .label {
+    font-size: 17px;
+    margin-top: 102px;
+    font-weight: 501;
+}
+.admin-dropdown-button.book{
+    height: 145px;
+    width: 180px;
+    margin-bottom: 10px;
+}
+
+/* News */
+.admin-dropdown-button.news .icon {
+    width: 110px;
+    height: 85px;
+    position: relative;
+    top: 2px;
+    left: 10px;
+}
+.admin-dropdown-button.news .label {
+    font-size: 17px;
+    margin-bottom: 12px;
+    font-weight: 501;
+}
+.admin-dropdown-button.news{
+    height: 145px;
+    width: 180px;
+    margin-bottom: 10px;
+}
+
+/* Trainer */
+.admin-dropdown-button.trainer .icon {
+    width: 90px;
+    height: 70px;
+    position: relative;
+    top: 0;
+    right: -6px;
+}
+.admin-dropdown-button.trainer .label {
+    font-size: 17px;
+    margin-bottom: 22px;
+    font-weight: 501;
+}
+.admin-dropdown-button.trainer{
+    height: 145px;
+    width: 180px;
+    margin-bottom: -24px;
+}
+
+
+/* Event */
+.admin-dropdown-button.event .icon {
+    width: 75px;
+    height: 70px;
+    position: relative;
+    top: 6px;
+    left: 5px;
+}
+.admin-dropdown-button.event .label {
+    font-size: 17px;
+    margin-bottom: 8px;
+    font-weight: 501;
+}
+.admin-dropdown-button.event{
+    height: 145px;
+    width: 180px;
+    margin-bottom: -20px;
+}
+
+/* FAQ */
+.admin-dropdown-button.FAQ .icon {
+    width: 75px;
+    height: 55px;
+    position: relative;
+    top: 3px;
+    left: 5px;
+}
+.admin-dropdown-button.FAQ .label {
+    font-size: 17px;
+    margin-bottom: 18px;
+    font-weight: 501;
+}
+.admin-dropdown-button.FAQ{
+    height: 145px;
+    width: 180px;
+    margin-bottom: -20px;
+}
+
+/* About Us */
+.admin-dropdown-button.aboutUs .icon {
+    width: 100px;
+    height: 80px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+.admin-dropdown-button.aboutUs .label {
+    font-size: 17px;
+    margin-bottom: 5px;
+    font-weight: 501;
+}
+.admin-dropdown-button.aboutUs{
+    height: 145px;
+    width: 180px;
+    margin-bottom: -20px;
+}
+
+/* Champion */
+.admin-dropdown-button.champion .icon {
+    width: 80px;
+    height: 60px;
+    position: relative;
+    top: 0;
+    right: -8px;
+}
+.admin-dropdown-button.champion .label {
+    font-size: 17px;
+    margin-bottom: 25px;
+    font-weight: 501;
+}
+.admin-dropdown-button.champion{
+    height: 145px;
+    width: 180px;
+    margin-bottom: -20px;
+}
+
+/* Subscribers */
+.admin-dropdown-button.subscribers .icon {
+    width: 120px;
+    height: 28px;
+    position: relative;
+    top: -25px;
+    left: 9px;
+}
+
+.admin-dropdown-button.subscribers .label {
+    font-size: 17px;
+    margin-bottom: 58px;
+    font-weight: 600;
+}
+
+.admin-dropdown-button.subscribers{
+    height: 125px;
+    width: 160px;
+    margin-bottom: 10px;
+}
 }
 
 @media only screen and (max-width: 480px) {
-    .admin-button-container-row1,
-    .admin-button-container-row2 {
-        grid-template-columns: 1fr;
-    }
+    
 
     .admin-dropdown-button {
         width: 100%;
