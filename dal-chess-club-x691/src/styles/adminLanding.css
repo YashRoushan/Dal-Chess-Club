@@ -35,6 +35,7 @@ h1 {
     position: relative;
 }
 
+
 /* Button styling */
 .admin-dropdown-button {
     background-color: white;
@@ -84,7 +85,7 @@ h1 {
     font-weight: 501;
 }
 
-/* Book  NEEDS FIXING*/
+
 .admin-dropdown-button.book .icon {
     width: 180px;
     height: 200px;
@@ -189,10 +190,16 @@ h1 {
     top: -25px;
     left: 9px;
 }
+
 .admin-dropdown-button.subscribers .label {
     font-size: 20px;
     margin-bottom: 58px;
-    font-weight: 501;
+    font-weight: 600;
+}
+
+.admin-dropdown-button.subscribers{
+    height: 175px;
+    width: 235px;
 }
 
 /* Dropdown content */
@@ -238,11 +245,11 @@ h1 {
 
 @media only screen and (max-width: 1200px) {
     .admin-button-container-row1 {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 
     .admin-button-container-row2 {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
