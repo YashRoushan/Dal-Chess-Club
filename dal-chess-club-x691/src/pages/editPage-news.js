@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/editPage.css';
 import {BASE_URL} from '../config.js';
-import {Link, useNavigate} from 'react-router-dom';
-
+import {Link} from "react-router-dom";
 function EditNews() {
 
     const [items, setItems] = useState([
@@ -48,10 +47,6 @@ function EditNews() {
             return text;
         }
         return text.substring(0, 100).concat(" ...");
-    }
-
-    const handleEditClick = (itemId) => {
-        // useNavigate(`../forms/editForm-news/${itemId}`)
     }
 
 
@@ -102,7 +97,7 @@ function EditNews() {
                             <td>{formatText(item.text)}</td>
                             {/*<td><img src={item.event_imageID ? item.event_imageID : null} /></td>*/}
                             <td className='buttons-container'>
-                                <button onClick={() => handleEditClick(item.newsID)}>Edit</button>
+                                <Link to={`/editForm-news?itemId=${item.newsID}`}><button>Edit</button></Link>
                                 <button onClick={() => handleDelete(item.newsID)}>Delete</button>
                             </td>
                         </tr>

@@ -624,11 +624,11 @@ app.post('/api/people_images/add', (req, res) => {
 
 // Adding news data
 app.post('/api/news/add', (req, res) => {
-  const { title, text, event_imageID } = req.body;
+  const { newsTitle, text, event_imageID } = req.body;
   const sqlInsertNews = "INSERT INTO news (newsTitle, date, text, event_imageID) VALUES (?, NOW(), ?, ?)";
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlInsertNews, [title, text, event_imageID], (error, result) => {
+    dbConnection.query(sqlInsertNews, [newsTitle, text, event_imageID], (error, result) => {
       if (error) {
         console.error('Error adding news:', error);
         res.status(500).json({ error: error.message });
