@@ -446,42 +446,140 @@ app.get("/api/faq/getAllFaqs", (req, res) => {
   });
 });
 
+
+// About US Page
+
 // Adding member data in About US page
-app.post('/api/members/add', async (req, res) => {
-  try {
-    const { positionID, status, bio, people_imageID, name } = req.body;
-    const sqlInsert = "INSERT INTO members (positionID, status, bio, people_imageID, name) VALUES (?, ?, ?, ?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [positionID, status, bio, people_imageID, name]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.post('/api/members/add', (req, res) => {
+  const { name, positionID, bio, people_imageID } = req.body;
+  const status = 1; // New members always have status 1
+
+  const sqlInsertMember = 'INSERT INTO members (name, positionID, status, bio, people_imageID) VALUES (?, ?, ?, ?, ?)';
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsertMember, [name, positionID, status, bio, people_imageID], (error, result) => {
+      if (error) {
+        console.error('Error adding member:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'Member added successfully', memberID: result.insertId });
+      }
+    });
+  }).catch((error) => {
+    console.error('Database connection error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// Getting member positions 
+app.get('/api/positions', (req, res) => {
+  const sqlSelectPositions = 'SELECT * FROM positions';
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectPositions, (error, results) => {
+      if (error) {
+        console.error('Error fetching positions:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    console.error('Database connection error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// Changing the status of the previous member with the chosen position
+app.put('/api/members/updateStatus/:positionID', (req, res) => {
+  const { positionID } = req.params;
+  const { status } = req.body;
+
+  const sqlUpdateStatus = 'UPDATE members SET status = ? WHERE positionID = ?';
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdateStatus, [status, positionID], (error, result) => {
+      if (error) {
+        console.error('Error updating member status:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json({ message: 'Member status updated successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error('Database connection error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+
+// Fetch all members
+app.get('/api/members', (req, res) => {
+  const sqlSelectAllBooks = "SELECT memberID, name, positionID, people_imageID, bio, status FROM members";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllBooks, (error, result) => {
+      if (error) {
+        console.error('Error fetching members:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Delete a member from the members table
+app.delete('/api/members/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlDeleteMember = "DELETE FROM members WHERE memberID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlDeleteMember, [id], (error, result) => {
+      if (error) {
+        console.error('Error deleting member:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'member not found' });
+      } else {
+        res.status(200).json({ success: true, message: 'member deleted successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Editing member data in About US page
-app.put('/api/members/edit/:memberID', async (req, res) => {
-  try {
-    const { positionID, status, bio, people_imageID, name } = req.body;
-    const { memberID } = req.params;
-    const sqlUpdate = "UPDATE members SET positionID = ?, status = ?, bio = ?, people_imageID = ?, name = ? WHERE memberID = ?";
-    const [result] = await require('./database').query(sqlUpdate, [positionID, status, bio, people_imageID, name, memberID]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.put('/api/members/update/:id', (req, res) => {
+  const { id } = req.params;
+  const memberID = id;
+  const status = 1; // default status is active unless someone else takes over that position
+  const { positionID, bio, people_imageID, name } = req.body;
+  const sqlUpdateMembers = "UPDATE members SET positionID = ?, status = ?, bio = ?, people_imageID = ?, name = ? WHERE memberID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdateMembers, [positionID, status, bio, people_imageID, name, memberID], (error, result) => {
+      if (error) {
+        console.error('Error updating members:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'member not found' });
+      } else {
+        res.status(200).json({ message: 'member updated successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
-/*Deleting member data in About US page
-app.delete('/api/members/delete/:memberID', async (req, res) => {
-try {
-  const { memberID } = req.params;
-  const sqlDelete = "DELETE FROM members WHERE memberID = ?";
-  const [result] = await require('./database').query(sqlDelete, [memberID]);
-  res.status(200).json({ message: 'Member deleted successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
-});*/
+
 
 //News page
 
