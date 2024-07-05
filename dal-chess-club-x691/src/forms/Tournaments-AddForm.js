@@ -61,7 +61,7 @@ function TournamentsAddForm() {
         <form className="form-element">
           <label>Tournament Image</label>
           <input 
-          className="filr-form" 
+          className="file-form" 
           type="file"
           accept='image/*' 
           value={tournamentImage} 
