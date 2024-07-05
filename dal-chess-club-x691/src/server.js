@@ -701,26 +701,26 @@ app.post('/api/live-tournaments/add', (req, res) => {
 
 // Editing live-tournaments data in live-Tournaments page
 app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
-  const { Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date } = req.body;
+  const { Pairings, Standings } = req.body;
   const { game_id } = req.params;
 
   const sqlCheckTournamentPresent = `SELECT * FROM tournament_scores WHERE game_id = ?`;
   const sqlUpdate = `
   UPDATE tournament_scores
-  SET Player1 = ?, Player2 = ?, Player1_time = ?, Player2_time = ?, Player1_score = ?, Player2_score = ?, game_date = ?
+  SET Pairings = ?, Standings = ?
   WHERE game_id = ?`;
   const sqlInsert = `
-  INSERT INTO tournament_scores (game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  INSERT INTO tournament_scores (game_id, Pairings, Standings)
+  VALUES (?, ?, ?)`;
 
   db.then((dbConnection) => {
     dbConnection.query(sqlCheckTournamentPresent, [game_id], (error, result) => {
       if (error) {
-        console.error('Error checking live tournament data:', error);
+        console.error('Error inserting live tournament data:', error);
         res.status(500).json({ error: error.message });
       } else if (result.length > 0) {
         // Tournament already exists, therefore performing an update
-        dbConnection.query(sqlUpdate, [Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date, game_id], (error, result) => {
+        dbConnection.query(sqlUpdate, [Pairings,Standings, game_id], (error, result) => {
           if (error) {
             console.error('Error editing live tournament data:', error);
             res.status(500).json({ error: error.message });
@@ -730,7 +730,7 @@ app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
         });
       } else {
         // Tournament not present, performing insert
-        dbConnection.query(sqlInsert, [game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date], (error, result) => {
+        dbConnection.query(sqlInsert, [game_id, Pairings, Standings], (error, result) => {
           if (error) {
             console.error('Error adding live tournament data:', error);
             res.status(500).json({ error: error.message });
