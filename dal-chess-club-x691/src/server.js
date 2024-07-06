@@ -1032,51 +1032,84 @@ try {
 //Trainers Event Page
 
 // Getting trainer data
-app.get('/api/speakers', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM speaker');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.get('/api/speaker', (req, res) => {
+  const sqlSelectAllSpeakers = "SELECT * FROM speaker";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllSpeakers, (error, result) => {
+      if (error) {
+        console.error('Error getting speakers:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
-// Adding trainer data in Events page
-app.post('/api/speakers/add', async (req, res) => {
-  try {
-    const { name, specialty, bio, people_imageID } = req.body;
-    const sqlInsert = "INSERT INTO speaker (name, specialty, bio, people_imageID) VALUES (?, ?, ?, ?)";
-    const [result] = await require('./database').query(sqlInsert, [name, specialty, bio, people_imageID]);
-    res.status(201).json({ message: 'Speaker added successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// getting single speaker
+app.get('/api/speaker/:speakerID', (req, res) => {
+  const { speakerID } = req.params;
+  const sqlSelectSingleSpeaker = "SELECT * FROM speaker WHERE speakerID = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectSingleSpeaker, [speakerID], (error, result) => {
+      if (error) {
+        console.error(`Error getting speaker: ${speakerID}`, error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Editing trainer data in Events page
-app.put('/api/speakers/edit/:speakerID', async (req, res) => {
-  try {
-    const { speakerID } = req.params;
-    const { name, specialty, bio, people_imageID } = req.body;
-    const sqlUpdate = "UPDATE speaker SET name = ?, specialty = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
-    const [result] = await require('./database').query(sqlUpdate, [name, specialty, bio, people_imageID, speakerID]);
-    res.status(200).json({ message: 'Speaker updated successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.put('/api/speaker/edit/:speakerID', (req, res) => {
+  const { speakerID } = req.params;
+  const { name, specialty, bio, people_imageID } = req.body;
+  const sqlUpdate = "UPDATE speaker SET name = ?, specialty = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlUpdate, [name, specialty, bio, people_imageID, speakerID], (error, result) => {
+      if (error) {
+        console.error('Error updating speaker:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json({ message: 'Speaker updated successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
-/* Deleting trainer data in Events page
-app.delete('/api/speakers/delete/:speakerID', async (req, res) => {
-try {
+ // Deleting trainer data in Events page
+app.delete('/api/speaker/delete/:speakerID', (req, res) => {
   const { speakerID } = req.params;
   const sqlDelete = "DELETE FROM speaker WHERE speakerID = ?";
-  const [result] = await require('./database').query(sqlDelete, [speakerID]);
-  res.status(200).json({ message: 'Speaker deleted successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
-});*/
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlDelete, [speakerID], (err, result) => {
+      if (err) {
+        console.error('Error deleting speaker:', err);
+        res.status(500).json({ error: err.message });
+      } else if (result.affectedRows === 0) {
+        res.status(404).json({ message: 'Speaker not found' });
+      } else {
+        res.status(200).json({ message: 'Speaker deleted successfully' });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
 //Library Page
 
