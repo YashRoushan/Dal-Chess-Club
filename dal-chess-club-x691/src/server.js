@@ -1170,11 +1170,10 @@ app.get('/api/news/:id', (req, res) => {
 app.put('/api/news/update/:id', (req, res) => {
   const { id } = req.params;
   const { newsTitle, date, text, event_imageID } = req.body;
-  const slicedDate = date.slice(0,10);
   const sqlUpdateNews = "update news set newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlUpdateNews, [newsTitle, slicedDate, text, event_imageID, id], (error, result) => {
+    dbConnection.query(sqlUpdateNews, [newsTitle, date, text, event_imageID, id], (error, result) => {
       if (error) {
         console.error('Error updating news item:', error);
         res.status(500).json({ error: error.message });
