@@ -894,7 +894,7 @@ app.delete('/api/subscribers/delete', (req, res) => {
 
 // Registration test
 app.get('/api/registration', async (req, res) => {
-  const sql = "SELECT id, tournamentsID, username, fullname, email, cfcID, entry_date FROM user";
+  const sql = "SELECT id, tournamentsID, fullname, email, cfcID, entry_date FROM user";
   db.then((dbConnection) => {
     dbConnection.query(sql, (error, results) => {
       if (error) {
@@ -907,7 +907,6 @@ app.get('/api/registration', async (req, res) => {
 
           id: `${user.id}`,
           tournamentsID: `${user.tournamentsID}`,
-          username: `${user.username}`,
           fullname: `${user.fullname}`,
           email: `${user.email}`,
           cfcID: `${user.cfcID}`,
@@ -924,25 +923,24 @@ app.get('/api/registration', async (req, res) => {
   });
 });
 
-// Tournament Registration Form
 app.post('/api/registration/add', async (req, res) => {
-  const { fullname, email, cfcID, cfcRating, entry_date } = req.body;
+  const { fullname, email, cfcID, cfcRating, entry_date, tournamentsID } = req.body;
 
   console.log('Received data:', req.body); // Add this line for debugging
 
   // Check for required fields
-  if (!fullname || !email) {
-      return res.status(400).json({ message: 'Fullname and email are required' });
+  if (!fullname || !email || !tournamentsID) {
+      return res.status(400).json({ message: 'Fullname, email, and tournament ID are required' });
   }
 
   // SQL Query to insert the new registration into the 'user' table
   const insertQuery = `
-      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating, tournamentsID)
+      VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   db.then((dbConnection) => {
-      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null], (error, results) => {
+      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null, tournamentsID], (error, results) => {
           if (error) {
               console.error('Failed to insert registration:', error);
               return res.status(500).json({ error: 'Database insertion failed', message: error.message });

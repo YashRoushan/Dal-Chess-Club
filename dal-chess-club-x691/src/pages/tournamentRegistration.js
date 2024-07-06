@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/tournamentRegistration.css'; 
 
 function RegistrationForm() {
@@ -10,6 +10,14 @@ function RegistrationForm() {
     cfcRating: '',
     hasCfcId: 'no' // Additional state to track CFC ID radio button
   });
+
+  const [tournamentsID, setTournamentsID] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('tournamentsID');
+    setTournamentsID(id);
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,7 +34,8 @@ function RegistrationForm() {
     const dataToSend = {
       fullname: formData.name,
       email: formData.email,
-      entry_date: new Date().toISOString().slice(0, 19).replace('T', ' ') // Format the date as YYYY-MM-DD HH:MM:SS
+      entry_date: new Date().toISOString().slice(0, 19).replace('T', ' '), // Format the date as YYYY-MM-DD HH:MM:SS
+      tournamentsID: tournamentsID
     };
 
     // Conditionally add CFC details if "yes" is selected
