@@ -961,11 +961,11 @@ app.get('/api/speaker/:speakerID', (req, res) => {
 // Editing trainer data in Events page
 app.put('/api/speaker/edit/:speakerID', (req, res) => {
   const { speakerID } = req.params;
-  const { name, specialty, bio, people_imageID } = req.body;
-  const sqlUpdate = "UPDATE speaker SET name = ?, specialty = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
+  const { name, speciality, bio, people_imageID } = req.body;
+  const sqlUpdate = "UPDATE speaker SET name = ?, speciality = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlUpdate, [name, specialty, bio, people_imageID, speakerID], (error, result) => {
+    dbConnection.query(sqlUpdate, [name, speciality, bio, people_imageID, speakerID], (error, result) => {
       if (error) {
         console.error('Error updating speaker:', error);
         res.status(500).json({ error: error.message });
