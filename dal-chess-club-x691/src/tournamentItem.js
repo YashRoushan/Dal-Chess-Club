@@ -5,6 +5,7 @@ import './styles/tournamentRegistration.css';
 import { BASE_URL } from './config.js';
 
 function TournamentItem({tournamentsID, name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
+  const navigate = useNavigate(); 
   const [showPopUp, setShowPopUp] = useState(false);
   const [participantCount, setParticipantCount] = useState(0);
 
