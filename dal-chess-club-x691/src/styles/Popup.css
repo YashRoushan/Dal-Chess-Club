@@ -10,9 +10,10 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-}
-
-.popup-content {
+ }
+ 
+ 
+ .popup-content {
   position: relative;
   padding: 20px;
   border-radius: 15px;
@@ -25,18 +26,20 @@
   background-color: white;
   overflow-y: auto;
   cursor: default;
-}
-
-.popup-content #close-button {
+ }
+ 
+ 
+ .popup-content #close-button {
   position: absolute;
   top: 16px;
   right: 16px;
   background: transparent;
   border: none;
   cursor: pointer;
-}
-
-#register-button {
+ }
+ 
+ 
+ #register-button {
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -46,39 +49,71 @@
   text-decoration: none;
   display: inline-block;
   margin-top: 10px;
-}
-
-#register-button:hover {
+ }
+ 
+ 
+ #register-button:hover {
   background-color: #242424;
   color: #FFD400;
-}
-
-.popup-content::-webkit-scrollbar {
+ }
+ 
+ 
+ .popup-content::-webkit-scrollbar {
   border-radius: 15px;
-}
-
-.live-scores {
+ }
+ 
+ 
+ /* .live-scores {
   border-collapse: collapse;
   width: 100%;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.live-scores th, .live-scores td {
+ }
+ 
+ 
+ .live-scores th, .live-scores td {
   padding: 10px 15px;
   text-align: left;
-}
-
-.live-scores th {
+ }
+ 
+ 
+ .live-scores th {
   background-color: #FFD400;
   color: black;
-}
-
-.live-scores tr:nth-child(even) {
+ }
+ 
+ 
+ .live-scores tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-.live-scores tr:hover {
+ }
+ 
+ 
+ .live-scores tr:hover {
   background-color: #ddd;
-}
-
+ } */
+ 
+ 
+ .standings-table, .pairings-table {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+ }
+ 
+ 
+ .standings-table iframe{
+  width: 100%;
+  height: 250px;
+  border: none;
+  border-radius: 5px;
+ }
+ 
+ 
+ .pairings-table iframe{
+  width: 100%;
+  height: 600px;
+  border: none;
+  border-radius: 5px;
+ }
+ 
