@@ -8,10 +8,14 @@ import { useEffect } from 'react';
 
 function NavBar() {    
     const [showDropdowns, setShowDropdowns] = useState(false);
+    const [showDropdownAbout, setShowDropdownAbout] = useState(false);
 
     const toggleDropdowns = () => {
         setShowDropdowns(!showDropdowns);
     };
+    const setShowDropdownsAbout = () => {    
+        setShowDropdownAbout(!showDropdownAbout);
+    }
 
     //checking if the user is in mobile or desktop
     const [userIsDesktop, setUserIsDesktop] = useState(window.innerWidth > 650);
@@ -38,11 +42,11 @@ function NavBar() {
                 <Link to='/'><button className='dropbtn'>Home</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/about-us'><button className='dropbtn'>About Us</button></Link>
-                <div className='dropdown-content'>
-                    {userIsDesktop ? <Link to='/about-us'><button className='content'>Our Members</button></Link> : <Link to='/about-us'><button className='content'>{'>'} Our Members</button></Link>}
-                    {userIsDesktop ? <Link to='/faq'><button className='content'>FAQ</button></Link> : <Link to='/faq'><button className='content'>{'>'} FAQ</button></Link>}
-                </div>
+            <Link to='/about-us'><button onClick={setShowDropdownsAbout} className='dropbtn'>About Us</button></Link>
+            {setShowDropdownsAbout && <div className='dropdown-content'>
+                <Link to='/our-members'><button  className='content'>Our Members</button></Link>
+                <Link to='/faq'><button className='content'>FAQ</button></Link>
+            </div>}
             </div>
             <div className='dropdown'>
                 <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
