@@ -102,13 +102,17 @@ app.get("/api/login", (req, res) => {
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
   //query parameters if filters were used
-  const { name, price, date } = req.query;
+  const { id, name, price, date } = req.query;
 
   let tournamentQuery =
     "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
+  if (id) {
+    tournamentQuery += ' AND tournamentsID LIKE ?';
+    queryParams.push(`%${id}%`);
+  }
   if (name) {
     tournamentQuery += ' AND title LIKE ?';
     queryParams.push(`%${name}%`);
@@ -1006,6 +1010,98 @@ app.delete('/api/subscribers/delete', (req, res) => {
     res.status(500).json({ error: "Internal Server Error", message: error.message });
   });
 });
+
+// Registration test
+app.get('/api/registration', async (req, res) => {
+  const sql = "SELECT id, tournamentsID, fullname, email, cfcID, entry_date FROM user";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (error, results) => {
+      if (error) {
+        console.error("Error fetching user:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+      console.log(results);
+      if (results.length > 0) {
+        const users = results.map(user => ({
+
+          id: `${user.id}`,
+          tournamentsID: `${user.tournamentsID}`,
+          fullname: `${user.fullname}`,
+          email: `${user.email}`,
+          cfcID: `${user.cfcID}`,
+          entry_date: `${user.entry_date}`,
+        }));
+        res.json(users);
+      } else {
+        res.status(404).json({ error: "No users found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+app.post('/api/registration/add', async (req, res) => {
+  const { fullname, email, cfcID, cfcRating, entry_date, tournamentsID } = req.body;
+
+  console.log('Received data:', req.body); // Add this line for debugging
+
+  // Check for required fields
+  if (!fullname || !email || !tournamentsID) {
+      return res.status(400).json({ message: 'Fullname, email, and tournament ID are required' });
+  }
+
+  // SQL Query to insert the new registration into the 'user' table
+  const insertQuery = `
+      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating, tournamentsID)
+      VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  db.then((dbConnection) => {
+      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null, tournamentsID], (error, results) => {
+          if (error) {
+              console.error('Failed to insert registration:', error);
+              return res.status(500).json({ error: 'Database insertion failed', message: error.message });
+          }
+          res.status(200).json({ message: 'Registration successful', id: results.insertId });
+      });
+  }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  });
+});
+
+// Count number of Participants
+app.get('/api/tournaments/:id/participants', async (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT COUNT(*) as participantCount FROM user WHERE tournamentsID = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [id], (error, results) => {
+      if (error) {
+        console.error("Error fetching participants:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+      const participantCount = results[0].participantCount;
+      res.json({ participantCount });
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

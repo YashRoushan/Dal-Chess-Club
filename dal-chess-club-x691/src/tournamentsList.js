@@ -37,3 +37,4 @@ export const tournamentsList = [
         registrationLink: "https://forms.office.com/pages/responsepage.aspx?id=mRm4YH8LLUGSo-F9iunj4DRpLS7nPQpAvB7eadzVE0ZUOFM1NkoxR0dXUTdLQ0FTRlNGRkFGRjU3Ni4u",
     },
 ]
+

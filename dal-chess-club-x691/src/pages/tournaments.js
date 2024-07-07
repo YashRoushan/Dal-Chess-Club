@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
-import { BASE_URL} from '../config.js';
+import { BASE_URL } from '../config.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +31,7 @@ function Tournaments() {
         return response.json();
       })
       .then(data => {
+        console.log('Fetched tournaments:', data); // Debug log
         if (data.length === 0) {
           setTournamentsList([]); // Clear the list if no data is returned
         } else {
@@ -87,7 +88,7 @@ function Tournaments() {
           {tournamentsList.length === 0 ?
             (<h3>No Tournaments Found...</h3>) :
             (tournamentsList.map((tournament, key) => {
-              
+              console.log('Tournament ID:', tournament.tournamentsID); // Debug log
               return(
                 <TournamentItem
                   key={key}
@@ -140,9 +141,10 @@ export function formatTime(dateString) {
   let hours = date.getHours();
   const ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
-  hours = hours ? hours : 12;
+  hours = hours ? 12 : 12;
 
   return `${hours}${ampm}`;
 }
 
 export default Tournaments;
+

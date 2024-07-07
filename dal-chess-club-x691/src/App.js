@@ -37,6 +37,7 @@ import SubscribersDeleteForm from './pages/subscribersDeleteForm.js';
 import DeleteForm from './pages/deleteForm.js';
 import RegistrationForm from './pages/tournamentRegistration.js';
 import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
+import TournamentInfo from './pages/tournamentInfo.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
@@ -76,6 +77,7 @@ function App() {
               <Route path="/mailingList" element={<MailingList />} />
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
+              <Route path="/tournamentInfo" element={<TournamentInfo />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
