@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL } from "./config";
 
 function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, participantsNo, price, description, registrationLink, participants }) {
-  let embedLink = registrationLink + "&embed=true";
   const navigate = useNavigate();
   const [pairings, setPairings] = useState('');
   const [standings, setStandings] = useState('');
@@ -13,30 +12,29 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
   const itemId = searchParams.get('itemId');
 
   useEffect(() => {
-    fetchData();
+    if (itemId) {
+      fetchData(itemId);
+    }
   }, [itemId]);
 
-  const fetchData = () => {
-    const tournamentURL = `${BASE_URL}/api/live-tournaments/${itemId}`;
-    fetch(tournamentURL).then(response => {
+  const fetchData = async (id) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/live-tournaments/${id}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      response.json().then(data => {
-        setStandings(data.Standings);
-        setPairings(data.Pairings);
-      }).catch(error => {
-        console.error('Error fetching data:', error);
-      });
-    }).catch(error => {
+      const data = await response.json();
+      setStandings(data.Standings);
+      setPairings(data.Pairings);
+    } catch (error) {
       console.error('Error fetching data:', error);
-    });
+    }
   };
 
-const handleRegisterNow = (e) => {
+  const handleRegisterNow = () => {
     navigate(`/tournamentRegistration?tournamentsID=${tournamentID}`); // Navigate to the registration page with the tournament ID
   };
-  
+
   return (
     <div className="tpopup-background">
       <div className="tpopup-content" onClick={e => e.stopPropagation()}>
@@ -44,7 +42,6 @@ const handleRegisterNow = (e) => {
           <img className="ttournament-image" src={image} alt={name} />
           <h1 className="ttitle">{name}</h1>
           <div className="ttournament-details">
-            
             <p> Cost: {price} </p>
             <p> Date: {date} </p>
             <p> Time: {time} - {endTime}</p>
@@ -55,14 +52,17 @@ const handleRegisterNow = (e) => {
             </div>
           </div>
         </div>
-
         <h2>Registered Participants:</h2>
-      <ul>
-        {participants.map(participant => (
-          <li key={participant.id}>{participant.fullname}</li>
-        ))}
-      </ul>
-
+        <ul>
+          {participants.map(participant => (
+            <li key={participant.id}>{participant.fullname}</li>
+          ))}
+        </ul>
+        {registrationLink && (
+          <a href={registrationLink} target="_blank" rel="noopener noreferrer">
+            <button className="tregisterButton">Register</button>
+          </a>
+        )}
         <div className="ttables">
           <h3>Standings</h3>
           <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
@@ -75,7 +75,3 @@ const handleRegisterNow = (e) => {
 }
 
 export default TournamentInfoItem;
-
-
-
-
