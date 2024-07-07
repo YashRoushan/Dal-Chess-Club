@@ -31,7 +31,7 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
 
   return (
     <div className="popup-background" onClick={onClose}>
-      <div className="popup-content" onClick={e => e.stopPropagation()}>
+    <div className="popup-content" onClick={e => e.stopPropagation()}>
         <h1>{name}</h1>
         <img className="tournament-image" src={image} alt={name} />
         
@@ -52,6 +52,7 @@ function TournamentPopUp({ name, image, date, time, endTime, participantsNo, pri
         <button className="close-button" onClick={onClose}><Close /></button>
       </div>
     </div>
+  
   );
 }
 

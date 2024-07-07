@@ -48,8 +48,9 @@ function HomeAddForm() {
 
       <label>Image</label>
        <input
-         className="text-form"
-         type="text"
+         className="file-form"
+         type="file"
+         accept='image/*'
          value={homeImage}
          onChange={(e) => setHomeImage(e.target.value)}
          required

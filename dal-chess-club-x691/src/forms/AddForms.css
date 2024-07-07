@@ -4,7 +4,8 @@
 
 .form-A,
 .form-B,
-.form-C {
+.form-C,
+.form-container{
   width: 50%;
   margin: auto;
   margin-bottom: 20px;
@@ -39,7 +40,7 @@
 }
 
 .submit-button-container button {
-  width: 100px;
+  width: 250%;
   padding: 10px;
   background-color: #FFD400;
   color: #000000;
