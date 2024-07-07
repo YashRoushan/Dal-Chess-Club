@@ -64,9 +64,8 @@ function NewsAddForm() {
         <form className="form-element">
           <label>News Images</label>
           <input 
-          className="file-form" 
-          type="file"
-          accept='image/*' 
+          className="text-form" 
+          type="text" 
           value={newsImage} 
           onChange={(e) => setNewsImage(e.target.value)} 
           required 

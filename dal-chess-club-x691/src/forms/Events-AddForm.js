@@ -51,9 +51,8 @@ function EventsAddForm() {
 
      <label>Image</label>
        <input
-         className="file-form"
-         type="file"
-         accept='image/*'
+         className="text-form"
+         type="text"
          value={image}
          onChange={(e) => setImage(e.target.value)}
          required

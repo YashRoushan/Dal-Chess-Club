@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userName, password) => {
         try {
-            const response = await fetch('http://localhost:5001/api/login');
+            const response = await fetch('http://localhost:5000/api/login');
             
             if (!response.ok) {
                 throw new Error('Network response was not ok');

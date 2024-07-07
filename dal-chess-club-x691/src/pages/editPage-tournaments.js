@@ -1,38 +1,16 @@
 import React from 'react';
-import { BASE_URL} from '../config.js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../styles/editPage.css';
 import { Link } from 'react-router-dom';
-import TournamentItem from '../tournamentItem.js';
-import {Tournaments, formatDate, formatTime, formatPrice} from "./tournaments.js";
-
 
 function EditTournaments() {
 
-
-    useEffect(()=>{
-        fetchData();
-    })
     const [items, setItems] = useState([
-        {tournamentsID: 1, title: 'Tournament 1'},
-        {tournamentsID: 2, title: 'Tournament 2'},
-        {tournamentsID: 3, title: 'Tournament 3'},
-        {tournamentsID: 4, title: 'Tournament 4'},
+        {id: 1, title: 'Tournament 1'},
+        {id: 2, title: 'Tournament 2'},
+        {id: 3, title: 'Tournament 3'},
+        {id: 4, title: 'Tournament 4'},
     ]);
-
-
-
-    const fetchData = () =>{
-        const tournamentURL = `${BASE_URL}/tournaments`;
-        fetch(tournamentURL).then(response => {
-            if(!response.ok){
-                throw new Error('Error fetching tournaments');
-            }
-            response.json().then(data => {
-                setItems(data);
-            })
-        })
-    }
 
     /*const handleDelete = async (itemId) => {
         try {
@@ -56,45 +34,20 @@ function EditTournaments() {
         <div className='editPage-container'>
             <h1>Edit Tournaments</h1>
             <div className='editing-container'>
-                <table className="tournament-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Image</th>
-                        <th>Price</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>End Time</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {items.map(tournament => (
-                        <tr key={tournament.tournamentsID}>
-                            <td>{tournament.tournamentsID}</td>
-                            <td>{tournament.title}</td>
-                            <td><img src={tournament.image} alt={tournament.title} className="tournament-image" /></td>
-                            <td>{formatPrice(tournament.cost)}</td>
-                            <td>{formatDate(tournament.start_date)}</td>
-                            <td>{formatTime(tournament.start_date)}</td>
-                            <td>{formatTime(tournament.end_date)}</td>
-                            <td>{tournament.description}</td>
-                            <td>
-                                <Link to={`/editForm-tournaments?itemId=${tournament.tournamentsID}`}>
-                                    <button>Edit Tournament</button>
-                                </Link>
-                                <Link to={`/editForm-liveTournament?itemId=${tournament.tournamentsID}`}>
-                                    <button>Update Live</button>
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                {items.map(item => (
+                    <div key = {item.id} className='item'>
+                        <h3>{item.title}</h3>
+                        <div className='buttons-container'>
+                        <Link to={`/editForm-tournaments?itemId=${item.id}`}>
+                                <button>Edit</button>
+                        </Link>
+                        </div>
+                    </div>
+                 ))}
             </div>
         </div>
     );
-}
+
+};
+
 export default EditTournaments;

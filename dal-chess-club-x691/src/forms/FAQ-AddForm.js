@@ -57,9 +57,8 @@ function FAQAddForm() {
 
       <label>FAQ Image</label>
        <input
-         className="file-form"
-         type="file"
-         accept='image/*'
+         className="text-form"
+         type="text"
          value={FAQImage}
          onChange={(e) => setFAQImage(e.target.value)}
          required
