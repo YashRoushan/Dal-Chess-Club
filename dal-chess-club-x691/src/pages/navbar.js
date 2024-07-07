@@ -56,6 +56,7 @@ function NavBar() {
                     {userIsDesktop ? <Link to='/library'><button className='content'>Library</button></Link> : <Link to='/library'><button className='content'>{'>'} Library</button></Link>}
                 </div>
             </div>
+            
         </div>
     </div>
   )

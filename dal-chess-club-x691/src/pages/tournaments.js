@@ -4,71 +4,94 @@ import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
 import { BASE_URL} from '../config.js';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 function Tournaments() {
   const [tournamentsList, setTournamentsList] = useState([]);
-
-  //Search results state
-  const [filteredResults, setResults] = useState([]);
-
-  //Filter inputs state
+  
+  // Search results state
+  const [nameFilter, setNameFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
-    // Fetch tournaments from the API
-    useEffect(() => {
-      // Fetch tournaments from API
-      fetch(`${BASE_URL}/tournaments`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
+  // fetches data from db whenever either of the three filters change
+  useEffect(() => {
+    fetchData();
+  }, [nameFilter, priceFilter, dateFilter]);
+  
+  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
+  const fetchData = () => {
+    const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
+    fetch(serverUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.length === 0) {
+          setTournamentsList([]); // Clear the list if no data is returned
+        } else {
           setTournamentsList(data);
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
-    }, []); 
-
-    //Filter and search not set up to the database yet
-  const filterTournaments = () => {
-    return tournamentsList.filter(tournament => {
-      const tournamentDate = new Date(tournament.date);
-      const filterDate = dateFilter ? new Date(dateFilter) : null;
-      
-      const matchesPrice = priceFilter ? tournament.price <= priceFilter : true;
-      const matchesDate = filterDate ? tournamentDate >= filterDate : true;
-
-      return matchesPrice && matchesDate;
-    });
-  };
-
-  const filteredTournaments = filterTournaments();
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        setTournamentsList([]); // Clear the list if there is an error
+      });
+  }
+  
+  // handle functions to call state change
+  const handleNameFilter = (event) => {
+    setNameFilter(event.target.value);
+  }
+  const handlePriceFilter = (event) => {
+    setPriceFilter(event.target.value);
+  }
+  const handleDateFilter = (event) => {
+    setDateFilter(event.target.value);
+  }
 
   return (
     <div className="tournament">
       <h1>Tournaments</h1>
       <div className="filters-container">
-        <div>
-        <TournamentSearch setResults={setResults}/>
+        
+        <div className='input-wrapper'>
+          <FontAwesomeIcon icon={faSearch} id="search-icon" />
+          <input placeholder='Type to search...' 
+          value={nameFilter} 
+          onChange={handleNameFilter}/>
         </div>
-        <input className='filter'
-            type="number" 
-            placeholder="Max Price" 
-            value={priceFilter} 
-            onChange={(e) => setPriceFilter(e.target.value)} 
-          />
-          <input className='filter' 
-            type="date" 
+        <div className='filter'>
+          <input 
+              type="number" 
+              placeholder="Max Price" 
+              value={priceFilter} 
+              onChange={handlePriceFilter}
+            />
+        </div>
+        <div className='filter' >
+          <label>Select Date Month - Year:</label>
+          <input 
+            type="month" 
             value={dateFilter} 
-            onChange={(e) => setDateFilter(e.target.value)} 
+            onChange={handleDateFilter} 
           />
+        </div>
         </div>
 
         <div className="tournamentList">
-            {filteredTournaments.map((tournament, key) => {
+          {tournamentsList.length === 0 ?
+            (<h3>No Tournaments Found...</h3>) :
+            (tournamentsList.map((tournament, key) => {
               
               return(
                 <TournamentItem
                   key={key}
+                  tournamentsID={tournament.tournamentsID}
                   name={tournament.title}
                   image={tournament.image}
                   price={formatPrice(tournament.cost)}
@@ -80,21 +103,22 @@ function Tournaments() {
                   registrationLink={tournament.registration_link}
                 />
               )
-            })}
+            }))
+          }
         </div>
     </div>
   )
 }
 
-function formatPrice(price) {
-  if (!price || price == 0) {
+export function formatPrice(price) {
+  if (!price || price === 0) {
     return "FREE";
   } else {
     return "$" + price;
   }
 }
 
-function formatDate(dateString) {
+export function formatDate(dateString) {
   if (!dateString) {
     return "Date TBD";
   }
@@ -107,7 +131,7 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
-function formatTime(dateString) {
+export function formatTime(dateString) {
   const date = new Date(dateString);
 
   if (!dateString) {
@@ -121,4 +145,4 @@ function formatTime(dateString) {
   return `${hours}${ampm}`;
 }
 
-export default Tournaments
+export default Tournaments;

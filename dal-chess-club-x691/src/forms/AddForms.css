@@ -4,7 +4,8 @@
 
 .form-A,
 .form-B,
-.form-C {
+.form-C,
+.form-container{
   width: 50%;
   margin: auto;
   margin-bottom: 20px;
@@ -39,7 +40,7 @@
 }
 
 .submit-button-container button {
-  width: 100px;
+  width: 250%;
   padding: 10px;
   background-color: #FFD400;
   color: #000000;
@@ -55,4 +56,11 @@
 
 .submit-button-container button:hover {
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.list-group{
+  display: flex;
+  flex-direction: column;
+  /*background-color: #007aff;*/
+  margin-left: 35vw;
 }

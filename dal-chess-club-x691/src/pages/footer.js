@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/footer.css';
-import Logo from '../images/Logo 2.png';
+import Logo from '../images/Logo2.png';
 import Facebook from '../images/facebook.png';
 import Instagram from '../images/instagram.png';
 import Discord from '../images/Discord.png';

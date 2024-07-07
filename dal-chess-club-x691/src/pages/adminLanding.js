@@ -25,7 +25,7 @@ const adminLanding = () => {
 
     //Code for the page layout
     return (
-    <div class="page">
+    <div className="page">
         <h1>Welcome!</h1>
         <div className='button-container'>
             <br></br>

@@ -35,6 +35,9 @@ import MailingList from './pages/mailingList.js';
 import Subscribers from './pages/subscribers.js';
 import SubscribersDeleteForm from './pages/subscribersDeleteForm.js';
 import DeleteForm from './pages/deleteForm.js';
+import RegistrationForm from './pages/tournamentRegistration.js';
+import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
+import TournamentInfo from './pages/tournamentInfo.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
@@ -42,7 +45,9 @@ import EventsEditForm from './forms/editForm-events.js';
 import FaqEditForm from './forms/editForm-faq.js';
 import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
+import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import NewsEditForm from './forms/editForm-news.js';
+
 
 
 function App() {
@@ -70,6 +75,9 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
+              <Route path="/tournamentRegistration" element={<RegistrationForm />} />
+              <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
+              <Route path="/tournamentInfo" element={<TournamentInfo />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
@@ -95,6 +103,7 @@ function App() {
               <Route path="/editForm-news" element={<AuthGuard><NewsEditForm /></AuthGuard>} />
               <Route path="/editForm-library" element={<AuthGuard><LibraryEditForm /></AuthGuard>} />
               <Route path="/editForm-tournaments" element={<AuthGuard><TournamentsEditForm /></AuthGuard>} />
+              <Route path="/editForm-liveTournament" element={<AuthGuard><LiveTournamentsEditForm /></AuthGuard>} />
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />

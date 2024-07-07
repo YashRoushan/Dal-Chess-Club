@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const moment = require("moment");
 const app = express();
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -31,9 +32,11 @@ app.use((req, res, next) => {
 app.use(cors());
 app.options("*", cors());
 
+
+
 var Client = require("ssh2").Client;
 var ssh = new Client();
-var mysql = require("mysql");
+var mysql = require("mysql2");
 
 const db = new Promise(function (resolve, reject) {
   ssh
@@ -42,7 +45,7 @@ const db = new Promise(function (resolve, reject) {
         // source address, this can usually be any valid address
         "euro.cs.dal.ca",
         // source port, this can be any valid port number
-        5000,
+        5001,
         // destination address (localhost here refers to the SSH server)
         "euro.cs.dal.ca",
         // destination port
@@ -94,12 +97,36 @@ app.get("/api/login", (req, res) => {
   });
 });
 
+
+
 //REST API for displaying tournaments on tournaments page
 app.get("/tournaments", (req, res) => {
-  const tournamentQuery =
-      "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+  //query parameters if filters were used
+  const { id, name, price, date } = req.query;
+
+  let tournamentQuery =
+    "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+
+  const queryParams = [];
+  //altering query by adding query parameters if filters were used
+  if (id) {
+    tournamentQuery += ' AND tournamentsID LIKE ?';
+    queryParams.push(`%${id}%`);
+  }
+  if (name) {
+    tournamentQuery += ' AND title LIKE ?';
+    queryParams.push(`%${name}%`);
+  }
+  if (price) {
+    tournamentQuery += ' AND cost <= ?';
+    queryParams.push(price);
+  }
+  if (date) {
+    tournamentQuery += ' AND start_date LIKE ?';
+    queryParams.push(`%${date}%`);
+  }
   db.then((dbConnection) => {
-    dbConnection.query(tournamentQuery, (error, data) => {
+    dbConnection.query(tournamentQuery, queryParams, (error, data) => {
       if (error) {
         console.error("Error while fetching news with images:", error);
         return res
@@ -108,7 +135,7 @@ app.get("/tournaments", (req, res) => {
       }
       if (data.length > 0) {
         const newsWithImages = data.map((item) => {
-          const image = item.image ? getImageUrl(item.image) : null; 
+          const image = item.image ? getImageUrl(item.image) : null;
           return {
             ...item, // Spread the existing item object
             image: image, // Override the imageUrl property
@@ -187,26 +214,27 @@ app.post("/emailVer", async (req, res) => {
 //API for displaying content on improve page
 app.get("/improve", (req, res) => {
   db.then((dbConnection) => {
+    console.log(dbConnection);
     const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
-    
-    dbConnection.query(eventQuery, (err, data) => {
-        if (err) {
-            console.error("Error fetching events:", err);
-            return res.status(500).json(err);
-        }
-        
-        const eventsWithImages = data.map((item) => {
-          const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
-          const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
-          
-          return {
-            ...item,
-            eventImage: eventImage,
-            speakerImage: speakerImage,
-          };
-        });
 
-        return res.json(eventsWithImages);
+    dbConnection.query(eventQuery, (err, data) => {
+      if (err) {
+        console.error("Error fetching events:", err);
+        return res.status(500).json(err);
+      }
+
+      const eventsWithImages = data.map((item) => {
+        const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
+        const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
+
+        return {
+          ...item,
+          eventImage: eventImage,
+          speakerImage: speakerImage,
+        };
+      });
+
+      return res.json(eventsWithImages);
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
@@ -219,12 +247,12 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Import BASE_URL and getImageUrl from config.js in server.js
 // Now you can use BASE_URL and getImageUrl in your server.js file
-const {getImageUrl } = require('./config.js');
+const { getImageUrl } = require('./config.js');
 
 
 // News Page
@@ -463,37 +491,37 @@ try {
 
 //Getting news data 
 app.get('/api/news', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM news');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM news');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 //Adding news data in News page
 app.post('/api/news/add', async (req, res) => {
-try {
-  const { newsTitle, date, text, event_imageID } = req.body;
-  const sqlInsert = "INSERT INTO news (newsTitle, date, text, event_imageID) VALUES (?, ?, ?, ?)";
-  const [result] = await require('./database').query(sqlInsert, [newsTitle, date, text, event_imageID]);
-  res.status(200).json(result);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const { newsTitle, date, text, event_imageID } = req.body;
+    const sqlInsert = "INSERT INTO news (newsTitle, date, text, event_imageID) VALUES (?, ?, ?, ?)";
+    const [result] = await require('./database').query(sqlInsert, [newsTitle, date, text, event_imageID]);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Editing news data in News page
 app.put('/api/members/edit/:newsID', async (req, res) => {
-try {
-  const { newsTitle, date, text, event_imageID } = req.body;
-  const { newsID } = req.params;
-  const sqlUpdate = "UPDATE news SET newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
-  const [result] = await require('./database').query(sqlUpdate, [newsTitle, date, text, event_imageID, newsID]);
-  res.status(200).json(result);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const { newsTitle, date, text, event_imageID } = req.body;
+    const { newsID } = req.params;
+    const sqlUpdate = "UPDATE news SET newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
+    const [result] = await require('./database').query(sqlUpdate, [newsTitle, date, text, event_imageID, newsID]);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /* Deleting news data in News page
@@ -512,12 +540,12 @@ app.delete('/api/news/delete/:newsID', async (req, res) => {
 
 //Getting faq data
 app.get('/api/faq', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM faq');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM faq');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Adding faq data in faq page
@@ -561,43 +589,43 @@ app.delete('/api/faq/delete/:faqID', async (req, res) => {
 
 // Getting tournmanets data
 app.get('/api/tournaments', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM tournaments');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM tournaments');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Adding tournaments data in Tournaments page
 app.post('/api/tournaments/add', async (req, res) => {
-try {
-  const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
-  const sqlInsert = `
+  try {
+    const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+    const sqlInsert = `
     INSERT INTO tournaments 
     (title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  const [result] = await require('./database').query(sqlInsert, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required]);
-  res.status(200).json(result);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+    const [result] = await require('./database').query(sqlInsert, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required]);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Editing tournaments data in Tournaments page
 app.put('/api/tournaments/edit/:tournamentsID', async (req, res) => {
-try {
-  const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
-  const { tournamentsID } = req.params;
-  const sqlUpdate = `
+  try {
+    const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+    const { tournamentsID } = req.params;
+    const sqlUpdate = `
     UPDATE tournaments 
     SET title = ?, description = ?, cost = ?, event_imageID = ?, registration_link = ?, start_date = ?, end_date = ?, num_of_participants = ?, locationID = ?, requirements = ?, prizes = ?, tournament_typeID = ?, registration_deadline = ?, cfc_required = ? 
     WHERE tournamentsID = ?`;
-  const [result] = await require('./database').query(sqlUpdate, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required, tournamentsID]);
-  res.status(200).json(result);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+    const [result] = await require('./database').query(sqlUpdate, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required, tournamentsID]);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /* Deleting tournaments data in Tournaments page
@@ -612,47 +640,153 @@ try {
 }
 });*/
 
+
+// Live Tournament Page
+app.get('/api/live-tournaments', (req, res) => {
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM tournament_scores', (error, rows) => {
+      if (error) {
+        console.error('Error fetching live tournaments:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.json(rows);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+app.get('/api/live-tournaments/:id', (req, res) => {
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM tournament_scores WHERE game_id = ?', [req.params.id], (error, rows) => {
+      if (error) {
+        console.error('Error fetching tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else if (rows.length === 0) {
+        res.status(404).json({ error: 'Tournament not found' });
+      } else {
+        res.json(rows[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Adding live tournaments data in live Tournaments page
+app.post('/api/live-tournaments/add', (req, res) => {
+  const { game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date } = req.body;
+  const sqlInsert = `
+  INSERT INTO tournament_scores 
+  (game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [game_id, Player1, Player2, Player1_time, Player2_time, Player1_score, Player2_score, game_date], (error, result) => {
+      if (error) {
+        console.error('Error adding live tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Editing live-tournaments data in live-Tournaments page
+app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
+  const { Pairings, Standings } = req.body;
+  const { game_id } = req.params;
+
+  const sqlCheckTournamentPresent = `SELECT * FROM tournament_scores WHERE game_id = ?`;
+  const sqlUpdate = `
+  UPDATE tournament_scores
+  SET Pairings = ?, Standings = ?
+  WHERE game_id = ?`;
+  const sqlInsert = `
+  INSERT INTO tournament_scores (game_id, Pairings, Standings)
+  VALUES (?, ?, ?)`;
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlCheckTournamentPresent, [game_id], (error, result) => {
+      if (error) {
+        console.error('Error inserting live tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length > 0) {
+        // Tournament already exists, therefore performing an update
+        dbConnection.query(sqlUpdate, [Pairings,Standings, game_id], (error, result) => {
+          if (error) {
+            console.error('Error editing live tournament data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(200).json(result);
+          }
+        });
+      } else {
+        // Tournament not present, performing insert
+        dbConnection.query(sqlInsert, [game_id, Pairings, Standings], (error, result) => {
+          if (error) {
+            console.error('Error adding live tournament data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(201).json(result);
+          }
+        });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
 //Events Page
 
 // Getting events data
 app.get('/api/events', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM events');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM events');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Addding events data in Tournaments page
 app.post('/api/events/add', async (req, res) => {
-try {
-  const { title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
-  const sqlInsert = `
+  try {
+    const { title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
+    const sqlInsert = `
     INSERT INTO events 
     (title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  const [result] = await require('./database').query(sqlInsert, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline]);
-  res.status(201).json({ message: 'Event added successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+    const [result] = await require('./database').query(sqlInsert, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline]);
+    res.status(201).json({ message: 'Event added successfully', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Editing events data in Tournaments page
 app.put('/api/events/edit/:eventID', async (req, res) => {
-try {
-  const { eventID } = req.params;
-  const { title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
-  const sqlUpdate = `
+  try {
+    const { eventID } = req.params;
+    const { title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
+    const sqlUpdate = `
     UPDATE events 
     SET title = ?, event_imageID = ?, start_date = ?, end_date = ?, description = ?, cost = ?, locationID = ?, categoryID = ?, speakerID = ?, num_of_attendees = ?, registration_deadline = ? 
     WHERE eventsID = ?`;
-  const [result] = await require('./database').query(sqlUpdate, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline, eventID]);
-  res.status(200).json({ message: 'Event updated successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+    const [result] = await require('./database').query(sqlUpdate, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline, eventID]);
+    res.status(200).json({ message: 'Event updated successfully', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /* Deleting events data in Tournaments page
@@ -671,37 +805,37 @@ try {
 
 // Getting trainer data
 app.get('/api/speakers', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM speaker');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM speaker');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Adding trainer data in Events page
 app.post('/api/speakers/add', async (req, res) => {
-try {
-  const { name, specialty, bio, people_imageID } = req.body;
-  const sqlInsert = "INSERT INTO speaker (name, specialty, bio, people_imageID) VALUES (?, ?, ?, ?)";
-  const [result] = await require('./database').query(sqlInsert, [name, specialty, bio, people_imageID]);
-  res.status(201).json({ message: 'Speaker added successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const { name, specialty, bio, people_imageID } = req.body;
+    const sqlInsert = "INSERT INTO speaker (name, specialty, bio, people_imageID) VALUES (?, ?, ?, ?)";
+    const [result] = await require('./database').query(sqlInsert, [name, specialty, bio, people_imageID]);
+    res.status(201).json({ message: 'Speaker added successfully', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Editing trainer data in Events page
 app.put('/api/speakers/edit/:speakerID', async (req, res) => {
-try {
-  const { speakerID } = req.params;
-  const { name, specialty, bio, people_imageID } = req.body;
-  const sqlUpdate = "UPDATE speaker SET name = ?, specialty = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
-  const [result] = await require('./database').query(sqlUpdate, [name, specialty, bio, people_imageID, speakerID]);
-  res.status(200).json({ message: 'Speaker updated successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const { speakerID } = req.params;
+    const { name, specialty, bio, people_imageID } = req.body;
+    const sqlUpdate = "UPDATE speaker SET name = ?, specialty = ?, bio = ?, people_imageID = ? WHERE speakerID = ?";
+    const [result] = await require('./database').query(sqlUpdate, [name, specialty, bio, people_imageID, speakerID]);
+    res.status(200).json({ message: 'Speaker updated successfully', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /* Deleting trainer data in Events page
@@ -720,37 +854,46 @@ try {
 
 // Getting books data
 app.get('/api/library', async (req, res) => {
-try {
-  const [rows] = await require('./database').query('SELECT * FROM library');
-  res.json(rows);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const [rows] = await require('./database').query('SELECT * FROM library');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Adding books data in Library page
-app.post('/api/library/add', async (req, res) => {
-try {
+app.post('/api/library/add', (req, res) => {
   const { title, author, image, available, description } = req.body;
   const sqlInsert = "INSERT INTO library (title, author, image, available, description) VALUES (?, ?, ?, ?, ?)";
-  const [result] = await require('./database').query(sqlInsert, [title, author, image, available, description]);
-  res.status(201).json({ message: 'Book added successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [title, author, image, available, description], (error, result) => {
+      if (error) {
+        console.error('Error adding book:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(201).json({ message: 'Book added successfully', result });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
+
 
 // Editing books data in Library page
 app.put('/api/library/edit/:booksID', async (req, res) => {
-try {
-  const { booksID } = req.params;
-  const { title, author, image, available, description } = req.body;
-  const sqlUpdate = "UPDATE library SET title = ?, author = ?, image = ?, available = ?, description = ? WHERE booksID = ?";
-  const [result] = await require('./database').query(sqlUpdate, [title, author, image, available, description, booksID]);
-  res.status(200).json({ message: 'Book updated successfully', result });
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
+  try {
+    const { booksID } = req.params;
+    const { title, author, image, available, description } = req.body;
+    const sqlUpdate = "UPDATE library SET title = ?, author = ?, image = ?, available = ?, description = ? WHERE booksID = ?";
+    const [result] = await require('./database').query(sqlUpdate, [title, author, image, available, description, booksID]);
+    res.status(200).json({ message: 'Book updated successfully', result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /* Deleting books data in Library page
@@ -764,3 +907,113 @@ try {
   res.status(500).json({ error: error.message });
 }
 });*/
+
+app.post('/api/subscribe/add', async (req, res) => {
+  const { first_name, last_name, email } = req.body;
+  if (!first_name || !last_name || !email) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  const insertQuery = `INSERT INTO mailing_list (first_name, last_name, email) VALUES (?, ?, ?)`;
+
+
+  db.then((dbConnection) => {
+    dbConnection.query(insertQuery, [first_name, last_name, email], (error, data) => {
+      if (error) {
+        console.error('Failed to insert subscriber:', error);
+        return res.status(500).json({ error: 'Database insertion failed' });
+      }
+      res.status(200).json({ message: 'Subscription successful', id: data.insertId });
+    })
+
+  });
+});
+
+// Test
+app.get('/api/subscribe/list', async (req, res) => {
+  const sql = "SELECT * FROM mailing_list";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (error, data) => {
+      if (error) {
+        console.error("Error while fetching FAQs:", error);
+        return res
+          .status(500)
+          .json({ error: "Internal Server Error", message: error.message });
+      }
+      if (data.length > 0) {
+
+        return res.json(data);
+      } else {
+        res.status(404).json({ error: "No FAQs found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: error.message });
+  });
+
+})
+
+// Subscribers List
+app.get('/api/subscribers', async (req, res) => {
+  const sql = "SELECT id, first_name, last_name, email FROM mailing_list";
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (error, results) => {
+      if (error) {
+        console.error("Error fetching subscribers:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+      console.log(results);
+      if (results.length > 0) {
+        const subscribers = results.map(subscriber => ({
+
+          id: `${subscriber.id}`,
+          first_name: `${subscriber.first_name}`,
+          last_name: `${subscriber.last_name}`,
+          name: `${subscriber.first_name} ${subscriber.last_name}`,
+          email: `${subscriber.email}`,
+        }));
+        res.json(subscribers);
+      } else {
+        res.status(404).json({ error: "No subscribers found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Delete subscriber by email
+app.delete('/api/subscribers/delete', (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  const deleteQuery = "DELETE FROM mailing_list WHERE id = ?";
+  db.then((dbConnection) => {
+    dbConnection.query(deleteQuery, [id], (err, result) => {
+      if (err) {
+        console.error("Error deleting subscriber:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "Subscriber not found" });
+      }
+      res.status(200).json({ message: "Subscriber deleted successfully" });
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+
+
+
+
+
+

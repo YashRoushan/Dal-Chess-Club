@@ -61,8 +61,9 @@ function TournamentsAddForm() {
         <form className="form-element">
           <label>Tournament Image</label>
           <input 
-          className="text-form" 
-          type="text" 
+          className="file-form" 
+          type="file"
+          accept='image/*' 
           value={tournamentImage} 
           onChange={(e) => setTournamentImage(e.target.value)} 
           required 
