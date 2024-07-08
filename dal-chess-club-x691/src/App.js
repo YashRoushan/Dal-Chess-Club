@@ -112,6 +112,7 @@ function App() {
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
               <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
               <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
+              <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
               
 
             </Routes>

@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import './AddForms.css';
 import { useLocation } from 'react-router-dom';
+import {BASE_URL} from "../config";
+import { NavigateBefore } from '@mui/icons-material';
 
 function ChampionsEditForm() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const itemId = searchParams.get('itemId');
-
+  const itemId = searchParams.get('id');
+  console.log(itemId);
+  const [successMessage, setSuccessMessage] = useState('');
   const [championName, setChampionName] = useState('');
-  const [championYear, setChampionYear] = useState('');
+  const [championYear, setChampionYear] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     const fetchChampion = async () => {
       try {
-        const response = await fetch(`/api/champions/${itemId}`);
+        const response = await fetch(`${BASE_URL}/api/champions/${itemId}`);
+        if(!response.ok) {
+          console.log('error');
+        }
         const result = await response.json();
+        console.log(result);
         if (result) {
-          setChampionName(result.name);
-          setChampionYear(result.year);
+          setChampionName(result[0].name);
+          const formattedYear = result[0].year.toString().split('T')[0];
+          setChampionYear(formattedYear);
+          setSuccessMessage(result[0].message);
         }
       } catch (error) {
         console.error('Error fetching champion:', error);
@@ -29,8 +38,9 @@ function ChampionsEditForm() {
 
   const handleEdit = async () => {
     const formData = { name: championName, year: championYear };
+    console.log(formData);
     try {
-      const response = await fetch(`/api/champions/edit/${itemId}`, {
+      const response = await fetch(`${BASE_URL}/api/champions/edit/${itemId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -57,6 +67,7 @@ function ChampionsEditForm() {
         <p>This is the page where you, the admin, can edit existing champions in the "Champions" page.</p>
       </div>
 
+      {successMessage && <div className="success-message">{successMessage}</div>}
       <div className="form-A">
         <form className="form-element">
           <label>Champion Name</label>
@@ -75,7 +86,7 @@ function ChampionsEditForm() {
           <label>Year</label>
           <input 
             className="date-form" 
-            type="date" 
+            type="date"
             value={championYear} 
             onChange={(e) => setChampionYear(e.target.value)} 
             required 

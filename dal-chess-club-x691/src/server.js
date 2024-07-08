@@ -1554,12 +1554,11 @@ app.get('/api/champions/:id', (req, res) => {
 
 //updating champions
 app.put('/api/champions/edit/:id', (req, res) => {
-  const { name, year } = req.body;
-  const splicedYear = new Date(year);
   const {id} = req.params;
+  const { name, year } = req.body;
   const sql = 'UPDATE champions SET name = ?, year = ? WHERE id = ?';
   db.then((dbConnection) => {
-    dbConnection.query(sql, [name, splicedYear, id], (err, result) => {
+    dbConnection.query(sql, [name, year, id], (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('Error updating champion');
