@@ -34,7 +34,7 @@ const AdminLanding = () => {
         { label: 'Add AboutUs', to: '/AboutUs-AddForm', category: 'aboutUs' },
         { label: 'Edit AboutUs', to: '/editAbout', category: 'aboutUs' },
         { label: 'Add Champion', to: '/Champions-AddForm', category: 'champion' },
-        { label: 'Edit Champion', to: '/Champions-EditForm', category: 'champion' },
+        { label: 'Edit Champion', to: '/editChampion', category: 'champion' },
     ];
 
     const categorizedLinks = {
@@ -61,15 +61,67 @@ const AdminLanding = () => {
     };
 
     return (
-    <div class="page">
-        <h1>Welcome!</h1>
-        <div className='button-container'>
-            <br></br>
-            {redirectLink.map((button , index) => (
-                <Link key={index} className='redirectLink' to={button.to}>{button.label}</Link>
-            ))}
+        <div className="admin-page">
+            <h1>Welcome!</h1>
+            <div className='admin-button-container-row1'>
+                {['tournament', 'book', 'news', 'trainer'].map((category, index) => (
+                    <div
+                        key={index}
+                        className="admin-dropdown"
+                        onMouseLeave={() => setVisibleDropdown(null)}
+                    >
+                        <button
+                            className={`admin-dropdown-button ${category}`}
+                            onClick={() => toggleDropdown(category)}
+                        >
+                            <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
+                            <img src={icons[category]} alt={`${category} icon`} className="icon" />
+                        </button>
+                        {visibleDropdown === category && (
+                            <div className="admin-dropdown-content admin-show">
+                                {categorizedLinks[category].map((link, index) => (
+                                    <Link key={index} className='admin-dropdown-link' to={link.to}>
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+            <div className='admin-button-container-row2'>
+                {['event', 'FAQ', 'aboutUs', 'champion'].map((category, index) => (
+                    <div
+                        key={index}
+                        className="admin-dropdown"
+                        onMouseLeave={() => setVisibleDropdown(null)}
+                    >
+                        <button
+                            className={`admin-dropdown-button ${category}`}
+                            onClick={() => toggleDropdown(category)}
+                        >
+                            <span className="label">{category.charAt(0).toUpperCase() + category.slice(1)} Options</span>
+                            <img src={icons[category]} alt={`${category} icon`} className="icon" />
+                        </button>
+                        {visibleDropdown === category && (
+                            <div className="admin-dropdown-content admin-show">
+                                {categorizedLinks[category].map((link, index) => (
+                                    <Link key={index} className='admin-dropdown-link' to={link.to}>
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
+                <div className="admin-dropdown">
+                    <Link to="/subscribers" className={`admin-dropdown-button subscribers`}>
+                        <span className="label">Subscribers</span>
+                        <img src={icons.subscribers} alt="subscribers icon" className="icon" />
+                    </Link>
+                </div>
+            </div>
         </div>
-    </div>
     );
 };
 
