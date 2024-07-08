@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
-import { BASE_URL} from '../config.js';
+import { BASE_URL } from '../config.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +31,7 @@ function Tournaments() {
         return response.json();
       })
       .then(data => {
+        console.log('Fetched tournaments:', data); // Debug log
         if (data.length === 0) {
           setTournamentsList([]); // Clear the list if no data is returned
         } else {
@@ -87,10 +88,11 @@ function Tournaments() {
           {tournamentsList.length === 0 ?
             (<h3>No Tournaments Found...</h3>) :
             (tournamentsList.map((tournament, key) => {
-              
+              console.log('Tournament ID:', tournament.tournamentsID); // Debug log
               return(
                 <TournamentItem
                   key={key}
+                  tournamentsID={tournament.tournamentsID}
                   name={tournament.title}
                   image={tournament.image}
                   price={formatPrice(tournament.cost)}
@@ -109,7 +111,7 @@ function Tournaments() {
   )
 }
 
-function formatPrice(price) {
+export function formatPrice(price) {
   if (!price || price === 0) {
     return "FREE";
   } else {
@@ -117,7 +119,7 @@ function formatPrice(price) {
   }
 }
 
-function formatDate(dateString) {
+export function formatDate(dateString) {
   if (!dateString) {
     return "Date TBD";
   }
@@ -130,7 +132,7 @@ function formatDate(dateString) {
   return `${month}/${day}/${year}`;
 }
 
-function formatTime(dateString) {
+export function formatTime(dateString) {
   const date = new Date(dateString);
 
   if (!dateString) {
@@ -139,9 +141,10 @@ function formatTime(dateString) {
   let hours = date.getHours();
   const ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
-  hours = hours ? hours : 12;
+  hours = hours ? 12 : 12;
 
   return `${hours}${ampm}`;
 }
 
 export default Tournaments;
+
