@@ -20,9 +20,9 @@ function EventItem({ tournamentsID, name, image, date, time, endTime, participan
 
   const handleTournamentClick = (e) => {
     e.preventDefault();  // Prevents the popup from opening when the button is clicked
-    navigate(`/tournamentInfo?itemId=${tournamentsID}`); // Navigate to the tournament info
+    navigate(`/eventInfo?itemId=${tournamentsID}`); // Navigate to the tournament info
   }
-
+  
   return (
     <div className="tournamentItem" onClick={handleTournamentClick}>
       <h1>{name}</h1>
