@@ -1,0 +1,33 @@
+/* styles/grandPrix.css */
+
+.grandPrix-background {
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.grandPrix-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.grandPrix-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.grandPrix-iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 10px;
+}

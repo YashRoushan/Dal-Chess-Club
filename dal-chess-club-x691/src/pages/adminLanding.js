@@ -119,6 +119,10 @@ const AdminLanding = () => {
                         <span className="label">Subscribers</span>
                         <img src={icons.subscribers} alt="subscribers icon" className="icon" />
                     </Link>
+                    <Link to="/grandPrixForm" className={`admin-dropdown-button grandPrixForm`}>
+                        <span className="label">Grand Prix</span>
+                        
+                    </Link>
                 </div>
             </div>
         </div>
