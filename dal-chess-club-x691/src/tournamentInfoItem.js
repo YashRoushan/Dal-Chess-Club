@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/tournaments.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL } from "./config";
+import {BsCaretDownFill, BsCaretUpFill} from "react-icons/bs";
 
 function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, participantsNo, price, description, registrationLink, participants }) {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
           )}
 
           <div className="ttables">
-            <button className="dropdown-button" onClick={toggleStandings}>Standings</button>
+            <button className="dropdown-button" onClick={toggleStandings}>Standings {showStandings ? <BsCaretUpFill />: <BsCaretDownFill />}</button>
             {showStandings && (
                 <>
                   <h3>Standings</h3>
@@ -87,7 +88,7 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
                 </>
             )}
 
-            <button className="dropdown-button" onClick={togglePairings}>Pairings</button>
+            <button className="dropdown-button" onClick={togglePairings}>Pairings  {showPairings ? <BsCaretUpFill />: <BsCaretDownFill />} </button>
             {showPairings && (
                 <>
                   <h3>Pairings</h3>
