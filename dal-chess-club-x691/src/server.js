@@ -8,7 +8,7 @@ const JWT_SECRET =
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const app = express();
-
+const multer = require("multer");
 
 app.use(cors());
 app.use(express.json());
@@ -253,6 +253,8 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // Import BASE_URL and getImageUrl from config.js in server.js
 // Now you can use BASE_URL and getImageUrl in your server.js file
 const { getImageUrl } = require('./config.js');
+const { File } = require("buffer");
+const { Upload } = require("@mui/icons-material");
 
 
 // News Page
@@ -804,28 +806,55 @@ app.put('/api/faq/update/:id', (req, res) => {
 //Tournaments Page
 
 // Getting tournmanets data
-app.get('/api/tournaments', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM tournaments');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+app.get('/api/tournaments', (req, res) => {
+  const sqlSelect = 'SELECT * FROM tournaments';
+  
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelect, (error, results) => {
+      if (error) {
+        console.error('Error retrieving tournaments:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
-// Adding tournaments data in Tournaments page
-app.post('/api/tournaments/add', async (req, res) => {
-  try {
-    const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
-    const sqlInsert = `
-    INSERT INTO tournaments 
-    (title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const [result] = await require('./database').query(sqlInsert, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required]);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+const tournamentImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb (null, 'src/images/')
+  },
+  filename: function (req, file, cb) {
+    cb (null, file.originalname)
   }
+})
+
+const tournamentImageUpload = multer({storage: tournamentImageStorage})
+// Adding tournaments data in Tournaments page
+app.post('/api/tournaments/add', tournamentImageUpload.single('tournamentImage'), (req, res) => {
+  const { title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+  const sqlInsert = `
+  INSERT INTO tournaments 
+  (title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required ) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlInsert, [title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required], (error, result) => {
+      if (error) {
+        console.error('Error adding tournament data:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Editing tournaments data in Tournaments page
