@@ -50,6 +50,9 @@ function NavBar() {
             </div>
             <div className='dropdown'>
                 <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
+                <div className='dropdown-content'>
+                    {userIsDesktop ? <Link to='/usersChampions'><button className='content'>Champions</button></Link> : <Link to='/champions'><button className='content'>{'>'} Champions</button></Link>}
+                </div>
             </div>
             <div className='dropdown'>
                 <Link to='/news'><button className='dropbtn'>News</button></Link>

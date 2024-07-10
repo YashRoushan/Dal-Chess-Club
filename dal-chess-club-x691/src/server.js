@@ -1503,21 +1503,83 @@ app.get('/api/tournaments/:id/participants', async (req, res) => {
   });
 });
 
+// making apis for champions
 
 
+app.post('/api/champions/add', (req, res) => {
+  const { name, year } = req.body;
+  const sql = 'INSERT INTO champions (name, year) VALUES (?, ?)';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [name, year], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error adding new champion');
+      } else {
+        res.status(201).send(`Champion added with ID: ${result.insertId}`);
+      }
+    });
+  })
+});
 
+// getting all champions
+app.get('/api/champions', (req, res) => {
+  const sql = 'SELECT * FROM champions';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (err, results) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving champions');
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  })
 
+});
 
+// getting single champion
+app.get('/api/champions/:id', (req, res) => {
+  const sql = 'SELECT * FROM champions WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [req.params.id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving champion');
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  })
+});
 
+//updating champions
+app.put('/api/champions/edit/:id', (req, res) => {
+  const {id} = req.params;
+  const { name, year } = req.body;
+  const sql = 'UPDATE champions SET name = ?, year = ? WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [name, year, id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error updating champion');
+      } else {
+        res.status(200).send(`Champion updated successfully`);
+      }
+    });
+  })
+});
 
-
-
-
-
-
-
-
-
-
-
-
+//deleting champions
+app.delete('/api/champions/delete/:id', (req, res) => {
+  const sql = 'DELETE FROM champions WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [req.params.id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting champion');
+      } else {
+        res.status(200).send('Champion deleted successfully');
+      }
+    });
+  })
+});

@@ -38,7 +38,9 @@ import DeleteForm from './pages/deleteForm.js';
 import RegistrationForm from './pages/tournamentRegistration.js';
 import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
 import TournamentInfo from './pages/tournamentInfo.js';
-
+import Champions from './pages/champions.js';
+import ChampionsAddForm from './forms/Champions-AddForm.js';
+import ChampionsEditForm from './forms/Champions-EditForm.js';
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
@@ -47,6 +49,7 @@ import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import NewsEditForm from './forms/editForm-news.js';
+import UsersChampions from './pages/usersChampions';
 
 
 
@@ -78,6 +81,7 @@ function App() {
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
               <Route path="/tournamentInfo" element={<TournamentInfo />} />
+              <Route path="/usersChampions" element={<UsersChampions />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
@@ -107,6 +111,11 @@ function App() {
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
+              <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
+              <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
+              <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
+              
+
             </Routes>
           <Footer/>
           </Router>
