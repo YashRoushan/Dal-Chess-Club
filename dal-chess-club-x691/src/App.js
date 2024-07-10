@@ -47,6 +47,9 @@ import Champions from './pages/champions.js';
 import ChampionsAddForm from './forms/Champions-AddForm.js';
 import ChampionsEditForm from './forms/Champions-EditForm.js';
 
+import Champions from './pages/champions.js';
+import ChampionsAddForm from './forms/Champions-AddForm.js';
+import ChampionsEditForm from './forms/Champions-EditForm.js';
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
@@ -92,6 +95,7 @@ function App() {
               <Route path="/champions" element={<Champions />} />
               <Route path="/usersChampions" element={<UsersChampions />} />
               <Route path="/eventInfo" element={<EventInfo />} />
+              <Route path="/champions" element={<Champions />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
