@@ -263,8 +263,7 @@ app.get("/api/news/getAllNews", (req, res) => {
 
   const sql = `SELECT news.newsTitle,news.date, news.text, event_images.image as imgurl, event_images.alt_text 
   FROM news
-  LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID
-  LIMIT 3`;
+  LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID`;
   db.then((dbConnection) => {
     dbConnection.query(sql, (error, data) => {
       if (error) {
