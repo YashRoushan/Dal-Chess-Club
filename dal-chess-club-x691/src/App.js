@@ -89,6 +89,7 @@ function App() {
               <Route path="/usersChampions" element={<UsersChampions />} />
               <Route path="/eventInfo" element={<EventInfo />} />
               <Route path="/champions" element={<Champions />} />
+              <Route path="/usersChampions" element={<UsersChampions />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
