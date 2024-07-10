@@ -10,7 +10,7 @@ function TournamentItem({ tournamentsID, name, image, date, time, endTime, parti
   const [participantCount, setParticipantCount] = useState(0);
 
   useEffect(() => {
-    console.log('Tournament ID:', tournamentsID); // Debug log
+    
     // Fetch the number of participants for this tournament
     if (tournamentsID) {
       fetch(`${BASE_URL}/api/tournaments/${tournamentsID}/participants`)
