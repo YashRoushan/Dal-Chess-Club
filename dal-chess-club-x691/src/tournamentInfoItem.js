@@ -7,6 +7,8 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
   const navigate = useNavigate();
   const [pairings, setPairings] = useState('');
   const [standings, setStandings] = useState('');
+  const [showStandings, setShowStandings] = useState(false);
+  const [showPairings, setShowPairings] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
@@ -33,6 +35,14 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
 
   const handleRegisterNow = () => {
     navigate(`/tournamentRegistration?tournamentsID=${tournamentID}`); // Navigate to the registration page with the tournament ID
+  };
+
+  const toggleStandings = () => {
+    setShowStandings(!showStandings);
+  };
+
+  const togglePairings = () => {
+    setShowPairings(!showPairings);
   };
 
   return (
@@ -62,19 +72,31 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
           </div>
         </div>
 
-        {registrationLink && (
-          <a href={registrationLink} target="_blank" rel="noopener noreferrer">
-            <button className="tregisterButton">Register</button>
-          </a>
-        )}
-        <div className="ttables">
-          <h3>Standings</h3>
-          <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-          <h3>Pairings</h3>
-          <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
+          {registrationLink && (
+              <a href={registrationLink} target="_blank" rel="noopener noreferrer">
+                <button className="tregisterButton">Register</button>
+              </a>
+          )}
+
+          <div className="ttables">
+            <button className="dropdown-button" onClick={toggleStandings}>Standings</button>
+            {showStandings && (
+                <>
+                  <h3>Standings</h3>
+                  <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
+                </>
+            )}
+
+            <button className="dropdown-button" onClick={togglePairings}>Pairings</button>
+            {showPairings && (
+                <>
+                  <h3>Pairings</h3>
+                  <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
+                </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 
