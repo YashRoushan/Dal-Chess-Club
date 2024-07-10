@@ -47,9 +47,6 @@ import Champions from './pages/champions.js';
 import ChampionsAddForm from './forms/Champions-AddForm.js';
 import ChampionsEditForm from './forms/Champions-EditForm.js';
 
-import Champions from './pages/champions.js';
-import ChampionsAddForm from './forms/Champions-AddForm.js';
-import ChampionsEditForm from './forms/Champions-EditForm.js';
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
