@@ -47,17 +47,21 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
             <p> Time: {time} - {endTime}</p>
             <p> Number of Participants: {participantsNo} </p>
             <p> {description} </p>
+            
+            <h2>Registered Participants:</h2>
+            
+            <ul>
+              {participants.map(participant => (
+                <li key={participant.id}>{participant.fullname}</li>
+              ))}
+            </ul>
             <div className="participants-register-container">
               <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
             </div>
+            
           </div>
         </div>
-        <h2>Registered Participants:</h2>
-        <ul>
-          {participants.map(participant => (
-            <li key={participant.id}>{participant.fullname}</li>
-          ))}
-        </ul>
+
         {registrationLink && (
           <a href={registrationLink} target="_blank" rel="noopener noreferrer">
             <button className="tregisterButton">Register</button>
