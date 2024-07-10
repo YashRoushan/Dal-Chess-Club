@@ -34,7 +34,7 @@ const AdminLanding = () => {
         { label: 'Add AboutUs', to: '/AboutUs-AddForm', category: 'aboutUs' },
         { label: 'Edit AboutUs', to: '/editAbout', category: 'aboutUs' },
         { label: 'Add Champion', to: '/Champions-AddForm', category: 'champion' },
-        { label: 'Edit Champion', to: '/editChampion', category: 'champion' },
+        { label: 'Edit Champion', to: '/champions', category: 'champion' },
     ];
 
     const categorizedLinks = {
