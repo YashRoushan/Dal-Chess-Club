@@ -62,12 +62,9 @@ function NavBar() {
                         <>
                             <Link to='/tournaments'><button className='content'>Future Tournaments</button></Link> 
                             <Link to=''><button className='content'>Past Tournaments</button></Link> 
-                            <Link to=''><button className='content'>{'>'}Grand Prix</button></Link> 
-                            <Link to='/champions'><button className='content'>{'>'} Champions</button></Link>
+                            <Link to=''><button className='content'>Grand Prix</button></Link> 
+                            <Link to='/champions'><button className='content'>Champions</button></Link>
                         </>}
-                </div>
-                <div className='dropdown-content'>
-                    {userIsDesktop ? <Link to='/usersChampions'><button className='content'>Champions</button></Link> : <Link to='/champions'><button className='content'>{'>'} Champions</button></Link>}
                 </div>
             </div>
             <div className='dropdown'>
@@ -84,7 +81,7 @@ function NavBar() {
                         : 
                         <>
                             <Link to='/improve'><button className='content'>Events</button></Link> 
-                            <Link to='/library'><button className='content'>{'>'} Library</button></Link>
+                            <Link to='/library'><button className='content'>Library</button></Link>
                             
                         </>}
                 </div>
