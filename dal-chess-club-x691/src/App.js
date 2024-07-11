@@ -41,6 +41,8 @@ import TournamentInfo from './pages/tournamentInfo.js';
 import Champions from './pages/champions.js';
 import ChampionsAddForm from './forms/Champions-AddForm.js';
 import ChampionsEditForm from './forms/Champions-EditForm.js';
+import EventInfo from './pages/eventInfo.js';
+
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
 import EventsEditForm from './forms/editForm-events.js';
@@ -81,6 +83,9 @@ function App() {
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
               <Route path="/tournamentInfo" element={<TournamentInfo />} />
+              <Route path="/usersChampions" element={<UsersChampions />} />
+              <Route path="/eventInfo" element={<EventInfo />} />
+              <Route path="/champions" element={<Champions />} />
               <Route path="/usersChampions" element={<UsersChampions />} />
 
               {/* Admin only Routes */}

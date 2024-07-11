@@ -32,7 +32,7 @@ function Improve() {
           <div className="tournamentList">
               {eventList.map((eventItem, key) => {
                 return(
-                  <TournamentItem
+                  <EventItem
                     key={key}
                     name={eventItem.title}
                     image={eventItem.eventImage}
