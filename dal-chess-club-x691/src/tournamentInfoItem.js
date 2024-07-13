@@ -69,20 +69,10 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
             <div className="participants-register-container">
               <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
             </div>
-<<<<<<< HEAD
-=======
-            <h2>Registered Participants:</h2>
-            <ul>
-              {participants.map(participant => (
-                <li key={participant.id}>{participant.fullname}</li>
-              ))}
-            </ul>
->>>>>>> 2cb57b3 (minor fix about the tournamentInfo form)
             
           </div>
         </div>
 
-<<<<<<< HEAD
           {registrationLink && (
               <a href={registrationLink} target="_blank" rel="noopener noreferrer">
                 <button className="tregisterButton">Register</button>
@@ -106,18 +96,6 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
                 </>
             )}
           </div>
-=======
-        {registrationLink && (
-          <a href={registrationLink} target="_blank" rel="noopener noreferrer">
-            <button className="tregisterButton">Register</button>
-          </a>
-        )}
-        <div className="ttables">
-          <h3>Standings</h3>
-          <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-          <h3>Pairings</h3>
-          <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
->>>>>>> 2cb57b3 (minor fix about the tournamentInfo form)
         </div>
       </div>
   );
