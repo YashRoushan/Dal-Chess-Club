@@ -1,26 +1,35 @@
-import React, {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import LibraryPopUp from './libraryBooksPopUp';
 import { BASE_URL } from './config.js';
 
-function LibraryItem({name, image, author }) {
-  
-  
+function LibraryItem({ id, name, image, author, description }) {
   const [showPopUp, setShowPopUp] = useState(false);
-  
+  const [bookDetails, setBookDetails] = useState(null);
+
   const togglePopUp = () => {
-    setShowPopUp(!showPopUp);
+    if (!showPopUp) {
+      fetch(`${BASE_URL}/api/library/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          setBookDetails(data);
+          setShowPopUp(true);
+        })
+        .catch(error => console.error('Error fetching book details:', error));
+    } else {
+      setShowPopUp(false);
+    }
   }
 
   return (
     <div className="libraryItem" onClick={togglePopUp}>
-      <img className="library-image" src={image} alt="Book Image" />
-      <h3> {name} </h3>
-      {showPopUp && (
+      <img className="library-image" src={image} alt={name} />
+      <h3>{name}</h3>
+      {showPopUp && bookDetails && (
         <LibraryPopUp
-          name={name}
-          image={image}
-          author={author}
+          name={bookDetails.title}
+          image={bookDetails.image}
+          author={bookDetails.author}
+          description={bookDetails.description}
           onClose={togglePopUp}
         />
       )}
@@ -29,3 +38,7 @@ function LibraryItem({name, image, author }) {
 }
 
 export default LibraryItem;
+
+
+
+
