@@ -20,14 +20,17 @@ function LibraryItem({ id, name, image, author, description }) {
     }
   }
 
+  const normalizedImage = image.replace('./', ''); 
+  const imageUrl = `${BASE_URL}/src${normalizedImage.startsWith('/') ? '' : '/'}${normalizedImage}`;
+
   return (
     <div className="libraryItem" onClick={togglePopUp}>
-      <img className="library-image" src={image} alt={name} />
+      <img className="library-image" src={imageUrl} alt={"No image"} />
       <h3>{name}</h3>
       {showPopUp && bookDetails && (
         <LibraryPopUp
           name={bookDetails.title}
-          image={bookDetails.image}
+          image={imageUrl}
           author={bookDetails.author}
           description={bookDetails.description}
           onClose={togglePopUp}

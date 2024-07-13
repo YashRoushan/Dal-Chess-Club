@@ -10,10 +10,7 @@ function Library() {
     fetch(`${BASE_URL}/api/library`) 
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched data:", data); // Debug fetched data
-        setLibraryList(data); // Assuming the endpoint returns an array directly
-        data.forEach(item => console.log(`Image URL for ${item.title}: ${item.image}`)); // Debug image URLs
-        
+        setLibraryList(data); 
       })
       .catch(error => console.error('Error fetching books:', error));
   }, []);
