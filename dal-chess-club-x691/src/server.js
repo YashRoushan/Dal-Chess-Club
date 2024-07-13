@@ -1101,24 +1101,7 @@ app.delete('/api/speaker/delete/:speakerID', (req, res) => {
 
 //Library Page
 
-// Fetch all books from the library
-app.get('/api/library', (req, res) => {
-  const sqlSelectAllBooks = "SELECT booksID, title, author, image, available, description FROM library";
 
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectAllBooks, (error, result) => {
-      if (error) {
-        console.error('Error fetching library books:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  });
-});
 
 
 // Adding books data in Library page
@@ -1142,27 +1125,7 @@ app.post('/api/library/add', (req, res) => {
 });
 
 
-// Fetch a single library item by id
-app.get('/api/library/:id', (req, res) => {
-  const { id } = req.params;
-  const sqlSelectLibraryItem = "SELECT booksID, title, author, image, available, description FROM library WHERE id = ?";
 
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectLibraryItem, [id], (error, result) => {
-      if (error) {
-        console.error('Error fetching library item:', error);
-        res.status(500).json({ error: error.message });
-      } else if (result.length === 0) {
-        res.status(404).json({ error: 'Library item not found' });
-      } else {
-        res.status(200).json(result[0]);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  });
-});
 
 // Update a library item
 app.put('/api/library/update/:id', (req, res) => {
@@ -1503,8 +1466,46 @@ app.get('/api/tournaments/:id/participants', async (req, res) => {
   });
 });
 
+// Fetch all books from the library
+app.get('/api/library', (req, res) => {
+  const sqlSelectAllBooks = "SELECT booksID, title, author, image, available, description FROM library";
 
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllBooks, (error, result) => {
+      if (error) {
+        console.error('Error fetching library books:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
+// Fetch a single library item by id
+app.get('/api/library/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlSelectLibraryItem = "SELECT booksID, title, author, image, available, description FROM library WHERE booksID = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectLibraryItem, [id], (error, result) => {
+      if (error) {
+        console.error('Error fetching library item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
 
 
