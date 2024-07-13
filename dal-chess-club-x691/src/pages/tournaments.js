@@ -88,7 +88,7 @@ function Tournaments() {
           {tournamentsList.length === 0 ?
             (<h3>No Tournaments Found...</h3>) :
             (tournamentsList.map((tournament, key) => {
-              console.log('Tournament ID:', tournament.tournamentsID); // Debug log
+              
               return(
                 <TournamentItem
                   key={key}
