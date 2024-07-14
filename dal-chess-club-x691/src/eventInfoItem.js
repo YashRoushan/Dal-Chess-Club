@@ -36,7 +36,9 @@ function EventInfoItem({ tournamentID, name, image, date, time, endTime, partici
       <div className="tpopup-content" onClick={e => e.stopPropagation()}>
         <div className="ttournament-info">
           <img className="ttournament-image" src={image} alt={name} />
+          <div>
           <h1 className="ttitle">{name}</h1>
+          </div>
           <div className="ttournament-details">
             <p> Cost: {price} </p>
             <p> Date: {date} </p>

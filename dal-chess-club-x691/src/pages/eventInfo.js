@@ -15,8 +15,23 @@ function EventInfo() {
     fetchParticipants(tournamentID);
   }, [tournamentID]);
 
+  const [eventList, setEventsList] = useState([]);
+
+    // Fetch events from the API
+    useEffect(() => {
+      fetch(`${BASE_URL}/improve`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setEventsList(data);
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }, []); 
+
   const fetchTournamentData = async (id) => {
-    const serverUrl = `${BASE_URL}/tournaments?id=${id}`;
+    const serverUrl = `${BASE_URL}/events?id=${id}`;
     console.log('Fetching tournament data:', serverUrl);
     try {
       const response = await fetch(serverUrl);
@@ -36,7 +51,7 @@ function EventInfo() {
   };
 
   const fetchParticipantCount = async (id) => {
-    const participantUrl = `${BASE_URL}/api/tournaments/${id}/participants`;
+    const participantUrl = `${BASE_URL}/api/events/${id}/participants`;
     console.log('Fetching participant count:', participantUrl);
     try {
       const response = await fetch(participantUrl);
@@ -57,7 +72,7 @@ function EventInfo() {
       const response = await fetch(`${BASE_URL}/api/registration`);
       const data = await response.json();
       console.log('All participants:', data); // Log all participants
-      const filteredParticipants = data.filter(user => user.tournamentsID === id.toString());
+      const filteredParticipants = data.filter(user => user.eventsID === id.toString());
       console.log('Filtered participants:', filteredParticipants);
       setParticipants(filteredParticipants);
     } catch (error) {
@@ -66,20 +81,43 @@ function EventInfo() {
   };
 
   return (
-    <EventInfoItem
-      tournamentID={tournamentID}
-      name={tournamentsList.title}
-      image={tournamentsList.image}
-      price={formatPrice(tournamentsList.cost)}
-      date={formatDate(tournamentsList.start_date)}
-      time={formatTime(tournamentsList.start_date)}
-      endTime={formatTime(tournamentsList.end_date)}
-      participantsNo={participantCount} // Pass the participant count here
-      description={tournamentsList.description}
-      registrationLink={tournamentsList.registration_link}
-      participants={participants} // Pass the participants here
-    />
+    <div className="tournamentList">
+              {eventList.map((eventItem, key) => {
+                return(
+                  <EventInfoItem
+                    key={key}
+                    eventsID={eventItem.eventsID}
+                    name={eventItem.title}
+                    image={eventItem.eventImage}
+                    price={formatPrice(eventItem.cost)}
+                    date={formatDate(eventItem.start_date)}
+                    time={formatTime(eventItem.start_date)}
+                    endTime={formatTime(eventItem.end_date)}
+                    description={eventItem.description}
+                    participantsNo={participantCount} // Pass the participant count here
+                    registrationLink={tournamentsList.registration_link}
+                    participants={participants} // Pass the participants here
+                  />
+                )
+              })}
+          </div>
   );
+
+  // return (
+  //   <EventInfoItem
+  //     tournamentID={tournamentID}
+  //     name={tournamentsList.title}
+  //     image={tournamentsList.eventImage}
+  //     price={formatPrice(tournamentsList.cost)}
+  //     date={formatDate(tournamentsList.start_date)}
+  //     time={formatTime(tournamentsList.start_date)}
+  //     endTime={formatTime(tournamentsList.end_date)}
+  //     participantsNo={participantCount} // Pass the participant count here
+  //     description={tournamentsList.description}
+  //     registrationLink={tournamentsList.registration_link}
+  //     participants={participants} // Pass the participants here
+  //   />
+  // );
 }
 
 function formatPrice(price) {
