@@ -88,6 +88,9 @@ function EditTournaments() {
                                 <Link to={`/editForm-liveTournament?itemId=${tournament.tournamentsID}`}>
                                     <button>Update Live</button>
                                 </Link>
+                                <Link to={`/editForm-tournamentParticipants?itemId=${tournament.tournamentsID}`}>
+                                    <button>Participants</button>
+                                </Link>
                             </td>
                         </tr>
                     ))}
