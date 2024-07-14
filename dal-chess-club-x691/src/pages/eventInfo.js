@@ -82,25 +82,25 @@ function EventInfo() {
 
   return (
     <div className="tournamentList">
-              {eventList.map((eventItem, key) => {
-                return(
-                  <EventInfoItem
-                    key={key}
-                    eventsID={eventItem.eventsID}
-                    name={eventItem.title}
-                    image={eventItem.eventImage}
-                    price={formatPrice(eventItem.cost)}
-                    date={formatDate(eventItem.start_date)}
-                    time={formatTime(eventItem.start_date)}
-                    endTime={formatTime(eventItem.end_date)}
-                    description={eventItem.description}
-                    participantsNo={participantCount} // Pass the participant count here
-                    registrationLink={tournamentsList.registration_link}
-                    participants={participants} // Pass the participants here
-                  />
-                )
-              })}
-          </div>
+      {eventList.map((eventItem, key) => {
+        return(
+          <EventInfoItem
+            key={key}
+            eventsID={eventItem.eventsID}
+            name={eventItem.title}
+            image={eventItem.eventImage}
+            price={formatPrice(eventItem.cost)}
+            date={formatDate(eventItem.start_date)}
+            time={formatTime(eventItem.start_date)}
+            endTime={formatTime(eventItem.end_date)}
+            description={eventItem.description}
+            participantsNo={participantCount} // Pass the participant count here
+            registrationLink={tournamentsList.registration_link}
+            participants={participants} // Pass the participants here
+          />
+        )
+      })}
+    </div>
   );
 
   // return (
