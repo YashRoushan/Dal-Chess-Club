@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/tournamentRegistration.css'; 
 import { BASE_URL } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 function RegistrationForm() {
   // State to store form data
@@ -13,6 +14,7 @@ function RegistrationForm() {
   });
 
   const [tournamentsID, setTournamentsID] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -26,6 +28,10 @@ function RegistrationForm() {
       ...formData,
       [name]: value
     });
+  };
+
+  const handleSubsribeNow = () => {
+    navigate(`/mailingList?tournamentsID=${tournamentsID}`)
   };
 
   const handleSubmit = async (event) => {
@@ -136,6 +142,10 @@ function RegistrationForm() {
           </div>
         </form>
       </div>
+      <p>
+        Subsribe to our mailing list!
+      </p>
+      <button className="subscribe-button" onCLick={handleSubsribeNow}>Subscribe</button>
     </div>
   );
 }
