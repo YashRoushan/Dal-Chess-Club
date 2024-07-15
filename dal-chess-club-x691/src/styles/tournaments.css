@@ -90,6 +90,15 @@
   background-position: center;
 }
 
+.eevent-image {
+  width: 375px;
+  height:425px;
+  margin-top: 100px;
+  margin-left: 30px;
+  background-size: cover;
+  background-position: center;
+}
+
 .ttournament-info h1{
   margin-top:-500px;
 }
@@ -130,6 +139,26 @@
   border-radius: 5px;
  }
 
+ .dropdown-button{
+   display: block;
+   width: 11vw;
+   font-size: x-large;
+   padding: 5px 20px;
+   background-color: #FFD400;
+   color: black;
+   font-weight: bold;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   min-width: 120px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+ }
+
+.dropdown-button:hover {
+  background-color: #242424;
+  color: #FFD400;
+}
 @media only screen and (max-width: 1300px) {
   .tournamentList {
     grid-template-columns: 1fr 1fr;

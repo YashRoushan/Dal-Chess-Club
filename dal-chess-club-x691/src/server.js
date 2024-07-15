@@ -105,7 +105,7 @@ app.get("/tournaments", (req, res) => {
   const { id, name, price, date } = req.query;
 
   let tournamentQuery =
-    "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID";
+    "SELECT * FROM tournaments t, event_images e where ((t.event_imageID = e.event_imageID) AND (t.end_date > NOW()))";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
@@ -265,8 +265,7 @@ app.get("/api/news/getAllNews", (req, res) => {
 
   const sql = `SELECT news.newsTitle,news.date, news.text, event_images.image as imgurl, event_images.alt_text 
   FROM news
-  LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID
-  LIMIT 3`;
+  LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID`;
   db.then((dbConnection) => {
     dbConnection.query(sql, (error, data) => {
       if (error) {
@@ -1146,24 +1145,7 @@ app.delete('/api/speaker/delete/:speakerID', (req, res) => {
 
 //Library Page
 
-// Fetch all books from the library
-app.get('/api/library', (req, res) => {
-  const sqlSelectAllBooks = "SELECT booksID, title, author, image, available, description FROM library";
 
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectAllBooks, (error, result) => {
-      if (error) {
-        console.error('Error fetching library books:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  });
-});
 
 
 // Adding books data in Library page
@@ -1187,27 +1169,7 @@ app.post('/api/library/add', (req, res) => {
 });
 
 
-// Fetch a single library item by id
-app.get('/api/library/:id', (req, res) => {
-  const { id } = req.params;
-  const sqlSelectLibraryItem = "SELECT booksID, title, author, image, available, description FROM library WHERE id = ?";
 
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectLibraryItem, [id], (error, result) => {
-      if (error) {
-        console.error('Error fetching library item:', error);
-        res.status(500).json({ error: error.message });
-      } else if (result.length === 0) {
-        res.status(404).json({ error: 'Library item not found' });
-      } else {
-        res.status(200).json(result[0]);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  });
-});
 
 // Update a library item
 app.put('/api/library/update/:id', (req, res) => {
@@ -1548,21 +1510,123 @@ app.get('/api/tournaments/:id/participants', async (req, res) => {
   });
 });
 
+// making apis for champions
 
 
+app.post('/api/champions/add', (req, res) => {
+  const { name, year } = req.body;
+  const sql = 'INSERT INTO champions (name, year) VALUES (?, ?)';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [name, year], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error adding new champion');
+      } else {
+        res.status(201).send(`Champion added with ID: ${result.insertId}`);
+      }
+    });
+  });
+});
+// Fetch all books from the library
+app.get('/api/library', (req, res) => {
+  const sqlSelectAllBooks = "SELECT booksID, title, author, image, available, description FROM library";
 
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectAllBooks, (error, result) => {
+      if (error) {
+        console.error('Error fetching library books:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
+// Fetch a single library item by id
+app.get('/api/library/:id', (req, res) => {
+  const { id } = req.params;
+  const sqlSelectLibraryItem = "SELECT booksID, title, author, image, available, description FROM library WHERE booksID = ?";
 
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectLibraryItem, [id], (error, result) => {
+      if (error) {
+        console.error('Error fetching library item:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length === 0) {
+        res.status(404).json({ error: 'Library item not found' });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 
+// getting all champions
+app.get('/api/champions', (req, res) => {
+  const sql = 'SELECT * FROM champions';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (err, results) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving champions');
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  })
 
+});
 
+// getting single champion
+app.get('/api/champions/:id', (req, res) => {
+  const sql = 'SELECT * FROM champions WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [req.params.id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving champion');
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  })
+});
 
+//updating champions
+app.put('/api/champions/edit/:id', (req, res) => {
+  const {id} = req.params;
+  const { name, year } = req.body;
+  const sql = 'UPDATE champions SET name = ?, year = ? WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [name, year, id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error updating champion');
+      } else {
+        res.status(200).send(`Champion updated successfully`);
+      }
+    });
+  })
+});
 
-
-
-
-
-
-
-
-
+//deleting champions
+app.delete('/api/champions/delete/:id', (req, res) => {
+  const sql = 'DELETE FROM champions WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [req.params.id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting champion');
+      } else {
+        res.status(200).send('Champion deleted successfully');
+      }
+    });
+  })
+});
