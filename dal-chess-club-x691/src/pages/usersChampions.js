@@ -4,11 +4,7 @@ import { BASE_URL } from "../config";
 
 
 const UsersChampions = () => {
-    const [champions, setChampions] = useState([
-        { name: 'Champion 1', year: new Date().toISOString().split('T')[0] },
-        { name: 'Champion 2', year: new Date().toISOString().split('T')[0] },
-        { name: 'Champion 3', year: new Date().toISOString().split('T')[0] },
-    ]);
+    const [champions, setChampions] = useState([]);
 
     useEffect(() => {
         let isMounted = true;
@@ -34,7 +30,7 @@ const UsersChampions = () => {
                 }
             }
         };
-
+        
         fetchData();
 
         return () => {
@@ -50,7 +46,6 @@ const UsersChampions = () => {
             <table className="champions-table">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Champion Name</th>
                     <th>Year</th>
                 </tr>
@@ -58,9 +53,8 @@ const UsersChampions = () => {
                 <tbody>
                 {champions.map((champion, index) => (
                     <tr key={index}>
-                        <td>{champion.id}</td>
                         <td>{champion.name}</td>
-                        <td>{champion.year}</td>
+                        <td>{formatDate(champion.year)}</td>
                     </tr>
 
                 ))}
@@ -71,3 +65,15 @@ const UsersChampions = () => {
 };
 
 export default UsersChampions;
+
+// adapted from tournaments.js 
+export function formatDate(dateString) {
+    if (!dateString) {
+      return "Date TBD";
+    }
+    const date = new Date(dateString);
+    
+    const year = date.getFullYear();
+  
+    return `${year}`;
+  }

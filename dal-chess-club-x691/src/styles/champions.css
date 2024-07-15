@@ -31,9 +31,6 @@
     background-color: #f2f2f2;
 }
 
-.champions-table tr:hover {
-    background-color: #ddd;
-}
 
 .champions-table th {
     padding-top: 12px;
