@@ -57,7 +57,7 @@ function Tournaments() {
 
   return (
     <div className="tournament">
-      <h1>Future Tournaments</h1>
+      <h1>Current and Future Tournaments</h1>
       <div className="filters-container">
         
         <div className='input-wrapper'>

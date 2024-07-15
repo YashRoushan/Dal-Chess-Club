@@ -106,7 +106,6 @@ app.get("/tournaments", (req, res) => {
 
   let tournamentQuery =
       "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID AND (t.end_date > NOW() || t.end_date is null) ";
-    // "SELECT * FROM tournaments where end_date > NOW()";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
