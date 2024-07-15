@@ -90,6 +90,15 @@
   background-position: center;
 }
 
+.eevent-image {
+  width: 375px;
+  height:425px;
+  margin-top: 100px;
+  margin-left: 30px;
+  background-size: cover;
+  background-position: center;
+}
+
 .ttournament-info h1{
   margin-top:-500px;
 }
