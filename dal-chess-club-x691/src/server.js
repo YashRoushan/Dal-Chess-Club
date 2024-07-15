@@ -105,7 +105,7 @@ app.get("/tournaments", (req, res) => {
   const { id, name, price, date } = req.query;
 
   let tournamentQuery =
-    "SELECT * FROM tournaments t, event_images e where ((t.event_imageID = e.event_imageID) AND (t.end_date > NOW()))";
+    "SELECT * FROM tournaments t, event_images e where (t.end_date > NOW())";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
@@ -143,7 +143,7 @@ app.get("/tournaments", (req, res) => {
         });
         return res.json(newsWithImages);
       } else {
-        res.status(404).json({ error: "No news articles found" });
+        res.status(404).json({ error: "No Tournaments found" });
       }
     });
   }).catch((error) => {
@@ -151,6 +151,61 @@ app.get("/tournaments", (req, res) => {
     res
       .status(500)
       .json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// past tournaments
+app.get("/pastTournaments", (req, res) => {
+  //query parameters if filters were used
+  const { id, name, price, date } = req.query;
+
+  let tournamentQuery =
+      "SELECT * FROM tournaments t, event_images e where (t.end_date < NOW())";
+
+  const queryParams = [];
+  //altering query by adding query parameters if filters were used
+  if (id) {
+    tournamentQuery += ' AND tournamentsID LIKE ?';
+    queryParams.push(`%${id}%`);
+  }
+  if (name) {
+    tournamentQuery += ' AND title LIKE ?';
+    queryParams.push(`%${name}%`);
+  }
+  if (price) {
+    tournamentQuery += ' AND cost <= ?';
+    queryParams.push(price);
+  }
+  if (date) {
+    tournamentQuery += ' AND start_date LIKE ?';
+    queryParams.push(`%${date}%`);
+  }
+  db.then((dbConnection) => {
+    dbConnection.query(tournamentQuery, queryParams, (error, data) => {
+      if (error) {
+        console.error("Error while fetching news with images:", error);
+        return res
+            .status(500)
+            .json({ error: "Internal Server Error", message: error.message });
+      }
+      if (data.length > 0) {
+        const newsWithImages = data.map((item) => {
+          const image = item.image ? getImageUrl(item.image) : null;
+          return {
+            ...item, // Spread the existing item object
+            image: image, // Override the imageUrl property
+          };
+        });
+        return res.json(newsWithImages);
+      } else {
+        res.status(404).json({ error: "No Tournaments found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res
+        .status(500)
+        .json({ error: "Internal Server Error", message: error.message });
   });
 });
 
