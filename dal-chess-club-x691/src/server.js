@@ -105,7 +105,8 @@ app.get("/tournaments", (req, res) => {
   const { id, name, price, date } = req.query;
 
   let tournamentQuery =
-    "SELECT * FROM tournaments t, event_images e where (t.end_date > NOW())";
+      "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID AND (t.end_date > NOW() || t.end_date is null) ";
+    // "SELECT * FROM tournaments where end_date > NOW()";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used
@@ -160,7 +161,8 @@ app.get("/pastTournaments", (req, res) => {
   const { id, name, price, date } = req.query;
 
   let tournamentQuery =
-      "SELECT * FROM tournaments t, event_images e where (t.end_date < NOW())";
+      // "SELECT * FROM tournaments t, event_images e where (t.end_date < NOW())";
+      "SELECT * FROM tournaments t, event_images e where t.event_imageID = e.event_imageID AND t.end_date <= NOW()";
 
   const queryParams = [];
   //altering query by adding query parameters if filters were used

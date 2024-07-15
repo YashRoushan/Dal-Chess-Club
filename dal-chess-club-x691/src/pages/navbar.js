@@ -54,7 +54,7 @@ function NavBar() {
                     {userIsDesktop ? 
                         <>
                             <Link to='/tournaments'><button className='content'>Future Tournaments</button></Link> 
-                            <Link to=''><button className='content'>Past Tournaments</button></Link> 
+                            <Link to='/pastTournaments'><button className='content'>Past Tournaments</button></Link>
                             <Link to=''><button className='content'>Grand Prix</button></Link> 
                             <Link to='/usersChampions'><button className='content'>Champions</button></Link>
                         </>
