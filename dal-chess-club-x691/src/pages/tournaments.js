@@ -57,7 +57,7 @@ function Tournaments() {
 
   return (
     <div className="tournament">
-      <h1>Tournaments</h1>
+      <h1>Future Tournaments</h1>
       <div className="filters-container">
         
         <div className='input-wrapper'>
@@ -88,7 +88,7 @@ function Tournaments() {
           {tournamentsList.length === 0 ?
             (<h3>No Tournaments Found...</h3>) :
             (tournamentsList.map((tournament, key) => {
-              console.log('Tournament ID:', tournament.tournamentsID); // Debug log
+              
               return(
                 <TournamentItem
                   key={key}

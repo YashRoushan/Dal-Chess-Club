@@ -42,22 +42,48 @@ function NavBar() {
                 <Link to='/'><button className='dropbtn'>Home</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/about-us'><button onClick={setShowDropdownsAbout} className='dropbtn'>About Us</button></Link>
+            <Link><button onClick={setShowDropdownsAbout} className='dropbtn'>About Us</button></Link>
             {setShowDropdownsAbout && <div className='dropdown-content'>
-                <Link to='/our-members'><button  className='content'>Our Members</button></Link>
+                <Link to='/about-us'><button  className='content'>Our Members</button></Link>
                 <Link to='/faq'><button className='content'>FAQ</button></Link>
             </div>}
             </div>
             <div className='dropdown'>
-                <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
+                <Link><button className='dropbtn'>Tournaments</button></Link>
+                <div className='dropdown-content'>
+                    {userIsDesktop ? 
+                        <>
+                            <Link to='/tournaments'><button className='content'>Future Tournaments</button></Link> 
+                            <Link to=''><button className='content'>Past Tournaments</button></Link> 
+                            <Link to=''><button className='content'>Grand Prix</button></Link> 
+                            <Link to='/usersChampions'><button className='content'>Champions</button></Link>
+                        </>
+                        : 
+                        <>
+                            <Link to='/tournaments'><button className='content'>Future Tournaments</button></Link> 
+                            <Link to=''><button className='content'>Past Tournaments</button></Link> 
+                            <Link to=''><button className='content'>Grand Prix</button></Link> 
+                            <Link to='/champions'><button className='content'>Champions</button></Link>
+                        </>}
+                </div>
             </div>
             <div className='dropdown'>
                 <Link to='/news'><button className='dropbtn'>News</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/improve'><button className='dropbtn' >Improve</button></Link>
+            <Link><button className='dropbtn' >Improve</button></Link>
                 <div className='dropdown-content'>
-                    {userIsDesktop ? <Link to='/library'><button className='content'>Library</button></Link> : <Link to='/library'><button className='content'>{'>'} Library</button></Link>}
+                    {userIsDesktop ? 
+                        <>
+                            <Link to='/improve'><button className='content'>Events</button></Link> 
+                            <Link to='/library'><button className='content'>Library</button></Link> 
+                        </>
+                        : 
+                        <>
+                            <Link to='/improve'><button className='content'>Events</button></Link> 
+                            <Link to='/library'><button className='content'>Library</button></Link>
+                            
+                        </>}
                 </div>
             </div>
             

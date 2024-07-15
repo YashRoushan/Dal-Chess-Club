@@ -5,7 +5,7 @@ function libraryPopUp({ name, image, author, onClose}) {
     return (
         <div className="library-popup-background" onClick={onClose}>
             <div className="library-popup-content" onClick = {e => e.stopPropagation()}>
-                <img className="library-image" src={image} alt="Library Book Pic" />
+                <img className="library-image" src={image} alt="No image" />
                 <h3>{name}</h3>
                 <p>{author}</p>
                 <button onClick={onClose}>Close</button>
@@ -14,4 +14,4 @@ function libraryPopUp({ name, image, author, onClose}) {
     );
 }
 
-export default libraryPopUp
+export default libraryPopUp;
