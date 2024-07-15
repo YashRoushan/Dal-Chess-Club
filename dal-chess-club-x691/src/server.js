@@ -836,20 +836,36 @@ const tournamentImageStorage = multer.diskStorage({
 const tournamentImageUpload = multer({storage: tournamentImageStorage})
 // Adding tournaments data in Tournaments page
 app.post('/api/tournaments/add', tournamentImageUpload.single('tournamentImage'), (req, res) => {
-  const { title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
-  const sqlInsert = `
-  INSERT INTO tournaments 
-  (title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required ) 
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const { title, description, cost, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+  
+  const imagePath = `/src/images/${req.file.originalname}`;
+  const alt_text = `${req.file.originalname} not found`;
+
+  const imageInsert = `INSERT INTO event_images (image, alt_text) VALUES (?, ?)`;
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlInsert, [title, description, cost, event_imageID, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required], (error, result) => {
+    dbConnection.query(imageInsert, [imagePath, alt_text], (error, result) => {
       if (error) {
-        console.error('Error adding tournament data:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        res.status(200).json(result);
+        console.error('Error adding event image data:', error);
+        return res.status(500).json({ error: error.message });
       }
+      
+      const event_imageID = result.insertId;
+
+      const sqlInsertTournament = `
+        INSERT INTO tournaments 
+        (title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      dbConnection.query(sqlInsertTournament, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required], (error, result) => {
+        if (error) {
+          console.error('Error adding tournament data:', error);
+          return res.status(500).json({ error: error.message });
+        }
+
+        res.status(200).json(result);
+      });
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
