@@ -34,7 +34,6 @@ import AuthGuard from './components/AuthGuard.js';
 import { AuthProvider } from './contexts/AuthContext';
 import MailingList from './pages/mailingList.js';
 import Subscribers from './pages/subscribers.js';
-import GrandPrixForm from './pages/grandPrixForm.js';
 import SubscribersDeleteForm from './pages/subscribersDeleteForm.js';
 import DeleteForm from './pages/deleteForm.js';
 import RegistrationForm from './pages/tournamentRegistration.js';
@@ -53,7 +52,9 @@ import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import NewsEditForm from './forms/editForm-news.js';
-import GrandPrixPage from './grandPrixPage.js';
+import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file name match
+import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
+import { IframeProvider } from './pages/IframeContext.js';
 import UsersChampions from './pages/usersChampions';
 
 
@@ -68,6 +69,7 @@ function App() {
 
   return (
     <div className="App">
+      <IframeProvider>
       <AuthProvider>
         <Suspense fallback="loading ...">
           <Router basename='/chessclub'>
@@ -138,6 +140,7 @@ function App() {
           </Router>
         </Suspense>
       </AuthProvider>
+      </IframeProvider>
     </div>
   );
 }
