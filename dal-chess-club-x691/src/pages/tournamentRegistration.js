@@ -30,10 +30,6 @@ function RegistrationForm() {
     });
   };
 
-  const handleSubsribeNow = () => {
-    navigate(`/mailingList?tournamentsID=${tournamentsID}`)
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -142,10 +138,14 @@ function RegistrationForm() {
           </div>
         </form>
       </div>
-      <p>
-        Subsribe to our mailing list!
-      </p>
-      <button className="subscribe-button" onCLick={handleSubsribeNow}>Subscribe</button>
+      <div className="forgotPassword-header">
+        <p>Subsribe to our mailing list!</p>
+      </div>
+      <div className="reset-submit-container">
+        <a href="mailingList">
+          <button>Subscribe</button>
+        </a>
+      </div>
     </div>
   );
 }
