@@ -14,7 +14,6 @@ function RegistrationForm() {
   });
 
   const [tournamentsID, setTournamentsID] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -138,10 +137,10 @@ function RegistrationForm() {
           </div>
         </form>
       </div>
-      <div className="forgotPassword-header">
+      <div className="subscriptionMessage-container">
         <p>Subsribe to our mailing list!</p>
       </div>
-      <div className="reset-submit-container">
+      <div className="subscribe-button-container">
         <a href="mailingList">
           <button>Subscribe</button>
         </a>

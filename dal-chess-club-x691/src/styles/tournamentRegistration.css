@@ -108,10 +108,40 @@
   color: #FFD400; 
 }
 
+.subscriptionMessage-container {
+  margin-top: 25px;
+  text-align: center;
+}
 
+.subscriptionMessage-container p {
+  text-align: center;
+}
 
-  
- 
-  
-  
-  
+.subscribe-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.subscribe-button-container a {
+  text-decoration: none;
+}
+
+.subscribe-button-container button {
+  width: 100px;
+  padding: 10px;
+  background-color: #FFD400;
+  color: #000000;
+  font-weight: 550;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.subscribe-button-container button:hover {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
