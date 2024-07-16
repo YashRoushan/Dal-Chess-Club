@@ -14,7 +14,6 @@ function RegistrationForm() {
   });
 
   const [tournamentsID, setTournamentsID] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
