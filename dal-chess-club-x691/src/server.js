@@ -1566,6 +1566,86 @@ app.get('/api/tournaments/:id/participants', async (req, res) => {
   });
 });
 
+
+// Fetch all grand prix data
+app.get('/api/grand-prix', (req, res) => {
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM grand_prix', (error, rows) => {
+      if (error) {
+        console.error('Error fetching grand prix:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.json(rows);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Fetch specific grand prix data by id
+app.get('/api/grand-prix/:idgrand_prix', (req, res) => {
+  const { idgrand_prix } = req.params;
+
+  db.then((dbConnection) => {
+    dbConnection.query('SELECT * FROM grand_prix WHERE idgrand_prix = ?', [idgrand_prix], (error, rows) => {
+      if (error) {
+        console.error('Error fetching grand prix data:', error);
+        res.status(500).json({ error: error.message });
+      } else if (rows.length === 0) {
+        res.status(404).json({ error: 'Grand prix not found' });
+      } else {
+        res.json(rows[0]);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+
+// Edit grand prix data
+app.put('/api/grand-prix/edit/:idgrand_prix', (req, res) => {
+  const { iframe_link } = req.body;
+  const { idgrand_prix } = req.params;
+
+  const sqlCheckTournamentPresent = 'SELECT * FROM grand_prix WHERE idgrand_prix = ?';
+  const sqlUpdate = 'UPDATE grand_prix SET iframe_link = ? WHERE idgrand_prix = ?';
+  const sqlInsert = 'INSERT INTO grand_prix (idgrand_prix, iframe_link) VALUES (?, ?)';
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlCheckTournamentPresent, [idgrand_prix], (error, result) => {
+      if (error) {
+        console.error('Error checking grand prix presence:', error);
+        res.status(500).json({ error: error.message });
+      } else if (result.length > 0) {
+        // Grand prix already exists, performing an update
+        dbConnection.query(sqlUpdate, [iframe_link, idgrand_prix], (error) => {
+          if (error) {
+            console.error('Error updating grand prix data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(200).json({ success: true });
+          }
+        });
+      } else {
+        // Grand prix not present, performing insert
+        dbConnection.query(sqlInsert, [idgrand_prix, iframe_link], (error) => {
+          if (error) {
+            console.error('Error adding grand prix data:', error);
+            res.status(500).json({ error: error.message });
+          } else {
+            res.status(201).json({ success: true });
+          }
+        });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
 // making apis for champions
 
 
