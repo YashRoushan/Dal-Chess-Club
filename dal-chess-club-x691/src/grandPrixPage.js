@@ -24,10 +24,16 @@ function GrandPrixPage() {
   };
 
   return (
-    <div className="tpopup-background">
-      <div className="ttables">
+    <div className="randPrix-container">
+      <div className="grandPrix-title">
         <h1>Grand Prix</h1>
-        <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: grandPrixIframe }}></div>
+          <div className="grandPrix-contents">
+            <p>The Dalhousie Grand Prix is a points-based competition that rewards players for achieving multiple strong performances throughout the academic year. </p>
+            <p> Out of 7 open tournaments hosted by the Dalhousie Chess Club, the best 4 results will count towards the final standings. </p> 
+            <p>In the case of tied positions in the final standings, the player with the higher CFC rating will be given the higher position.</p>
+            <p>In the case of tied positions in a tournament, the points will be evenly divided amongst the tied positions. </p>
+          </div>
+        <div className="grandPrix-table" dangerouslySetInnerHTML={{ __html: grandPrixIframe }}></div>
       </div>
     </div>
   );
