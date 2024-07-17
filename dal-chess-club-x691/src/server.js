@@ -891,7 +891,7 @@ const tournamentImageStorage = multer.diskStorage({
 const tournamentImageUpload = multer({storage: tournamentImageStorage})
 // Adding tournaments data in Tournaments page
 app.post('/api/tournaments/add', tournamentImageUpload.single('tournamentImage'), (req, res) => {
-  const { title, description, cost, registration_link, start_date, end_date,num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+  const { title, description, cost, registration_link, start_date, end_date,num_of_participants, location, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
   
   const imagePath = `/src/images/${req.file.originalname}`;
   const alt_text = `${req.file.originalname} not found`;
@@ -909,11 +909,11 @@ app.post('/api/tournaments/add', tournamentImageUpload.single('tournamentImage')
 
       const sqlInsertTournament = `
         INSERT INTO tournaments 
-        (title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) 
+        (title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, location, requirements, prizes, tournament_typeID, registration_deadline, cfc_required) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
 
-      dbConnection.query(sqlInsertTournament, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required], (error, result) => {
+      dbConnection.query(sqlInsertTournament, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, location, requirements, prizes, tournament_typeID, registration_deadline, cfc_required], (error, result) => {
         if (error) {
           console.error('Error adding tournament data:', error);
           return res.status(500).json({ error: error.message });
@@ -931,13 +931,13 @@ app.post('/api/tournaments/add', tournamentImageUpload.single('tournamentImage')
 // Editing tournaments data in Tournaments page
 app.put('/api/tournaments/edit/:tournamentsID', async (req, res) => {
   try {
-    const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
+    const { title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, location, requirements, prizes, tournament_typeID, registration_deadline, cfc_required } = req.body;
     const { tournamentsID } = req.params;
     const sqlUpdate = `
     UPDATE tournaments 
-    SET title = ?, description = ?, cost = ?, event_imageID = ?, registration_link = ?, start_date = ?, end_date = ?, num_of_participants = ?, locationID = ?, requirements = ?, prizes = ?, tournament_typeID = ?, registration_deadline = ?, cfc_required = ? 
+    SET title = ?, description = ?, cost = ?, event_imageID = ?, registration_link = ?, start_date = ?, end_date = ?, num_of_participants = ?, location = ?, requirements = ?, prizes = ?, tournament_typeID = ?, registration_deadline = ?, cfc_required = ? 
     WHERE tournamentsID = ?`;
-    const [result] = await require('./database').query(sqlUpdate, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, locationID, requirements, prizes, tournament_typeID, registration_deadline, cfc_required, tournamentsID]);
+    const [result] = await require('./database').query(sqlUpdate, [title, description, cost, event_imageID, registration_link, start_date, end_date, num_of_participants, location, requirements, prizes, tournament_typeID, registration_deadline, cfc_required, tournamentsID]);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

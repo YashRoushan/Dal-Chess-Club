@@ -11,7 +11,7 @@ function TournamentsAddForm() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [numofParticipents, setNumofParticipents] = useState('');
-  const [locationID, setLocationID] = useState('');
+  const [location, setLocation] = useState('');
   const [requirements, setRequirements] = useState('');
   const [prizes, setPrizes] = useState('');
   const [tournamentTypeID, setTournamentTypeID] = useState('');
@@ -30,7 +30,7 @@ function TournamentsAddForm() {
       formData.append('start_date', startDate);
       formData.append('end_date', endDate);
       formData.append('num_of_participants', numofParticipents);
-      formData.append('locationID', locationID);
+      formData.append('location', location);
       formData.append('requirements', requirements);
       formData.append('prizes', prizes);
       formData.append('tournament_typeID', tournamentTypeID);
@@ -144,12 +144,12 @@ function TournamentsAddForm() {
           />
         </div>
         <div className="form-element">
-          <label>Location ID</label>
+          <label>Location </label>
           <input 
             className="text-form" 
-            type="number" 
-            value={locationID} 
-            onChange={(e) => setLocationID(e.target.value)} 
+            type="text" 
+            value={location} 
+            onChange={(e) => setLocation(e.target.value)} 
             required 
           />
         </div>
