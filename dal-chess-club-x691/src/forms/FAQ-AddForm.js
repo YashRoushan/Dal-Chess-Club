@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddForms.css';
+import { BASE_URL } from '../config';
 
 function FAQAddForm() {
  const [FAQQuestion, setFAQQuestion] = useState('');
@@ -15,7 +16,7 @@ function FAQAddForm() {
     };
 
 
-    const response = await fetch('http://localhost:5001/api/faq/add', { 
+    const response = await fetch(BASE_URL + '/api/faq/add', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
