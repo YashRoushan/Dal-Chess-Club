@@ -100,7 +100,7 @@ function Home() {
                   {card.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" className="cardDescription">
-                  {card.description}
+                  {card.content}
                 </Typography>
               </CardContent>
             </Card>

@@ -80,8 +80,13 @@
 .cardContent{
   text-align: center;
   font-weight: bold !important;
+  cursor: pointer;
 }
-
+.cardDescription{
+  text-align: center;
+  color: black !important;
+  cursor: pointer;
+}
 @media (min-width: 1200px){
 .css-1oqqzyl-MuiContainer-root {
     max-width: 1343px !important;
