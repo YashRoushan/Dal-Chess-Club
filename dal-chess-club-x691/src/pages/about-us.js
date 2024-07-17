@@ -30,8 +30,7 @@ function AboutUsPage() {
   return (
     <div className="container">
       <div className="about-us">
-        <h1>About Us</h1>
-        <h2 id="member-header">Our Proud Members</h2>
+        <h1>Our Members</h1>
         {/*<p id="members-p">Introductory paragraph about the team members...</p>*/}
       </div>
       {members.map(member => (
