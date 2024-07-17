@@ -10,9 +10,9 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-.library-popup-content {
+  }
+  
+  .library-popup-content {
     position: relative;
     padding: 20px;
     border-radius: 15px;
@@ -24,11 +24,20 @@
     background-color: white;
     overflow-y: auto;
     cursor: default;
-}
-
-.library-content button {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+  }
+  
+  .library-popup-content img {
+    width: 80%; /* Constrain the image width */
+    height: auto;
+    max-height: 400px; /* Constrain the image height */
+    margin-bottom: 20px; /* Add some space below the image */
+  }
+  
+  .library-popup-content button {
     position: absolute;
-    margin-top: 10px;
     top: 16px;
     right: 16px;
-}
+  }
