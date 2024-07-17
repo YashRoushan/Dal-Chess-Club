@@ -61,10 +61,10 @@ function Home() {
 
               <div className="innerContent">
                 <Link to='/' onClick={() => { window.scroll({ top: 0, left: 0, behavior: "smooth", }); }}><img src={data.image} alt={data.title} /></Link>
-                <div>
+                <div className="slider-text">
                   <h1>{data.title}</h1>
                   <p>
-                    {data.description}
+                    {data.content}
                   </p>
                 </div>
               </div>
