@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/tournamentRegistration.css'; 
 import { BASE_URL } from '../config';
-import { useNavigate } from 'react-router-dom';
 
 function RegistrationForm() {
   // State to store form data
@@ -27,10 +26,6 @@ function RegistrationForm() {
       ...formData,
       [name]: value
     });
-  };
-
-  const handleSubsribeNow = () => {
-    navigate(`/mailingList?tournamentsID=${tournamentsID}`)
   };
 
   const handleSubmit = async (event) => {
