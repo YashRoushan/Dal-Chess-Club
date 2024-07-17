@@ -138,6 +138,7 @@ function RegistrationForm() {
         </form>
       </div>
       <div className="subscriptionMessage-container">
+        <p>Want news about tournaments, events, socials or open positions?</p>
         <p>Subsribe to our mailing list!</p>
       </div>
       <div className="subscribe-button-container">
