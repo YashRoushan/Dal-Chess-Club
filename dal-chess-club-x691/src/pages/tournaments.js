@@ -20,7 +20,7 @@ function Tournaments() {
     fetchData();
   }, [nameFilter, priceFilter, dateFilter]);
   
-  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
+  // fetches data from the server with query strings in case of filters and assigns it to tournamentList.
   const fetchData = () => {
     const serverUrl =  `${BASE_URL}/api/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
     fetch(serverUrl)
@@ -57,7 +57,7 @@ function Tournaments() {
 
   return (
     <div className="tournament">
-      <h1>Future Tournaments</h1>
+      <h1>Current and Future Tournaments</h1>
       <div className="filters-container">
         
         <div className='input-wrapper'>
