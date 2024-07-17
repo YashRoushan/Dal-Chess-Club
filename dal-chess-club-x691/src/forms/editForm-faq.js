@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AddForms.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function FaqEditForm({ faq, onCancel, onUpdate }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function FaqEditForm({ faq, onCancel, onUpdate }) {
     event.preventDefault();
     const formData = { question: FAQQuestion, answer: FAQAnswer };
     try {
-      const response = await fetch(`http://localhost:5001/api/faq/update/${faq.faqID}`, {
+      const response = await fetch(`${BASE_URL}/api/faq/update/${faq.faqID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

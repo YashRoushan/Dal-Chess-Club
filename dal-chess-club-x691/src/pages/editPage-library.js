@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/editPage.css';
 import LibraryEditForm from '../forms/editForm-library'; 
+import { BASE_URL } from '../config';
 
 function EditLibrary() {
   const [items, setItems] = useState([]);
@@ -10,7 +11,7 @@ function EditLibrary() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/library'); 
+        const response = await fetch(BASE_URL + '/api/library'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -32,7 +33,7 @@ function EditLibrary() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/library/delete/${itemId}`, {
+      const response = await fetch(`${BASE_URL}/api/library/delete/${itemId}`, {
         method: 'DELETE',
       });
 
@@ -57,7 +58,7 @@ function EditLibrary() {
     
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/library'); 
+        const response = await fetch(BASE_URL + '/api/library'); 
         const data = await response.json();
         setItems(data);
       } catch (error) {

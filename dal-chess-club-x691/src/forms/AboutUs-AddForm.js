@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AddForms.css';
+import { BASE_URL } from '../config';
 
 function AddFormAboutUs() {
   const [executiveName, setExecutiveName] = useState('');
@@ -13,7 +14,7 @@ function AddFormAboutUs() {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/positions');
+        const response = await fetch(BASE_URL + '/api/positions');
         const data = await response.json();
         setPositions(data);
       } catch (error) {
@@ -32,7 +33,7 @@ function AddFormAboutUs() {
         alt_text: altText,
       };
 
-      const imageResponse = await fetch('http://localhost:5001/api/people_images/add', {
+      const imageResponse = await fetch(BASE_URL + '/api/people_images/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ function AddFormAboutUs() {
         status: 1,
       };
 
-      await fetch(`http://localhost:5001/api/members/updateStatus/${selectedPosition}`, {
+      await fetch(`${BASE_URL}/api/members/updateStatus/${selectedPosition}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ function AddFormAboutUs() {
         body: JSON.stringify({ status: 0 }),
       });
 
-      const memberResponse = await fetch('http://localhost:5001/api/members/add', {
+      const memberResponse = await fetch(BASE_URL + '/api/members/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

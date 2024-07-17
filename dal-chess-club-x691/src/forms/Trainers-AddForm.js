@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddForms.css';
+import { BASE_URL } from '../config';
 
 function TrainersAddForm() {
   const [speakerName, setSpeakerName] = useState('');
@@ -17,7 +18,7 @@ function TrainersAddForm() {
         alt_text: altText,
       };
 
-      const imageResponse = await fetch('http://localhost:5001/api/people_images/add', { 
+      const imageResponse = await fetch(BASE_URL + '/api/people_images/add', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ function TrainersAddForm() {
         people_imageID: peopleImageID,
       };
 
-      const speakerResponse = await fetch('http://localhost:5001/api/speaker/add', {
+      const speakerResponse = await fetch(BASE_URL + '/api/speaker/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
