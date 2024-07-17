@@ -15,21 +15,21 @@ import ChessPuzzle from "./chessPuzzle";
 import { BASE_URL} from '../config.js';
 
 function Home() {
-  const [slides, setslides] = useState([]);
-  const [cards, setcards] = useState([]);
+  const [slides, setSlides] = useState([]);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/home/getHomePageSlides`)
       .then(res => res.json())
       .then(data => {       
-        setslides(data);
+        setSlides(data);
       })
       .catch(err => console.log(err))
   }, []);
   useEffect(() => {
     fetch(`${BASE_URL}/api/home/homePageCards`)
       .then(res => res.json())
-      .then(data => setcards(data))
+      .then(data => setCards(data))
       .catch(err => console.log(err))
   }, []);
   return (
@@ -96,10 +96,10 @@ function Home() {
                 />
               </CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div" className="cardContent">
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" className="cardDescription">
                   {card.description}
                 </Typography>
               </CardContent>

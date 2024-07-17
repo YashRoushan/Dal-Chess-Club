@@ -77,6 +77,11 @@
   padding-bottom: 20px;
 }
 
+.cardContent{
+  text-align: center;
+  font-weight: bold !important;
+}
+
 @media (min-width: 1200px){
 .css-1oqqzyl-MuiContainer-root {
     max-width: 1343px !important;
