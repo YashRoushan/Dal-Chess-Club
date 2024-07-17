@@ -330,7 +330,7 @@ app.get("/api/home/homePageCards", (req, res) => {
 
 // For getting homepage slides
 app.get("/api/home/getHomePageSlides", (req, res) => {
-  console.log("/api/home/getHomePageSlides");
+  
   const sql = "SELECT * FROM event_images e JOIN news n ON e.event_imageID = n.event_imageID ORDER BY n.date DESC LIMIT 6";
 
   db.then((dbConnection) => {
