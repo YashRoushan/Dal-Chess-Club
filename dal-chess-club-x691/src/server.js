@@ -298,27 +298,24 @@ app.get("/api/news/getAllNews", (req, res) => {
 // For getting homepage cards
 app.get("/api/home/homePageCards", (req, res) => {
   db.then((dbConnection) => {
-    const sql = "SELECT * from event_images LIMIT 3";
+    const sql = "SELECT * FROM event_images e JOIN news n ON e.event_imageID = n.event_imageID ORDER BY n.date DESC LIMIT 6";
     dbConnection.query(sql, (error, data) => {
-      console.log("/homePageCards called");
       if (error) {
-        console.error("Error while fetching Homepage data:", error);
+        console.error("Error while fetching homepage data:", error);
         return res
           .status(500)
           .json({ error: "Internal Server Error", message: error.message });
       }
 
       if (data.length > 0) {
+        const cardsData = data.slice(3, 6).map((item) => ({
+          id: item.event_imageID,
+          content: item.alt_text,
+          title: item.alt_text,
+          image: getImageUrl(item.image),
+        }));
         console.log("/homePageCards data found");
-        const slideData = data.map((item) => {
-          return {
-            id: item.event_imageID,
-            content: item.alt_text,
-            title: item.alt_text,
-            image: getImageUrl(item.image),
-          };
-        });
-        return res.json(slideData);
+        return res.json(cardsData);
       } else {
         res.status(404).json({ error: "No data found" });
       }
@@ -334,7 +331,7 @@ app.get("/api/home/homePageCards", (req, res) => {
 // For getting homepage slides
 app.get("/api/home/getHomePageSlides", (req, res) => {
   console.log("/api/home/getHomePageSlides");
-  const sql = "SELECT * FROM event_images e JOIN news n ON e.event_imageID = n.event_imageID ORDER BY n.date DESC LIMIT 3";
+  const sql = "SELECT * FROM event_images e JOIN news n ON e.event_imageID = n.event_imageID ORDER BY n.date DESC LIMIT 6";
 
   db.then((dbConnection) => {
     dbConnection.query(sql, (error, data) => {
@@ -345,13 +342,13 @@ app.get("/api/home/getHomePageSlides", (req, res) => {
           .json({ error: "Internal Server Error", message: error.message });
       }
       if (data.length > 0) {
-        const slideData = data.map((item) => ({
+        const slidesData = data.slice(0, 3).map((item) => ({
           id: item.event_imageID,
           content: item.alt_text,
           title: item.alt_text,
           image: getImageUrl(item.image),
         }));
-        return res.json(slideData);
+        return res.json(slidesData);
       } else {
         res.status(404).json({ error: "No data found" });
       }
