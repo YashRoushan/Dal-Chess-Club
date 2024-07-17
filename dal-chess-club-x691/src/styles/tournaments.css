@@ -141,9 +141,10 @@
 
  .dropdown-button{
    display: block;
-   width: 11vw;
+   width: 100vw;
+   text-align: center;
    font-size: x-large;
-   padding: 5px 20px;
+   padding: 5px;
    background-color: #FFD400;
    color: black;
    font-weight: bold;
