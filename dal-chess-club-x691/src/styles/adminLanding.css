@@ -1,16 +1,12 @@
-/* CSS for Admin Landing Page */
-
 /* Default styles for admin page */
-.admin-page {
-    text-align: center;
-    margin: 20px;
-}
+
 
 /* Grid layout for button containers */
 .admin-button-container-row1,
 .admin-button-container-row2 {
     display: grid;
     justify-items: center;
+    gap: 20px; 
     margin-bottom: 35px;
 }
 
@@ -20,23 +16,15 @@
 
 .admin-button-container-row2 {
     grid-template-columns: repeat(5, 1fr);
-    
 }
 
-/* Header styling */
 h1 {
     margin-bottom: 20px;
     font-size: 36px;
     color: #333;
 }
 
-/* Button and dropdown container */
-.admin-dropdown {
-    position: relative;
-}
 
-
-/* Button styling */
 .admin-dropdown-button {
     background-color: white;
     color: black;
@@ -55,134 +43,55 @@ h1 {
     height: 190px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
+    margin: 10px; 
 }
 
 .admin-dropdown-button:hover {
     transform: scale(1.05);
 }
 
-/* Label styling */
+
 .label {
     font-size: 20px;
     margin-bottom: 15px;
     font-weight: 501;
 }
 
-/* Icon styling */
-
 /* Specific styles for each category */
-
-/* Tournament */
-.admin-dropdown-button.tournament .icon {
+.admin-dropdown-button.tournament .icon,
+.admin-dropdown-button.news .icon,
+.admin-dropdown-button.trainer .icon,
+.admin-dropdown-button.event .icon,
+.admin-dropdown-button.FAQ .icon,
+.admin-dropdown-button.aboutUs .icon,
+.admin-dropdown-button.champion .icon,
+.admin-dropdown-button.subscribers .icon,
+.admin-dropdown-button.grandPrix .icon {
     width: 110px;
     height: 80px;
     position: relative;
     top: 6px;
 }
-.admin-dropdown-button.tournament .label {
-    font-size: 20px;
-    margin-bottom: 15px;
-    font-weight: 501;
-}
-
-
+/* book icon and label */
 .admin-dropdown-button.book .icon {
     width: 180px;
     height: 200px;
     position: relative;
     top: -40px;
 }
+
 .admin-dropdown-button.book .label {
-    font-size: 20px;
     margin-top: 102px;
-    font-weight: 501;
 }
 
-/* News */
-.admin-dropdown-button.news .icon {
-    width: 110px;
-    height: 80px;
-    position: relative;
-    top: 10px;
-    left: 10px;
-}
-.admin-dropdown-button.news .label {
-    font-size: 20px;
-    margin-bottom: 15px;
-    font-weight: 501;
+
+.admin-dropdown-button.subscribers,
+.admin-dropdown-button.grandPrix {
+    height: 175px;
+    width: 235px;
 }
 
-/* Trainer */
-.admin-dropdown-button.trainer .icon {
-    width: 90px;
-    height: 70px;
-    position: relative;
-    top: 0;
-    right: -6px;
-}
-.admin-dropdown-button.trainer .label {
-    font-size: 20px;
-    margin-bottom: 22px;
-    font-weight: 501;
-}
-
-/* Event */
-.admin-dropdown-button.event .icon {
-    width: 85px;
-    height: 80px;
-    position: relative;
-    top: 6px;
-    left: 5px;
-}
-.admin-dropdown-button.event .label {
-    font-size: 20px;
-    margin-bottom: 8px;
-    font-weight: 501;
-}
-
-/* FAQ */
-.admin-dropdown-button.FAQ .icon {
-    width: 85px;
-    height: 65px;
-    position: relative;
-    top: 3px;
-    left: 5px;
-}
-.admin-dropdown-button.FAQ .label {
-    font-size: 20px;
-    margin-bottom: 18px;
-    font-weight: 501;
-}
-
-/* About Us */
-.admin-dropdown-button.aboutUs .icon {
-    width: 110px;
-    height: 90px;
-    position: relative;
-    top: 10px;
-    left: 12px;
-}
-.admin-dropdown-button.aboutUs .label {
-    font-size: 20px;
-    margin-bottom: 5px;
-    font-weight: 501;
-}
-
-/* Champion */
-.admin-dropdown-button.champion .icon {
-    width: 90px;
-    height: 70px;
-    position: relative;
-    top: 0;
-    right: -8px;
-}
-.admin-dropdown-button.champion .label {
-    font-size: 20px;
-    margin-bottom: 25px;
-    font-weight: 501;
-}
-
-/* Subscribers */
+/* subscribers icon and label */
 .admin-dropdown-button.subscribers .icon {
     width: 150px;
     height: 35px;
@@ -197,12 +106,7 @@ h1 {
     font-weight: 600;
 }
 
-.admin-dropdown-button.subscribers{
-    height: 175px;
-    width: 235px;
-}
-
-/* Grand Prix */
+/* book grandPrix and label */
 .admin-dropdown-button.grandPrix .icon {
     width: 150px;
     height: 170px;
@@ -215,65 +119,21 @@ h1 {
     font-weight: 600;
 }
 
-.admin-dropdown-button.grandPrix{
-    height: 175px;
-    width: 235px;
-}
-
-
-/* Dropdown content */
-.admin-dropdown-content {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 200px;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-.admin-dropdown-content.admin-show {
-    display: flex;
-}
-
-/* Dropdown link styling */
-.admin-dropdown-link {
-    color: black;
-    text-decoration: none;
-    margin: 5px 0;
-    padding: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.admin-dropdown-link:hover {
-    background-color: #f0c400;
-}
 
 /* Media queries for responsiveness */
-
-/* Media queries for responsiveness */
-
-/* General container styling for smaller screens */
 @media only screen and (max-width: 1200px) {
+    .admin-button-container-row1,
+    .admin-button-container-row2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 768px) {
     .admin-button-container-row1,
     .admin-button-container-row2 {
         grid-template-columns: 1fr;
     }
-}
 
-/* Specific button adjustments for even smaller screens */
-@media only screen and (max-width: 768px) {
     .admin-dropdown-button {
         width: 150px;
         height: 150px;
@@ -293,140 +153,38 @@ h1 {
         max-width: 150px;
     }
 
-    /* General icon and label adjustments for all buttons */
     .admin-dropdown-button .icon {
-        width: 100px;
-        height: 70px;
-        position: relative;
-        top: 2px;
-        left: 8px;
+        width: 90px;
+        height: 60px;
+        top: 0;
+        left: 0;
     }
 
     .admin-dropdown-button .label {
-        font-size: 17px;
-        margin-bottom: 15px;
-        font-weight: 501;
+        font-size: 14px;
+        margin-bottom: 10px;
     }
+    
 
-    /* Tournament specific styles */
-    .admin-dropdown-button.tournament {
+    .admin-dropdown-button {
         height: 145px;
         width: 180px;
         margin-bottom: 10px;
     }
 
-    /* Book specific styles */
-    .admin-dropdown-button.book .icon {
-        width: 180px;
-        height: 200px;
-        top: -50px;
-        left: 6px;
-    }
-
-    .admin-dropdown-button.book {
-        height: 145px;
-        width: 180px;
-        margin-bottom: 10px;
-    }
-
-    /* News specific styles */
-    .admin-dropdown-button.news .icon {
-        width: 110px;
-        height: 85px;
-        top: 2px;
-        left: 10px;
-    }
-
-    .admin-dropdown-button.news {
-        height: 145px;
-        width: 180px;
-        margin-bottom: 10px;
-    }
-
-    /* Trainer specific styles */
-    .admin-dropdown-button.trainer .icon {
-        width: 90px;
-        height: 70px;
-        right: -6px;
-    }
-
-    .admin-dropdown-button.trainer {
-        height: 145px;
-        width: 180px;
-        margin-bottom: -24px;
-    }
-
-    /* Event specific styles */
-    .admin-dropdown-button.event .icon {
-        width: 75px;
-        height: 70px;
-        top: 6px;
-        left: 5px;
-    }
-
-    .admin-dropdown-button.event {
-        height: 145px;
-        width: 180px;
-        margin-bottom: -20px;
-    }
-
-    /* FAQ specific styles */
-    .admin-dropdown-button.FAQ .icon {
-        width: 75px;
-        height: 55px;
-        top: 3px;
-        left: 5px;
-    }
-
-    .admin-dropdown-button.FAQ {
-        height: 145px;
-        width: 180px;
-        margin-bottom: -20px;
-    }
-
-    /* About Us specific styles */
-    .admin-dropdown-button.aboutUs .icon {
-        width: 100px;
-        height: 80px;
-        top: 10px;
-        left: 10px;
-    }
-
-    .admin-dropdown-button.aboutUs {
-        height: 145px;
-        width: 180px;
-        margin-bottom: -20px;
-    }
-
-    /* Champion specific styles */
-    .admin-dropdown-button.champion .icon {
-        width: 80px;
-        height: 60px;
-        right: -8px;
-    }
-
-    .admin-dropdown-button.champion {
-        height: 145px;
-        width: 180px;
-        margin-bottom: -20px;
-    }
-
-    /* Subscribers specific styles */
-    .admin-dropdown-button.subscribers .icon {
-        width: 120px;
-        height: 28px;
-        top: -25px;
-        left: 9px;
-    }
-
+    /*subscribers */
     .admin-dropdown-button.subscribers {
         height: 125px;
         width: 160px;
         margin-bottom: 10px;
     }
+    
+    .admin-dropdown-button.subscribers .label,
+    .admin-dropdown-button.grandPrix .label{
+        font-size: 14px;
+    }
 
-    /* Grand Prix specific styles */
-   
+    /* Grand Prix  */
     .admin-dropdown-button.grandPrix {
         height: 125px;
         width: 160px;
@@ -435,11 +193,4 @@ h1 {
 }
 
 
-@media only screen and (max-width: 480px) {
-    
 
-    .admin-dropdown-button {
-        width: 100%;
-        height: auto;
-    }
-}
