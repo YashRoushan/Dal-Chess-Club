@@ -9,6 +9,7 @@ body {
     background-color: #FFD400;
     overflow: auto;
     width: 100%;
+    z-index: 1000;
   }
   
   .navbar .links {
@@ -85,6 +86,7 @@ body {
     transform: translateY(-5px);
     transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease;
     top: 100px;
+    z-index: 2000;
   }
   
   .dropdown-content a {
@@ -95,6 +97,7 @@ body {
     text-decoration: none;
     display: none;
     text-align: left;
+    z-index: 2000;
   }
   .dropdown-content a:last-child {
     border-bottom: 5px solid #FFD400;
