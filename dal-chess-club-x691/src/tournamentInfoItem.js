@@ -92,7 +92,7 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
 
           <div className="ttables">
 
-            <button className="dropdown-button" onClick={togglePairings}>Pairings  {showPairings ? <BsCaretUpFill />: <BsCaretDownFill />} </button>
+            <button className="dropdown-button pairings-dropdown-button" onClick={togglePairings}>Pairings  {showPairings ? <BsCaretUpFill />: <BsCaretDownFill />} </button>
             {showPairings && (
                 <>
                   <h3>Pairings</h3>
