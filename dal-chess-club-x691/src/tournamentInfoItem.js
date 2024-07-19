@@ -47,31 +47,42 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
   };
 
   return (
-    <div className="tpopup-background">
-      <div className="tpopup-content" onClick={e => e.stopPropagation()}>
-        <div className="ttournament-info">
-          <img className="ttournament-image" src={image} alt={name} />
-          <h1 className="ttitle">{name}</h1>
-          <div className="ttournament-details">
-            <p> Cost: {price} </p>
-            <p> Date: {date} </p>
-            <p> Time: {time} - {endTime}</p>
-            <p> Number of Participants: {participantsNo} </p>
-            <p> {description} </p>
-            
-            <h2>Registered Participants:</h2>
-            
-            <ul>
-              {participants.map(participant => (
-                <li key={participant.id}>{participant.fullname}</li>
-              ))}
-            </ul>
-            <div className="participants-register-container">
-              <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
-            </div>
-            
-          </div>
+      <div className="tpopup-background">
+        <div className="ttables">
+          <button className="dropdown-button" onClick={toggleStandings}>Standings {showStandings ? <BsCaretUpFill/> :
+              <BsCaretDownFill/>}</button>
+          {showStandings && (
+              <>
+                <h3>Standings</h3>
+                <div className="tstandings-table" dangerouslySetInnerHTML={{__html: standings}}></div>
+              </>
+          )}
+
         </div>
+        <div className="tpopup-content" onClick={e => e.stopPropagation()}>
+          <div className="ttournament-info">
+            <img className="ttournament-image" src={image} alt={name}/>
+            <h1 className="ttitle">{name}</h1>
+            <div className="ttournament-details">
+              <p> Cost: {price} </p>
+              <p> Date: {date} </p>
+              <p> Time: {time} - {endTime}</p>
+              <p> Number of Participants: {participantsNo} </p>
+              <p> {description} </p>
+
+              <h2>Registered Participants:</h2>
+
+              <ul>
+                {participants.map(participant => (
+                    <li key={participant.id}>{participant.fullname}</li>
+                ))}
+              </ul>
+              <div className="participants-register-container">
+                <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
+              </div>
+
+            </div>
+          </div>
 
           {registrationLink && (
               <a href={registrationLink} target="_blank" rel="noopener noreferrer">
@@ -80,13 +91,6 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
           )}
 
           <div className="ttables">
-            <button className="dropdown-button" onClick={toggleStandings}>Standings {showStandings ? <BsCaretUpFill />: <BsCaretDownFill />}</button>
-            {showStandings && (
-                <>
-                  <h3>Standings</h3>
-                  <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-                </>
-            )}
 
             <button className="dropdown-button" onClick={togglePairings}>Pairings  {showPairings ? <BsCaretUpFill />: <BsCaretDownFill />} </button>
             {showPairings && (
