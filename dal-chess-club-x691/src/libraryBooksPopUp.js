@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles/libraryPopUp.css';
- 
+
 function LibraryPopUp({ name, image, author, description, onClose }) {
   return (
     <div className="library-popup-background" onClick={onClose}>
@@ -14,5 +14,5 @@ function LibraryPopUp({ name, image, author, description, onClose }) {
     </div>
   );
 }
- 
+
 export default LibraryPopUp;

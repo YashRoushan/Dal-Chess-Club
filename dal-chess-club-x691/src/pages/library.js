@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import LibraryItem from '../libraryBooksItem';
 import '../styles/library.css';
 import { BASE_URL } from '../config.js';
- 
+
 function Library() {
   const [libraryList, setLibraryList] = useState([]);
- 
+
   useEffect(() => {
     fetch(`${BASE_URL}/api/library`)
       .then(response => response.json())
@@ -14,7 +14,7 @@ function Library() {
       })
       .catch(error => console.error('Error fetching books:', error));
   }, []);
- 
+
   return (
     <div className="library">
       <h1>Library Books List</h1>
@@ -33,5 +33,5 @@ function Library() {
     </div>
   );
 }
- 
+
 export default Library;
