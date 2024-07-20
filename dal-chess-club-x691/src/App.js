@@ -70,6 +70,8 @@ function App() {
         <Suspense fallback="loading ...">
           <Router basename='/chessclub'>
             <NavBar />
+            <div className="wrapper">
+             <main className="content">
             <Routes>
               <Route path="/tournaments" element={<Tournaments />} />
               <Route path="/pastTournaments" element={<PastTournaments />} />
@@ -124,7 +126,11 @@ function App() {
               
 
             </Routes>
+            </main>
+             <footer className="footer">
           <Footer/>
+             </footer>
+            </div>
           </Router>
         </Suspense>
       </AuthProvider>
