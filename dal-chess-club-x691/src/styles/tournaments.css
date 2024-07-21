@@ -109,10 +109,34 @@
 
 }
 
+@media (max-width: 768px) {
+  .ttournament-info h1 {
+    /*margin-top: 0;*/
+    /*display: block;*/
+  }
+  .ttournament-details{
+    margin-top: 500px;
+    margin-left: 3vw;
+    display: block;
+  }
+}
+
+
 .ttables{
-  margin-top: 300px;
+  /*margin-top: 180px;*/
   margin-left: 30px;
   margin-right:30px;
+}
+
+@media (max-width: 768px) {
+  .ttables{
+    /*margin-top: 70px;*/
+    margin-left: 30px;
+    margin-right:30px;
+  }
+  .dropdown-button{
+    margin-left: -3vw;
+  }
 }
 
 .tstandings-table, .tpairings-table {
@@ -141,9 +165,10 @@
 
  .dropdown-button{
    display: block;
-   width: 11vw;
+   width: 96vw;
+   text-align: center;
    font-size: x-large;
-   padding: 5px 20px;
+   padding: 5px;
    background-color: #FFD400;
    color: black;
    font-weight: bold;
@@ -154,6 +179,13 @@
    margin-top: 10px;
    margin-bottom: 10px;
  }
+
+@media only screen and (min-width: 768px) {
+  .pairings-dropdown-button{
+    margin-top: 100px;
+  }
+}
+
 
 .dropdown-button:hover {
   background-color: #242424;
