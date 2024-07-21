@@ -3,24 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import './styles/tournamentRegistration.css';
 import { BASE_URL } from './config.js';
 
-function EventItem({ tournamentsID, name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
+function EventItem({ eventsID, name, image, date, time, endTime, participantsNo, price, description, registrationLink }) {
   const navigate = useNavigate();
   const [participantCount, setParticipantCount] = useState(0);
 
   useEffect(() => {
-    console.log('Tournament ID:', tournamentsID); // Debug log
+    console.log('Event ID:', eventsID); // Debug log
     // Fetch the number of participants for this tournament
-    if (tournamentsID) {
-      fetch(`${BASE_URL}/api/tournaments/${tournamentsID}/participants`)
+    if (eventsID) {
+      fetch(`${BASE_URL}/api/events/${eventsID}/participants`)
         .then(response => response.json())
         .then(data => setParticipantCount(data.participantCount))
         .catch(error => console.error('Error fetching participant count:', error));
     }
-  }, [tournamentsID]);
+  }, [eventsID]);
 
   const handleTournamentClick = (e) => {
     e.preventDefault();  // Prevents the popup from opening when the button is clicked
-    navigate(`/eventInfo?itemId=${tournamentsID}`); // Navigate to the tournament info
+    navigate(`/eventInfo?itemId=${eventsID}`); // Navigate to the tournament info
   }
   
   return (

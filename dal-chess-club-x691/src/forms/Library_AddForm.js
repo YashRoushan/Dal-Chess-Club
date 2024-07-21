@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddForms.css';
+import { BASE_URL } from '../config';
 
 function LibraryAddForm() {
   const [libraryImage, setLibraryImage] = useState('');
@@ -18,7 +19,7 @@ function LibraryAddForm() {
         available,
         description,
       };
-      const response = await fetch('http://localhost:5001/api/library/add', {
+      const response = await fetch(BASE_URL + '/api/library/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

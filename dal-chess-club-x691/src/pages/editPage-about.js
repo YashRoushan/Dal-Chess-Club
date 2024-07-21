@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/editPage.css';
 import AboutUsEditForm from '../forms/editForm-about'; 
+import { BASE_URL } from '../config';
 
 function EditAbout() {
   const [items, setItems] = useState([]);
@@ -10,7 +11,7 @@ function EditAbout() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/members'); 
+        const response = await fetch(BASE_URL + '/api/members'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -32,7 +33,7 @@ function EditAbout() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/members/delete/${itemId}`, {
+      const response = await fetch(`${BASE_URL}/api/members/delete/${itemId}`, {
         method: 'DELETE',
       });
 
@@ -57,7 +58,7 @@ function EditAbout() {
     
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/members'); 
+        const response = await fetch(BASE_URL + '/api/members'); 
         const data = await response.json();
         setItems(data);
       } catch (error) {

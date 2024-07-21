@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AddForms.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function AboutUsEditForm({ memberItem, onCancel, onUpdate }) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function AboutUsEditForm({ memberItem, onCancel, onUpdate }) {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/positions');
+        const response = await fetch(BASE_URL + '/api/positions');
         const data = await response.json();
         setPositions(data);
       } catch (error) {
@@ -36,7 +37,7 @@ function AboutUsEditForm({ memberItem, onCancel, onUpdate }) {
     };
 
     try {
-      const response = await fetch(`http://localhost:5001/api/members/update/${memberItem.memberID}`, {
+      const response = await fetch(`${BASE_URL}/api/members/update/${memberItem.memberID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

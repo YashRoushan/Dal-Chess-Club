@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AddForms.css';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function LibraryEditForm({ libraryItem, onCancel, onUpdate }) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function LibraryEditForm({ libraryItem, onCancel, onUpdate }) {
     event.preventDefault();
     const formData = { title, author, image, available, description };
     try {
-      const response = await fetch(`http://localhost:5001/api/library/update/${libraryItem.booksID}`, {
+      const response = await fetch(`${BASE_URL}/api/library/update/${libraryItem.booksID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

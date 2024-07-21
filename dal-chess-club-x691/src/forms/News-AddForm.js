@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddForms.css';
+import { BASE_URL } from '../config';
 
 function NewsAddForm() {
   const [newsTitle, setNewsTitle] = useState('');
@@ -17,7 +18,7 @@ function NewsAddForm() {
         alt_text: altText,
       };
 
-      const imageResponse = await fetch('http://localhost:5001/api/event_images/add', {
+      const imageResponse = await fetch(BASE_URL + '/api/event_images/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ function NewsAddForm() {
         event_imageID: eventImageID,
       };
 
-      const newsResponse = await fetch('http://localhost:5001/api/news/add', {
+      const newsResponse = await fetch(BASE_URL + '/api/news/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

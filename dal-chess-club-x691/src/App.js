@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Tournaments from './pages/tournaments.js';
+import PastTournaments from "./pages/pastTournaments";
 import NewsPage from './pages/news.js';
 import NavBar from './pages/navbar';
 import Footer from './pages/footer';
@@ -69,8 +70,11 @@ function App() {
         <Suspense fallback="loading ...">
           <Router basename='/chessclub'>
             <NavBar />
+            <div className="wrapper">
+             <main className="content">
             <Routes>
               <Route path="/tournaments" element={<Tournaments />} />
+              <Route path="/pastTournaments" element={<PastTournaments />} />
               <Route path="/news" element={<NewsPage />} />
               <Route path="/library" element={<Library />} />
               <Route path="/improve" element={<Improve />} />
@@ -122,7 +126,11 @@ function App() {
               
 
             </Routes>
+            </main>
+             <footer className="footer">
           <Footer/>
+             </footer>
+            </div>
           </Router>
         </Suspense>
       </AuthProvider>

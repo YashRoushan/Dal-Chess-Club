@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/tournamentRegistration.css'; 
+import { BASE_URL } from '../config';
 
 function RegistrationForm() {
   // State to store form data
@@ -47,7 +48,7 @@ function RegistrationForm() {
     console.log('Data to be sent:', dataToSend); // Add this line for debugging
 
     try {
-      const response = await fetch('http://localhost:5001/api/registration/add', {
+      const response = await fetch(BASE_URL + '/api/registration/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
