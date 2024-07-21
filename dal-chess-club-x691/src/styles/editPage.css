@@ -1,3 +1,4 @@
+
 .editing-container {
   display: flex;
   align-items: center;
@@ -232,4 +233,67 @@
 .library-table button:hover, .faq-table button:hover {
   background-color: #000000;
   color: #FFD400;
+}.gp-add-form-container {
+  text-align: center;
 }
+
+.gp-form-element,
+.gp-form-container {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.gp-text-form {
+  width: 100%;
+  font-size: 14pt;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.gp-header-info p {
+  text-align: center; 
+}
+
+.gp-header-info h2 {
+  text-align: center;
+}
+
+.gp-submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.gp-submit-button-container button {
+  width: 250%;
+  padding: 10px;
+  background-color: #FFD400;
+  color: #000000;
+  font-weight: 550;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.gp-submit-button-container button:hover {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.gp-list-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 35vw;
+}
+
+

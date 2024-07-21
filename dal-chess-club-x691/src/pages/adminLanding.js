@@ -10,6 +10,7 @@ import eventIcon from '../images/event.png';
 import faqIcon from '../images/FAQ.png';
 import aboutUsIcon from '../images/aboutUs.png';
 import subscribersIcon from '../images/subscribe.jpg';
+import grandPrixIcon from '../images/grandPrix.webp';
 
 const AdminLanding = () => {
     const [visibleDropdown, setVisibleDropdown] = useState(null);
@@ -57,14 +58,16 @@ const AdminLanding = () => {
         FAQ: faqIcon,
         aboutUs: aboutUsIcon,
         champion: championIcon,
-        subscribers: subscribersIcon
+        subscribers: subscribersIcon,
+        grandPrix: grandPrixIcon
     };
+
 
     return (
         <div className="admin-page">
             <h1>Welcome!</h1>
             <div className='admin-button-container-row1'>
-                {['tournament', 'book', 'news', 'trainer'].map((category, index) => (
+                {['tournament', 'book', 'news', 'trainer', 'event'].map((category, index) => (
                     <div
                         key={index}
                         className="admin-dropdown"
@@ -90,7 +93,7 @@ const AdminLanding = () => {
                 ))}
             </div>
             <div className='admin-button-container-row2'>
-                {['event', 'FAQ', 'aboutUs', 'champion'].map((category, index) => (
+                {['FAQ', 'aboutUs', 'champion'].map((category, index) => (
                     <div
                         key={index}
                         className="admin-dropdown"
@@ -118,6 +121,12 @@ const AdminLanding = () => {
                     <Link to="/subscribers" className={`admin-dropdown-button subscribers`}>
                         <span className="label">Subscribers</span>
                         <img src={icons.subscribers} alt="subscribers icon" className="icon" />
+                    </Link>
+                </div>
+                <div className="admin-dropdown">
+                    <Link to="/grandPrixForm" className={`admin-dropdown-button grandPrix`}>
+                        <span className="label">Grand Prix</span>
+                        <img src={icons.grandPrix} alt="grandPrix icon" className="icon" />
                     </Link>
                 </div>
             </div>
