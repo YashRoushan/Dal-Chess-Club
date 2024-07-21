@@ -55,14 +55,14 @@ function NavBar() {
                         <>
                             <Link to='/tournaments'><button className='content'>Current and Future Tournaments</button></Link> 
                             <Link to='/pastTournaments'><button className='content'>Past Tournaments</button></Link>
-                            <Link to=''><button className='content'>Grand Prix</button></Link> 
+                            <Link to='grandPrixPage'><button className='content'>Grand Prix</button></Link> 
                             <Link to='/usersChampions'><button className='content'>Champions</button></Link>
                         </>
                         : 
                         <>
                             <Link to='/tournaments'><button className='content'>Current and Future Tournaments</button></Link> 
                             <Link to='pastTournaments'><button className='content'>Past Tournaments</button></Link> 
-                            <Link to=''><button className='content'>Grand Prix</button></Link> 
+                            <Link to='grandPrixPage'><button className='content'>Grand Prix</button></Link> 
                             <Link to='/usersChampions'><button className='content'>Champions</button></Link>
                         </>}
                 </div>
