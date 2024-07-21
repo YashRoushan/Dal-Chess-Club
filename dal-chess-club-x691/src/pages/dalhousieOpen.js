@@ -47,6 +47,15 @@ function DalhousieOpenRegistration() {
           <button type="submit">Submit</button>
         </div>
       </form>
+      <div className="subscriptionMessage-container">
+        <p>Want news about tournaments, events, socials or open positions?</p>
+        <p>Subsribe to our mailing list!</p>
+      </div>
+      <div className="subscribe-button-container">
+        <a href="mailingList">
+          <button>Subscribe</button>
+        </a>
+      </div>
     </div>
   );
 }
