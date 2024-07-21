@@ -7,6 +7,22 @@
   position: relative;
 }
 
+.slider-text{
+  background-color: white;
+  bottom: 2px;
+  /*width: 100%;*/
+  margin-bottom: 20px;
+  margin-left: 8vw;
+  align-self: center;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+.slider-text p{
+  color: black;
+  text-align: center;
+}
 .carousel-caption {
   position: absolute;
   top: 80%;
@@ -77,6 +93,16 @@
   padding-bottom: 20px;
 }
 
+.cardContent{
+  text-align: center;
+  font-weight: bold !important;
+  cursor: pointer;
+}
+.cardDescription{
+  text-align: center;
+  color: black !important;
+  cursor: pointer;
+}
 @media (min-width: 1200px){
 .css-1oqqzyl-MuiContainer-root {
     max-width: 1343px !important;
@@ -163,6 +189,7 @@
 
   .innerContent {
     position: relative;
+    top: -10px;
 
     div {
       position: absolute;
@@ -177,6 +204,12 @@
 
       p {
         font-size: 1rem;
+      }
+
+      img{
+        margin-top: 10vh;
+        margin-bottom: -15vh;
+        border: 2px solid red;
       }
     }
 

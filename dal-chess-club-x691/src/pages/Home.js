@@ -15,21 +15,21 @@ import ChessPuzzle from "./chessPuzzle";
 import { BASE_URL} from '../config.js';
 
 function Home() {
-  const [slides, setslides] = useState([]);
-  const [cards, setcards] = useState([]);
+  const [slides, setSlides] = useState([]);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/home/getHomePageSlides`)
       .then(res => res.json())
       .then(data => {       
-        setslides(data);
+        setSlides(data);
       })
       .catch(err => console.log(err))
   }, []);
   useEffect(() => {
     fetch(`${BASE_URL}/api/home/homePageCards`)
       .then(res => res.json())
-      .then(data => setcards(data))
+      .then(data => setCards(data))
       .catch(err => console.log(err))
   }, []);
   return (
@@ -61,10 +61,10 @@ function Home() {
 
               <div className="innerContent">
                 <Link to='/' onClick={() => { window.scroll({ top: 0, left: 0, behavior: "smooth", }); }}><img src={data.image} alt={data.title} /></Link>
-                <div>
+                <div className="slider-text">
                   <h1>{data.title}</h1>
                   <p>
-                    {data.description}
+                    {data.content}
                   </p>
                 </div>
               </div>
@@ -96,11 +96,11 @@ function Home() {
                 />
               </CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div" className="cardContent">
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {card.description}
+                <Typography variant="body2" color="text.secondary" className="cardDescription">
+                  {card.content}
                 </Typography>
               </CardContent>
             </Card>
