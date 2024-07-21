@@ -88,7 +88,7 @@ function PastTournaments() {
                 {tournamentsList.length === 0 ?
                     (<h3>No Tournaments Found...</h3>) :
                     (tournamentsList.map((tournament, key) => {
-
+                        {tournament.registrationLink = "pastTournament"}
                         return(
                             <TournamentItem
                                 key={key}
