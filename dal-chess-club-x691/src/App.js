@@ -52,6 +52,9 @@ import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import NewsEditForm from './forms/editForm-news.js';
+import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file name match
+import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
+import { IframeProvider } from './pages/IframeContext.js';
 import UsersChampions from './pages/usersChampions';
 
 
@@ -66,6 +69,7 @@ function App() {
 
   return (
     <div className="App">
+      <IframeProvider>
       <AuthProvider>
         <Suspense fallback="loading ...">
           <Router basename='/chessclub'>
@@ -87,6 +91,7 @@ function App() {
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
               <Route path="/tournamentInfo" element={<TournamentInfo />} />
+              <Route path="/grandPrixPage" element={<GrandPrixPage />} />
               <Route path="/usersChampions" element={<UsersChampions />} />
               <Route path="/eventInfo" element={<EventInfo />} />
               <Route path="/champions" element={<Champions />} />
@@ -120,6 +125,7 @@ function App() {
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
+              <Route path="/grandPrixForm" element={<AuthGuard><GrandPrixForm /></AuthGuard>} />
               <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
               <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
               <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
@@ -134,6 +140,7 @@ function App() {
           </Router>
         </Suspense>
       </AuthProvider>
+      </IframeProvider>
     </div>
   );
 }
