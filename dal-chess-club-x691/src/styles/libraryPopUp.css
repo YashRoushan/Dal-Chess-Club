@@ -24,11 +24,20 @@
     background-color: white;
     overflow-y: auto;
     cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.library-content button {
+.library-popup-content img {
+    width: 80%;
+    height: auto;
+    max-height: 400px;
+    margin-bottom: 20px;
+}
+
+.library-popup-content button {
     position: absolute;
-    margin-top: 10px;
     top: 16px;
     right: 16px;
 }
