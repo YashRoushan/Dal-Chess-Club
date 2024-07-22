@@ -56,6 +56,7 @@ import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file
 import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
 import { IframeProvider } from './pages/IframeContext.js';
 import UsersChampions from './pages/usersChampions';
+import DailyTips from './pages/dailyTips';
 
 
 
@@ -96,6 +97,7 @@ function App() {
               <Route path="/eventInfo" element={<EventInfo />} />
               <Route path="/champions" element={<Champions />} />
               <Route path="/usersChampions" element={<UsersChampions />} />
+              <Route path="/dailyTips" element={<DailyTips />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
