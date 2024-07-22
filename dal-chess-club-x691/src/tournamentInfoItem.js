@@ -57,6 +57,17 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
                 <div className="tstandings-table" dangerouslySetInnerHTML={{__html: standings}}></div>
               </>
           )}
+          {/*<div className="ttables">*/}
+
+          <button className="dropdown-button"
+                  onClick={togglePairings}>Pairings {showPairings ? <BsCaretUpFill/> : <BsCaretDownFill/>} </button>
+          {showPairings && (
+              <>
+                <h3>Pairings</h3>
+                <div className="tpairings-table" dangerouslySetInnerHTML={{__html: pairings}}></div>
+              </>
+          )}
+          {/*</div>*/}
 
         </div>
         <div className="tpopup-content" onClick={e => e.stopPropagation()}>
@@ -90,16 +101,7 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
               </a>
           )}
 
-          <div className="ttables">
 
-            <button className="dropdown-button pairings-dropdown-button" onClick={togglePairings}>Pairings  {showPairings ? <BsCaretUpFill />: <BsCaretDownFill />} </button>
-            {showPairings && (
-                <>
-                  <h3>Pairings</h3>
-                  <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
-                </>
-            )}
-          </div>
         </div>
       </div>
   );
