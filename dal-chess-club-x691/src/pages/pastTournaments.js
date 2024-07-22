@@ -101,7 +101,7 @@ function PastTournaments() {
                                 endTime={formatTime(tournament.end_date)}
                                 participantsNo={tournament.num_of_participants}
                                 description={tournament.description}
-                                registrationLink={tournament.registration_link}
+                                registrationLink={"pastTournament"}
                             />
                         )
                     }))

@@ -41,7 +41,7 @@ function TournamentItem({ tournamentsID, name, image, date, time, endTime, parti
       <img src={image} alt={name} />
       <p>{date} | {time} - {endTime} | {price}</p>
       <p>Number of Participants: {participantCount}</p>
-      { registrationLink !== "pastTournament" && <div className="participants-register-container">
+      { registrationLink != "pastTournament" && <div className="participants-register-container">
         <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
       </div>}
     </div>
