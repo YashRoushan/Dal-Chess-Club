@@ -4,11 +4,13 @@ import Logo from '../images/logo.png';
 import Reorder from '../images/reorder.png';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 
 function NavBar() {    
     const [showDropdowns, setShowDropdowns] = useState(false);
     const [showDropdownAbout, setShowDropdownAbout] = useState(false);
+    const { user, logout } = useAuth();
 
     const toggleDropdowns = () => {
         setShowDropdowns(!showDropdowns);
@@ -86,6 +88,16 @@ function NavBar() {
                         </>}
                 </div>
             </div>
+            {user.isAuthenticated && (
+                <>
+                    <div className='dropdown adminButtons'>
+                        <Link to='/adminLanding'><button className='dropbtn adminButtons'>Admin Dashboard</button></Link>
+                    </div>
+                    <div className='dropdown adminButtons'>
+                        <button className='dropbtn adminButtons' onClick={logout}>Logout</button>
+                    </div>
+                </>
+                )}
             
         </div>
     </div>
