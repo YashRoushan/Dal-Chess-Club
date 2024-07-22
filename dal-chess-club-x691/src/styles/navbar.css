@@ -118,6 +118,15 @@ body {
   .mobile-toggle {
     display: none;
   }
+
+  .dropdown .adminButtons{
+    background-color: black;
+    color:#FFD400;
+  }
+
+  .dropdown .adminButtons:hover{
+    color: black;
+  }
   
   @media screen and (max-width: 1025px) {
     .navbar h2 {
