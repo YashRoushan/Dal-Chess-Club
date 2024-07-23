@@ -2,24 +2,19 @@ import React, { useState, useEffect } from 'react';
 import '../styles/dailyTips.css'; // Use dailyTips.css for styling
 import { BASE_URL } from '../config.js';
 
-const Tip = ({ title, type, description, image_link }) => {
+const Tip = ({ title, type, typeIntro, description, image_link }) => {
     const imageUrl = image_link ? `${BASE_URL}${image_link}` : '';
-
-    let typeIntro = '';
-    if (type.toLowerCase() === 'opening') {
-        typeIntro = "Mastering the art of the opening is a vital first step towards chess mastery. A strong opening sets the tone for the entire game, helping you establish control, develop your pieces effectively, and ensure the safety of your king.";
-    } else if (type.toLowerCase() === 'middle game') {
-        typeIntro = "Transitioning to the middle game, the real strategic battle unfolds. It's not just about moving pieces; it's about launching a well-coordinated attack while maintaining a solid defense.";
-    } else if (type.toLowerCase() === 'endgame') {
-        typeIntro = "The endgame is where chess matches are won or lost. It's a high-stakes phase where every move can make the difference between a resounding victory or a bitter defeat.";
-    }
 
     return (
         <div className="tip-article">
+            <div className="type-info">
+                <p className="type"><strong>{type}</strong> - {typeIntro}</p>
+            </div>
             <h2>{title}</h2>
-            <p className="type">{type} - {typeIntro}</p>
-            <p>{description}</p>
-            {imageUrl && <img src={imageUrl} alt={title} />}
+            <div className="tip-content">
+                <p>{description}</p>
+                {imageUrl && <img className="tip-image" src={imageUrl} alt={title} />}
+            </div>
         </div>
     );
 };
@@ -52,10 +47,12 @@ function DailyTips() {
     return (
         <div className="daily-tips-page">
             <h1 className="daily-tips-header">Daily Chess Tips</h1>
+            <p className="daily-tips-intro">Welcome to the Daily Chess Tips page! Here, you'll find valuable tips to improve your chess game.</p>
+            <p className="daily-tips-intro">Every time you visit, you'll receive a new tip for the opening, middle game, and endgame. Refresh the page to discover new strategies and enhance your skills.</p>
             <div className="tips-container">
-                {openingTip && <Tip {...openingTip} />}
-                {middleGameTip && <Tip {...middleGameTip} />}
-                {endgameTip && <Tip {...endgameTip} />}
+                {openingTip && <Tip {...openingTip} typeIntro="Mastering the art of the opening is a vital first step towards chess mastery. A strong opening sets the tone for the entire game, helping you establish control, develop your pieces effectively, and ensure the safety of your king." />}
+                {middleGameTip && <Tip {...middleGameTip} typeIntro="Transitioning to the middle game, the real strategic battle unfolds. It's not just about moving pieces; it's about launching a well-coordinated attack while maintaining a solid defense." />}
+                {endgameTip && <Tip {...endgameTip} typeIntro="The endgame is where chess matches are won or lost. It's a high-stakes phase where every move can make the difference between a resounding victory or a bitter defeat." />}
             </div>
         </div>
     );

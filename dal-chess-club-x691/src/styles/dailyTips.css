@@ -1,28 +1,55 @@
 .daily-tips-page {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
 }
 
 .daily-tips-header {
-    margin: 20px 0;
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.daily-tips-intro {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #666;
 }
 
 .tips-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .tip-article {
-    margin-bottom: 40px;
-    padding: 20px;
+    width: 100%;
+    max-width: 800px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
-    text-align: left;
+    padding: 20px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.type-info {
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.tip-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tip-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .tip-article h2 {
@@ -30,23 +57,12 @@
     color: #333;
 }
 
-.tip-article .type {
-    margin-bottom: 10px;
-    color: #666;
-    font-style: italic;
-}
-
 .tip-article p {
     color: #333;
     line-height: 1.6;
 }
 
-.tip-article img {
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
-    margin-top: 20px;
-    border-radius: 4px;
-}
+
+
 
 
