@@ -75,7 +75,8 @@ h1 {
 .admin-dropdown-button.aboutUs .icon,
 .admin-dropdown-button.champion .icon,
 .admin-dropdown-button.subscribers .icon,
-.admin-dropdown-button.grandPrix .icon {
+.admin-dropdown-button.grandPrix .icon,
+.admin-dropdown-button.tips .icon{
     width: 110px;
     height: 80px;
     position: relative;

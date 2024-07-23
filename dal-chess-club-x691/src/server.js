@@ -1874,3 +1874,54 @@ app.get('/api/tips', (req, res) => {
     res.status(500).send('Database connection error');
   });
 });
+
+
+// Get a specific tip by ID
+app.get('/api/tips/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = 'SELECT * FROM tips WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching tip');
+      } else {
+        res.json(result[0]);
+      }
+    });
+  });
+});
+
+// Update a specific tip by ID
+app.put('/api/tips/edit/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, description, image_link, type } = req.body;
+  const sql = 'UPDATE tips SET title = ?, description = ?, image_link = ?, type = ? WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [title, description, image_link, type, id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error updating tip');
+      } else {
+        res.status(200).send('Tip updated successfully');
+      }
+    });
+  });
+});
+
+
+// deleting tips
+app.delete('/api/tips/delete/:id', (req, res) => {
+  const sql = 'DELETE FROM tips WHERE tipID = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [req.params.id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting tip');
+      } else {
+        res.status(200).send('Tip deleted successfully');
+      }
+    });
+  });
+});
+
