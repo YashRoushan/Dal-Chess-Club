@@ -1763,3 +1763,19 @@ app.delete('/api/champions/delete/:id', (req, res) => {
     });
   })
 });
+
+// API endpoint to fetch tips
+app.get('/api/tips', (req, res) => {
+  const sql = 'SELECT * FROM tips';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (err, results) => {
+      if (err) {
+        res.status(500).send('Error retrieving tips');
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    res.status(500).send('Database connection error');
+  });
+});

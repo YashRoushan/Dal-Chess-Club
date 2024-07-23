@@ -1,0 +1,52 @@
+.daily-tips-page {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.daily-tips-header {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.tips-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tip-article {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+.tip-article h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.tip-article .type {
+    margin-bottom: 10px;
+    color: #666;
+    font-style: italic;
+}
+
+.tip-article p {
+    color: #333;
+    line-height: 1.6;
+}
+
+.tip-article img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+
