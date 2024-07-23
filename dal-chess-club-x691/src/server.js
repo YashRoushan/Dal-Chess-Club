@@ -1814,12 +1814,12 @@ app.put('/api/tips/edit/:id', (req, res) => {
   });
 });
 
-
-// deleting tips
+// Delete tip by ID
 app.delete('/api/tips/delete/:id', (req, res) => {
-  const sql = 'DELETE FROM tips WHERE tipID = ?';
+  const { id } = req.params;
+  const sql = 'DELETE FROM tips WHERE id = ?';
   db.then((dbConnection) => {
-    dbConnection.query(sql, [req.params.id], (err, result) => {
+    dbConnection.query(sql, [id], (err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('Error deleting tip');
@@ -1829,4 +1829,5 @@ app.delete('/api/tips/delete/:id', (req, res) => {
     });
   });
 });
+
 
