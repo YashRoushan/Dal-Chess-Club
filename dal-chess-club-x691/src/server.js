@@ -1089,38 +1089,10 @@ const eventImageStorage = multer.diskStorage({
 
 const eventImageUpload = multer({ storage: eventImageStorage });
 
-// Getting events data
 
-// Configuring storage for image uploads
-const eventImageStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'src/images/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-
-const eventImageUpload = multer({ storage: eventImageStorage });
 
 // Getting events data
 app.get('/api/events', async (req, res) => {
-  const sqlSelectEvents = "Select * from events";
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectEvents, (err, result) => {
-      if (err) {
-        console.error("Error fetching events from events data:", err);
-        res.status(500).json({ error: err });
-      }
-      else {
-        res.status(200).json(result);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  })
-
   const sqlSelectEvents = "Select * from events";
   db.then((dbConnection) => {
     dbConnection.query(sqlSelectEvents, (err, result) => {
@@ -1885,5 +1857,20 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
   }).catch((error) => {
     console.error("Database connection error:", error);
     res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});
+// API endpoint to fetch tips
+app.get('/api/tips', (req, res) => {
+  const sql = 'SELECT * FROM tips';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (err, results) => {
+      if (err) {
+        res.status(500).send('Error retrieving tips');
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    res.status(500).send('Database connection error');
   });
 });
