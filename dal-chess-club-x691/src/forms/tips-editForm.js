@@ -53,7 +53,6 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
   return (
     <div className="edit-form-container">
       <form className="edit-form" onSubmit={handleSubmit}>
-        <h1>Edit Tips</h1> {/* Add heading */}
         <label htmlFor="title">Title:</label>
         <input
           type="text"
@@ -148,7 +147,7 @@ const EditTips = () => {
 
   return (
     <div className="editPage-container">
-      <h1>Chess Tips</h1>
+      <h1>Edit Tips</h1>
       <div className="editing-container">
         {editingTip ? (
           <TipsEditForm tip={editingTip} onCancel={() => setEditingTip(null)} onUpdate={handleUpdate} />
