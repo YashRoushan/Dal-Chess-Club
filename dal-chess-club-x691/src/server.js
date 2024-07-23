@@ -1763,3 +1763,30 @@ app.delete('/api/champions/delete/:id', (req, res) => {
     });
   })
 });
+
+
+// api to delete participant
+// Delete a participant by ID
+app.delete('/api/registration/delete/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const deleteQuery = "DELETE FROM user WHERE id = ?";
+
+  db.then((dbConnection) => {
+    dbConnection.query(deleteQuery, [id], (error, results) => {
+      if (error) {
+        console.error("Error deleting participant:", error);
+        return res.status(500).json({ error: "Internal Server Error", message: error.message });
+      }
+
+      if (results.affectedRows > 0) {
+        res.status(200).json({ message: `Participant with ID ${id} deleted successfully` });
+      } else {
+        res.status(404).json({ error: "Participant not found" });
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
+});

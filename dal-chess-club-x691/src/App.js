@@ -51,6 +51,7 @@ import FaqEditForm from './forms/editForm-faq.js';
 import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
+import TournamentParticipants from "./pages/tournamentParticipants";
 import NewsEditForm from './forms/editForm-news.js';
 import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file name match
 import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
@@ -122,6 +123,7 @@ function App() {
               <Route path="/editForm-library" element={<AuthGuard><LibraryEditForm /></AuthGuard>} />
               <Route path="/editForm-tournaments" element={<AuthGuard><TournamentsEditForm /></AuthGuard>} />
               <Route path="/editForm-liveTournament" element={<AuthGuard><LiveTournamentsEditForm /></AuthGuard>} />
+              <Route path="/editForm-tournamentParticipants" element={<AuthGuard><TournamentParticipants /></AuthGuard>} />
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
