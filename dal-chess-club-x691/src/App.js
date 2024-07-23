@@ -42,6 +42,7 @@ import TournamentInfo from './pages/tournamentInfo.js';
 import Champions from './pages/champions.js';
 import ChampionsAddForm from './forms/Champions-AddForm.js';
 import ChampionsEditForm from './forms/Champions-EditForm.js';
+import EditTips from './forms/tips-editForm.js';
 import EventInfo from './pages/eventInfo.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
@@ -131,6 +132,9 @@ function App() {
               <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
               <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
               <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
+              <Route path="/tips-editForm" element={<AuthGuard><EditTips /></AuthGuard>} />
+              <Route path="/tips-editForm/:id" element={<AuthGuard><EditTips /></AuthGuard>} />
+
               
 
             </Routes>

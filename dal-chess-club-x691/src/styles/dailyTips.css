@@ -33,7 +33,7 @@
 }
 
 .type-intro-box {
-    background-color: #ffd90046; /* Match the navbar color */
+    background-color: #ffd90046; 
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
@@ -56,7 +56,7 @@
     overflow: hidden;
     width: 100%;
     position: relative;
-    padding: 0 60px; /* Add padding for the arrows */
+    padding: 0 60px; 
 }
 
 .tip-content {
@@ -65,7 +65,7 @@
     align-items: center;
     gap: 20px;
     flex-grow: 1;
-    transition: transform 0.5s ease-in-out; /* Add transition for smooth sliding */
+    transition: transform 0.5s ease-in-out; 
 }
 
 .tip-image {
@@ -82,7 +82,7 @@
 }
 
 .tip-text p {
-    color: #666; /* Ensure the description text is not bold and has a lighter color */
+    color: #666; 
     font-weight: normal;
     line-height: 1.6;
 }
@@ -108,11 +108,11 @@
 }
 
 .prev-btn {
-    left: -10px; /* Adjusted position to move away from content */
+    left: -10px; 
 }
 
 .next-btn {
-    right: -10px; /* Adjusted position to move away from content */
+    right: -10px; 
 }
 
 .dot-container {
