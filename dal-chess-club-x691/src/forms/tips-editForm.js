@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import '../styles/editTips.css'; // Use the new CSS file for styling
+import { useNavigate } from 'react-router-dom';
+import '../styles/editTips.css'; 
 import { BASE_URL } from '../config.js';
 
 function TipsEditForm({ tip, onCancel, onUpdate }) {
@@ -53,6 +53,7 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
   return (
     <div className="edit-form-container">
       <form className="edit-form" onSubmit={handleSubmit}>
+        <h1>Edit Tips</h1> {/* Add heading */}
         <label htmlFor="title">Title:</label>
         <input
           type="text"
@@ -88,8 +89,9 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
           <option value="Endgame">Endgame</option>
         </select>
         <div className="button-container">
-          <button type="submit">Save</button>
           <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="submit">Save</button>
+          
         </div>
       </form>
     </div>
@@ -97,10 +99,8 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
 }
 
 const EditTips = () => {
-  const { id } = useParams();
   const [tips, setTips] = useState([]);
   const [editingTip, setEditingTip] = useState(null);
-  const navigate = useNavigate();
 
   const fetchTips = async () => {
     try {
@@ -116,13 +116,6 @@ const EditTips = () => {
     fetchTips();
   }, []);
 
-  useEffect(() => {
-    if (id) {
-      const tipToEdit = tips.find((tip) => tip.id === parseInt(id));
-      setEditingTip(tipToEdit);
-    }
-  }, [id, tips]);
-
   const handleDelete = async (tipId) => {
     const confirmed = window.confirm('Are you sure you want to delete this tip?');
     if (!confirmed) return;
@@ -132,31 +125,29 @@ const EditTips = () => {
         method: 'DELETE',
       });
       if (response.ok) {
-        setTips((prevTips) => prevTips.filter(tip => tip.id !== tipId));
         alert('Tip deleted successfully');
+        setTips((prevTips) => prevTips.filter(tip => tip.id !== tipId));
       } else {
         alert('Failed to delete tip');
         console.error('Failed to delete tip');
       }
     } catch (error) {
       alert('Error deleting tip');
-      console.error('Error deleting tip:', error);
+      console.error('Error deleting tip', error);
     }
   };
 
   const handleEditClick = (tip) => {
-    navigate(`/tips-editForm/${tip.id}`);
+    setEditingTip(tip);
   };
 
   const handleUpdate = () => {
     setEditingTip(null);
     fetchTips();
-    navigate('/tips-editForm');
   };
 
   return (
     <div className="editPage-container">
-      <h1>Edit Tips</h1>
       <div className="editing-container">
         {editingTip ? (
           <TipsEditForm tip={editingTip} onCancel={() => setEditingTip(null)} onUpdate={handleUpdate} />
@@ -195,6 +186,7 @@ const EditTips = () => {
 };
 
 export default EditTips;
+
 
 
 
