@@ -47,22 +47,6 @@ function Improve() {
               })}
           </div>
       </div>
-      <div className="trainer">
-        <h1>Speakers</h1>
-          <div className="trainerList">
-              {eventList.map((trainerItem, key) => {
-                return(
-                  <TrainerItem
-                    key={key}
-                    name={trainerItem.name}
-                    image={trainerItem.speakerImage}
-                    speciality={trainerItem.speciality}
-                    description={trainerItem.bio}
-                  />
-                )
-              })}
-          </div>
-      </div>
     </div>
   )
 }
