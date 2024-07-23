@@ -1925,4 +1925,21 @@ app.delete('/api/tips/delete/:id', (req, res) => {
   });
 });
 
+// Add new tip
+app.post('/api/tips/add', (req, res) => {
+  const { title, description, image_link, type } = req.body;
+  const sql = 'INSERT INTO tips (title, description, image_link, type) VALUES (?, ?, ?, ?)';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [title, description, image_link, type], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error adding tip');
+      } else {
+        res.status(200).send('Tip added successfully');
+      }
+    });
+  });
+});
+
+
 

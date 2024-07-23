@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/dailyTips.css'; // Use dailyTips.css for styling
+import '../styles/dailyTips.css';
 import { BASE_URL } from '../config.js';
 
 const Tip = ({ title, description, image_link }) => {

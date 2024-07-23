@@ -46,7 +46,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh; /* Adjusted to vertically center the container */
+    height: 50vh; /* Center the container vertically */
   }
   
   .edit-form {
@@ -56,11 +56,6 @@
     width: 100%; /* Increase width to make it more rectangular */
     max-width: 1000px; /* Increase max-width to make it wider */
     background-color: #f9f9f9;
-  }
-  
-  .edit-form h1 {
-    text-align: center;
-    margin-bottom: 20px;
   }
   
   .edit-form label {
@@ -97,5 +92,4 @@
     display: flex;
     justify-content: space-between;
   }
-  
   
