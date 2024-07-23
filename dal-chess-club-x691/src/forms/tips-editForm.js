@@ -148,6 +148,7 @@ const EditTips = () => {
 
   return (
     <div className="editPage-container">
+      <h1>Chess Tips</h1>
       <div className="editing-container">
         {editingTip ? (
           <TipsEditForm tip={editingTip} onCancel={() => setEditingTip(null)} onUpdate={handleUpdate} />
