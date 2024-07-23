@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddForms.css';
+import '../styles/AddForms.css';
 import { BASE_URL } from "../config";
 
 function ChampionsAddForm() {
