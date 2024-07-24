@@ -1365,18 +1365,37 @@ app.get('/api/news/:id', (req, res) => {
 
 app.put('/api/news/update/:id', (req, res) => {
   const { id } = req.params;
-  const { newsTitle, date, text, event_imageID } = req.body;
-  const sqlUpdateNews = "update news set newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
+  const { newsTitle, date, text, event_imageID, image } = req.body;
+  console.log("the body is ", req.body);
+  const sqlUpdateNews = "UPDATE news SET newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
+  const sqlUpdateImage = "UPDATE event_images SET image = ?, alt_text = ? WHERE event_imageID = ?";
 
   db.then((dbConnection) => {
     dbConnection.query(sqlUpdateNews, [newsTitle, date, text, event_imageID, id], (error, result) => {
       if (error) {
         console.error('Error updating news item:', error);
-        res.status(500).json({ error: error.message });
-      } else if(result.length === 0) {
-        res.status(404).json({ error: 'Library item not found' });
-      } else{
-        res.status(200).json(result);
+        return res.status(500).json({ error: error.message });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'News item not found' });
+      }
+
+      if (event_imageID && image) {
+        dbConnection.query(sqlUpdateImage, [image, newsTitle, event_imageID], (imageError, imageResult) => {
+          if (imageError) {
+            console.error('Error updating image:', imageError);
+            return res.status(500).json({ error: imageError.message });
+          }
+
+          if (imageResult.affectedRows === 0) {
+            return res.status(404).json({ error: 'Event image not found' });
+          }
+
+          return res.status(200).json({ message: 'News item and image updated successfully' });
+        });
+      } else {
+        return res.status(200).json({ message: 'News item updated successfully' });
       }
     });
   }).catch((error) => {
