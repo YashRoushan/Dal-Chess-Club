@@ -12,18 +12,45 @@ import TournamentItem from '../tournamentItem.js';
 function Improve() {
   const [eventList, setEventsList] = useState([]);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
     // Fetch events from the API
-    useEffect(() => {
-      fetch(`${BASE_URL}/improve`)
-        .then(response => response.json())
+    // useEffect(() => {
+    //   fetch(`${BASE_URL}/improve`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log(data);
+    //       setEventsList(data);
+    //     })
+    //     .catch(error => {
+    //       console.error("Error fetching data:", error);
+    //     });
+    // }, []); 
+
+    const fetchData = () => {
+      const serverUrl =  `${BASE_URL}/improve`;
+      fetch(serverUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
-          console.log(data);
-          setEventsList(data);
+          console.log('Fetched events:', data); // Debug log
+          if (data.length === 0) {
+            setEventsList([]); // Clear the list if no data is returned
+          } else {
+            setEventsList(data);
+          }
         })
         .catch(error => {
           console.error("Error fetching data:", error);
+          setEventsList([]); // Clear the list if there is an error
         });
-    }, []); 
+    }
 
   return (
     <div className="improve">

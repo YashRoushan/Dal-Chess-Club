@@ -16,23 +16,23 @@ function EventInfo() {
     fetchParticipants(tournamentID);
   }, [tournamentID]);
 
-  const [eventList, setEventsList] = useState([]);
+  // const [eventList, setEventsList] = useState([]);
 
-    // Fetch events from the API
-    useEffect(() => {
-      fetch(`${BASE_URL}/improve`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setEventsList(data);
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
-    }, []); 
+  //   // Fetch events from the API
+  //   useEffect(() => {
+  //     fetch(`${BASE_URL}/improve`)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         console.log(data);
+  //         setEventsList(data);
+  //       })
+  //       .catch(error => {
+  //         console.error("Error fetching data:", error);
+  //       });
+  //   }, []); 
 
   const fetchTournamentData = async (id) => {
-    const serverUrl = `${BASE_URL}/events?id=${id}`;
+    const serverUrl = `${BASE_URL}/improve?id=${id}`;
     console.log('Fetching tournament data:', serverUrl);
     try {
       const response = await fetch(serverUrl);
@@ -81,62 +81,62 @@ function EventInfo() {
     }
   };
 
-  return (
-    <div>
-      <div className="tournamentList">
-      {eventList.map((eventItem, key) => {
-        return(
-          <EventInfoItem
-            key={key}
-            eventsID={eventItem.eventsID}
-            name={eventItem.title}
-            image={eventItem.eventImage}
-            price={formatPrice(eventItem.cost)}
-            date={formatDate(eventItem.start_date)}
-            time={formatTime(eventItem.start_date)}
-            endTime={formatTime(eventItem.end_date)}
-            description={eventItem.description}
-            participantsNo={participantCount} // Pass the participant count here
-            registrationLink={tournamentsList.registration_link}
-            participants={participants} // Pass the participants here
-          />
-        )
-      })}
-    </div>
-    <div className="trainer">
-        <h1>Speakers</h1>
-          <div className="trainerList">
-              {eventList.map((trainerItem, key) => {
-                return(
-                  <TrainerItem
-                    key={key}
-                    name={trainerItem.name}
-                    image={trainerItem.speakerImage}
-                    speciality={trainerItem.speciality}
-                    description={trainerItem.bio}
-                  />
-                )
-              })}
-          </div>
-      </div>
-    </div>
-  );
-
   // return (
-  //   <EventInfoItem
-  //     tournamentID={tournamentID}
-  //     name={tournamentsList.title}
-  //     image={tournamentsList.eventImage}
-  //     price={formatPrice(tournamentsList.cost)}
-  //     date={formatDate(tournamentsList.start_date)}
-  //     time={formatTime(tournamentsList.start_date)}
-  //     endTime={formatTime(tournamentsList.end_date)}
-  //     participantsNo={participantCount} // Pass the participant count here
-  //     description={tournamentsList.description}
-  //     registrationLink={tournamentsList.registration_link}
-  //     participants={participants} // Pass the participants here
-  //   />
+  //   <div>
+  //     <div className="tournamentList">
+  //     {eventList.map((eventItem, key) => {
+  //       return(
+  //         <EventInfoItem
+  //           key={key}
+  //           eventsID={eventItem.eventsID}
+  //           name={eventItem.title}
+  //           image={eventItem.eventImage}
+  //           price={formatPrice(eventItem.cost)}
+  //           date={formatDate(eventItem.start_date)}
+  //           time={formatTime(eventItem.start_date)}
+  //           endTime={formatTime(eventItem.end_date)}
+  //           description={eventItem.description}
+  //           participantsNo={participantCount} // Pass the participant count here
+  //           registrationLink={tournamentsList.registration_link}
+  //           participants={participants} // Pass the participants here
+  //         />
+  //       )
+  //     })}
+  //   </div>
+  //   <div className="trainer">
+  //       <h1>Speakers</h1>
+  //         <div className="trainerList">
+  //             {eventList.map((trainerItem, key) => {
+  //               return(
+  //                 <TrainerItem
+  //                   key={key}
+  //                   name={trainerItem.name}
+  //                   image={trainerItem.speakerImage}
+  //                   speciality={trainerItem.speciality}
+  //                   description={trainerItem.bio}
+  //                 />
+  //               )
+  //             })}
+  //         </div>
+  //     </div>
+  //   </div>
   // );
+
+  return (
+    <EventInfoItem
+      tournamentID={tournamentID}
+      name={tournamentsList.title}
+      image={tournamentsList.eventImage}
+      price={formatPrice(tournamentsList.cost)}
+      date={formatDate(tournamentsList.start_date)}
+      time={formatTime(tournamentsList.start_date)}
+      endTime={formatTime(tournamentsList.end_date)}
+      participantsNo={participantCount} // Pass the participant count here
+      description={tournamentsList.description}
+      registrationLink={tournamentsList.registration_link}
+      participants={participants} // Pass the participants here
+    />
+  );
 }
 
 function formatPrice(price) {

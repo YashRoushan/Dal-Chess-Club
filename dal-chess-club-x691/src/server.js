@@ -269,28 +269,57 @@ app.post("/emailVer", async (req, res) => {
 
 //API for displaying content on improve page
 app.get("/improve", (req, res) => {
+
+  const { id } = req.query;
+  
+  let eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
+
+  const queryParams = [];
+
+  if (id) {
+    eventQuery += ' AND eventsID LIKE ?';
+    queryParams.push(`%${id}%`);
+  }
+
   db.then((dbConnection) => {
     console.log(dbConnection);
-    const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
+    //const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
 
-    dbConnection.query(eventQuery, (err, data) => {
+    dbConnection.query(eventQuery, queryParams, (err, data) => {
       if (err) {
         console.error("Error fetching events:", err);
         return res.status(500).json(err);
       }
 
-      const eventsWithImages = data.map((item) => {
-        const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
-        const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
+      if (data.length > 0) {
+        const eventsWithImages = data.map((item) => {
+          const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
+          const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
 
-        return {
-          ...item,
-          eventImage: eventImage,
-          speakerImage: speakerImage,
-        };
-      });
+          return {
+            ...item,
+            eventImage: eventImage,
+            speakerImage: speakerImage,
+          };
+        });
 
-      return res.json(eventsWithImages);
+        return res.json(eventsWithImages);
+      } else {
+        res.status(404).json({ error: "No Events found" });
+      }
+      // const eventsWithImages = data.map((item) => {
+      //   const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
+      //   const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
+
+      //   return {
+      //     ...item,
+      //     eventImage: eventImage,
+      //     speakerImage: speakerImage,
+      //   };
+      // });
+
+      // return res.json(eventsWithImages);
+
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
@@ -1062,13 +1091,31 @@ app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
 //Events Page
 
 // Getting events data
-app.get('/api/events', async (req, res) => {
-  try {
-    const [rows] = await require('./database').query('SELECT * FROM events');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// app.get('/api/events', async (req, res) => {
+//   try {
+//     const [rows] = await require('./database').query('SELECT * FROM events');
+//     res.json(rows);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+app.get('/api/events', (req, res) => {
+  const sqlSelect = 'SELECT * FROM events';
+
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelect, (error, results) => {
+      if (error) {
+        console.error('Error retrieving events:', error);
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  });
 });
 
 // Addding events data in Tournaments page
