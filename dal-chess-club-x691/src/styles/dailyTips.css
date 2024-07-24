@@ -29,7 +29,6 @@
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
     background-color: white;
     margin-bottom: 20px;
-    
 }
 
 .type-intro-box {
@@ -39,24 +38,15 @@
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     font-weight: normal;
-}
-
-.tip-slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+    text-align: center;
 }
 
 .tip-content-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 20px;
-    flex-grow: 1;
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    padding: 0 60px; 
 }
 
 .tip-content {
@@ -64,85 +54,27 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    flex-grow: 1;
-    transition: transform 0.5s ease-in-out; 
 }
 
 .tip-image {
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
     border-radius: 8px;
-    align-self: center;
 }
 
 .tip-text h2 {
     margin-top: 0;
     color: #333;
+    text-align: center;
 }
 
 .tip-text p {
     color: #666; 
     font-weight: normal;
     line-height: 1.6;
-}
-
-.slide-btn {
-    background-color: #ccc;
-    border: none;
-    border-radius: 50%;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.slide-btn:hover {
-    background-color: #bbb;
-}
-
-.prev-btn {
-    left: -10px; 
-}
-
-.next-btn {
-    right: -10px; 
-}
-
-.dot-container {
-    text-align: center;
-    padding: 10px 0;
-}
-
-.dot {
-    height: 15px;
-    width: 15px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-.dot.active {
-    background-color: #333;
-}
-
-.tip-text {
-    text-align: left; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tip-content p {
-    margin: 0;
+    text-align: justify;
+    
 }
 
 

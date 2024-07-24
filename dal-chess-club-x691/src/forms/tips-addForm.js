@@ -10,6 +10,7 @@ function AddTips() {
     image_link: '',
     type: 'Opening',
   });
+  const [imageFile, setImageFile] = useState(null);
   
   const navigate = useNavigate();
 
@@ -18,15 +19,47 @@ function AddTips() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let imageUrl = '';
+
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('file', imageFile);
+      try {
+        const response = await fetch(`${BASE_URL}/api/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        if (response.ok) {
+          imageUrl = `/src/images/tips/${data.filename}`;
+        } else {
+          alert('Error uploading image');
+          console.error('Error uploading image');
+        }
+      } catch (error) {
+        alert('Error uploading image');
+        console.error('Error uploading image', error);
+      }
+    }
+
+    const tipData = {
+      ...formData,
+      image_link: imageUrl,
+    };
+
     try {
       const response = await fetch(`${BASE_URL}/api/tips/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(tipData),
       });
       if (response.ok) {
         alert('Tip added successfully');
@@ -62,11 +95,10 @@ function AddTips() {
         />
         <label htmlFor="image_link">Image Link:</label>
         <input
-          type="text"
+          type="file"
           id="image_link"
           name="image_link"
-          value={formData.image_link}
-          onChange={handleChange}
+          onChange={handleImageChange}
         />
         <label htmlFor="type">Type:</label>
         <select
@@ -89,4 +121,5 @@ function AddTips() {
 }
 
 export default AddTips;
+
 
