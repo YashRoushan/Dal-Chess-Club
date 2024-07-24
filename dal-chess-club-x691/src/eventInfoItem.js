@@ -60,12 +60,6 @@ function EventInfoItem({ eventID, name, image, date, time, endTime, participants
             <button className="tregisterButton">Register</button>
           </a>
         )}
-        <div className="ttables">
-          <h3>Standings</h3>
-          <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-          <h3>Pairings</h3>
-          <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
-        </div>
       </div>
     </div>
   );
