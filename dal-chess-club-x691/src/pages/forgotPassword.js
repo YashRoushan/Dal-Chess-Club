@@ -1,54 +1,61 @@
+// ForgotPassword.js
 import React, { useState } from 'react';
+import { BASE_URL } from "../config";
 import '../styles/forgotPassword.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/emailVer', {
+      const response = await fetch(`${BASE_URL}/api/check-email`, {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
-      })
-      const data = await response.json();
-      if(data.exists) {
-        setMessage('Email exists in admin table');
-        //window.location.href = "/chessclub/resetPassword";
-      } else {
-        setMessage('Email does not exist in admin table');
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const data = await response.json();
+      setMessage(data.message);
     } catch (error) {
-      console.error('Error checking email:', error);
-      setMessage('Error checking email.');
+      console.error('There was an error!', error);
+      setMessage('An error occurred. Please try again.');
     }
-  }
+  };
 
   return (
     <div className="forgotPassword-container">
-
       <div className="forgotPassword-header">
         <h1 id="main-header">Forgot Password</h1>
-        <p>Please input your email address, thereafter we will send you a password reset email.</p>
+        <p>Please input your email address, and we will check if it matches our records.</p>
       </div>
 
       <div className="emailFormDiv">
         <form className="form-element" onSubmit={handleSubmit}>
           <label>Email Address:</label>
-          <input className="emailText-form" type="text" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input
+            className="emailText-form"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <div className="reset-submit-container">
             <button type="submit">Submit</button>
-        </div>
+          </div>
         </form>
       </div>
 
       {message && <div className='message'>{message}</div>}
     </div>
-  )
+  );
 }
 
 export default ForgotPassword;

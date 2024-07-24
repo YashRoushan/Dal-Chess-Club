@@ -1861,6 +1861,32 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", message: error.message });
   });
 });
+
+// api to check if admin email matches inputted email
+app.post('/api/check-email', (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  const query = 'SELECT username FROM admin WHERE username = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(query, [email], (err, results) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+  
+      if (results.length > 0) {
+        res.json({ message: 'Email matches, check email to receive new password' });
+      } else {
+        res.json({ message: 'Email does not match' });
+      }
+    })
+  });
+});
+
 // API endpoint to fetch tips
 app.get('/api/tips', (req, res) => {
   const sql = 'SELECT * FROM tips';
