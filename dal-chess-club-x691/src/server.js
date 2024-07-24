@@ -283,8 +283,6 @@ app.get("/improve", (req, res) => {
 
   db.then((dbConnection) => {
     console.log(dbConnection);
-    //const eventQuery = "SELECT events.*, ei.image AS eventImage, s.*, pi.image AS speakerImage, c.*, l.* FROM events JOIN event_images ei ON events.event_imageID = ei.event_imageID JOIN speaker s ON events.speakerID = s.speakerID JOIN people_images pi ON s.people_imageID = pi.people_imageID JOIN category c ON events.categoryID = c.categoryID JOIN location l ON events.locationID = l.locationID";
-
     dbConnection.query(eventQuery, queryParams, (err, data) => {
       if (err) {
         console.error("Error fetching events:", err);
@@ -307,19 +305,6 @@ app.get("/improve", (req, res) => {
       } else {
         res.status(404).json({ error: "No Events found" });
       }
-      // const eventsWithImages = data.map((item) => {
-      //   const eventImage = item.eventImage ? getImageUrl(item.eventImage) : null;
-      //   const speakerImage = item.speakerImage ? getImageUrl(item.speakerImage) : null;
-
-      //   return {
-      //     ...item,
-      //     eventImage: eventImage,
-      //     speakerImage: speakerImage,
-      //   };
-      // });
-
-      // return res.json(eventsWithImages);
-
     });
   }).catch((error) => {
     console.error("Database connection error:", error);

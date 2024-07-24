@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TrainerItem from '../trainerItem'
 import '../styles/trainer.css'
 import EventItem from '../eventItem'
 import '../styles/event.css'
@@ -7,7 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/tournaments.css";
 import { BASE_URL} from '../config.js';
-import TournamentItem from '../tournamentItem.js';
 
 function Improve() {
   const [eventList, setEventsList] = useState([]);
@@ -15,19 +13,6 @@ function Improve() {
   useEffect(() => {
     fetchData();
   }, []);
-
-    // Fetch events from the API
-    // useEffect(() => {
-    //   fetch(`${BASE_URL}/improve`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       console.log(data);
-    //       setEventsList(data);
-    //     })
-    //     .catch(error => {
-    //       console.error("Error fetching data:", error);
-    //     });
-    // }, []); 
 
     const fetchData = () => {
       const serverUrl =  `${BASE_URL}/improve`;

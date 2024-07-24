@@ -4,36 +4,21 @@ import EventInfoItem from '../eventInfoItem.js';
 import TrainerItem from '../trainerItem.js';
 
 function EventInfo() {
-  const [tournamentsList, setTournamentsList] = useState({});
+  const [eventsList, setEventsList] = useState({});
   const [participantCount, setParticipantCount] = useState(0);
   const [participants, setParticipants] = useState([]);
   const parameters = new URLSearchParams(window.location.search);
-  const tournamentID = Number(parameters.get('itemId'));
+  const eventID = Number(parameters.get('itemId'));
 
   useEffect(() => {
-    fetchTournamentData(tournamentID);
-    fetchParticipantCount(tournamentID);
-    fetchParticipants(tournamentID);
-  }, [tournamentID]);
+    fetchEventData(eventID);
+    fetchParticipantCount(eventID);
+    fetchParticipants(eventID);
+  }, [eventID]);
 
-  // const [eventList, setEventsList] = useState([]);
-
-  //   // Fetch events from the API
-  //   useEffect(() => {
-  //     fetch(`${BASE_URL}/improve`)
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         console.log(data);
-  //         setEventsList(data);
-  //       })
-  //       .catch(error => {
-  //         console.error("Error fetching data:", error);
-  //       });
-  //   }, []); 
-
-  const fetchTournamentData = async (id) => {
+  const fetchEventData = async (id) => {
     const serverUrl = `${BASE_URL}/improve?id=${id}`;
-    console.log('Fetching tournament data:', serverUrl);
+    console.log('Fetching event data:', serverUrl);
     try {
       const response = await fetch(serverUrl);
       if (!response.ok) {
@@ -41,10 +26,10 @@ function EventInfo() {
       }
       const data = await response.json();
       if (data.length === 0) {
-        console.error("No tournament found");
+        console.error("No event found");
       } else {
-        console.log('Tournament data:', data[0]);
-        setTournamentsList(data[0]);
+        console.log('Event data:', data[0]);
+        setEventsList(data[0]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -68,7 +53,7 @@ function EventInfo() {
   };
 
   const fetchParticipants = async (id) => {
-    console.log('Fetching participants for tournament ID:', id);
+    console.log('Fetching participants for event ID:', id);
     try {
       const response = await fetch(`${BASE_URL}/api/registration`);
       const data = await response.json();
@@ -81,68 +66,27 @@ function EventInfo() {
     }
   };
 
-  // return (
-  //   <div>
-  //     <div className="tournamentList">
-  //     {eventList.map((eventItem, key) => {
-  //       return(
-  //         <EventInfoItem
-  //           key={key}
-  //           eventsID={eventItem.eventsID}
-  //           name={eventItem.title}
-  //           image={eventItem.eventImage}
-  //           price={formatPrice(eventItem.cost)}
-  //           date={formatDate(eventItem.start_date)}
-  //           time={formatTime(eventItem.start_date)}
-  //           endTime={formatTime(eventItem.end_date)}
-  //           description={eventItem.description}
-  //           participantsNo={participantCount} // Pass the participant count here
-  //           registrationLink={tournamentsList.registration_link}
-  //           participants={participants} // Pass the participants here
-  //         />
-  //       )
-  //     })}
-  //   </div>
-  //   <div className="trainer">
-  //       <h1>Speakers</h1>
-  //         <div className="trainerList">
-  //             {eventList.map((trainerItem, key) => {
-  //               return(
-  //                 <TrainerItem
-  //                   key={key}
-  //                   name={trainerItem.name}
-  //                   image={trainerItem.speakerImage}
-  //                   speciality={trainerItem.speciality}
-  //                   description={trainerItem.bio}
-  //                 />
-  //               )
-  //             })}
-  //         </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div>
       <EventInfoItem
-      tournamentID={tournamentID}
-      name={tournamentsList.title}
-      image={tournamentsList.eventImage}
-      price={formatPrice(tournamentsList.cost)}
-      date={formatDate(tournamentsList.start_date)}
-      time={formatTime(tournamentsList.start_date)}
-      endTime={formatTime(tournamentsList.end_date)}
+      eventID={eventID}
+      name={eventsList.title}
+      image={eventsList.eventImage}
+      price={formatPrice(eventsList.cost)}
+      date={formatDate(eventsList.start_date)}
+      time={formatTime(eventsList.start_date)}
+      endTime={formatTime(eventsList.end_date)}
       participantsNo={participantCount} // Pass the participant count here
-      description={tournamentsList.description}
-      registrationLink={tournamentsList.registration_link}
+      description={eventsList.description}
+      registrationLink={eventsList.registration_link}
       participants={participants} // Pass the participants here
     />
     <h1>Speakers</h1>
     <TrainerItem
-      name={tournamentsList.name}
-      image={tournamentsList.speakerImage}
-      speciality={tournamentsList.speciality}
-      description={tournamentsList.bio}
+      name={eventsList.name}
+      image={eventsList.speakerImage}
+      speciality={eventsList.speciality}
+      description={eventsList.bio}
     />
     </div>
   );
@@ -180,9 +124,3 @@ function formatTime(dateString) {
 }
 
 export default EventInfo;
-
-// Move the associated speaker within the events pop-up display rather than having the speaker section
-
-// The client has concerns that as the events page grows, 
-//   it will be hard to decipher which speaker is associated with which event.
-// Display the speaker card on the event view more page.
