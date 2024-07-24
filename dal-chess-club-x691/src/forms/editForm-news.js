@@ -13,6 +13,7 @@ function NewsEditForm() {
   const [date, setDate] = useState(new Date());
   const [text, setText] = useState('');
   const [event_imageID, setEventImageID] = useState(0);
+    const [image, setImage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(()=>{
@@ -33,6 +34,7 @@ function NewsEditForm() {
               // setDate(new Date(data.date));
               setText(data.text);
               setEventImageID(data.event_imageID);
+              setImage(data.imgurl || '');
           } catch(error){
               console.error('Error fetching data:', error);
               setSuccessMessage('');
@@ -45,7 +47,7 @@ function NewsEditForm() {
 
     const handleEdit = async (event) => {
       event.preventDefault();
-        const formData = { newsID, newsTitle, date, text, event_imageID };
+        const formData = { newsID, newsTitle, date, text, event_imageID, image };
         try {
             const response = await fetch(`${BASE_URL}/api/news/update/${itemId}`, {
                 method: 'PUT',
@@ -77,7 +79,7 @@ function NewsEditForm() {
       </div>
 
         {successMessage && <div className="success-message">{successMessage}</div>}
-        <form onSubmit={(e)=> handleEdit(e)} className="form-combined">
+        <form onSubmit={(e) => handleEdit(e)} className="form-combined">
             <div className="form-element">
                 <label>Title</label>
                 <input
@@ -118,6 +120,15 @@ function NewsEditForm() {
                     required
                 />
             </div>
+            <div className="form-element">
+                <label>Image URL</label>
+                <input
+                    className="text-form"
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                />
+            </div>
             <div className="submit-button-container">
                 <button type="submit">Submit</button>
                 {/*<button type="button" onClick={onCancel}>Cancel</button>*/}
@@ -125,7 +136,7 @@ function NewsEditForm() {
         </form>
 
     </div>
-  )
+    )
 }
 
 export default NewsEditForm;

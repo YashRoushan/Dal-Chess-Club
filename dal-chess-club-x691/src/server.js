@@ -1338,14 +1338,19 @@ app.post('/api/news/add', (req, res) => {
 // fetching a single news
 app.get('/api/news/:id', (req, res) => {
   const { id } = req.params;
-  const sqlSelectNewsItem = "select * from news where newsID = ?";
+  const sqlSelectNewsItem = `
+    SELECT news.*, event_images.image as imgurl, event_images.alt_text
+    FROM news
+    LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID
+    WHERE news.newsID = ?
+  `;
   db.then((dbConnection) => {
     dbConnection.query(sqlSelectNewsItem, [id], (error, result) => {
       if (error) {
         console.error('Error fetching news item:', error);
         res.status(500).json({ error: error.message });
       } else if (result.length === 0) {
-        res.status(404).json({ error: 'Library item not found' });
+        res.status(404).json({ error: 'News item not found' });
       } else {
         res.status(200).json(result[0]);
       }
