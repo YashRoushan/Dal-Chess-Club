@@ -1,34 +1,7 @@
 import React from "react";
 import "./styles/tournaments.css";
-import { useLocation } from 'react-router-dom';
-import { BASE_URL } from "./config";
 
 function EventInfoItem({ eventID, name, image, date, time, endTime, participantsNo, price, description, registrationLink, participants }) {
-  const [pairings, setPairings] = useState('');
-  const [standings, setStandings] = useState('');
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const itemId = searchParams.get('itemId');
-
-  useEffect(() => {
-    if (itemId) {
-      fetchData(itemId);
-    }
-  }, [itemId]);
-
-  const fetchData = async (id) => {
-    try {
-      const response = await fetch(`${BASE_URL}/api/live-tournaments/${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setStandings(data.Standings);
-      setPairings(data.Pairings);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
   return (
     <div className="tpopup-background">
