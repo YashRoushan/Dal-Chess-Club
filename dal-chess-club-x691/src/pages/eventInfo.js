@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../config.js';
 import EventInfoItem from '../eventInfoItem.js';
+import TrainerItem from '../trainerItem.js';
 
 function EventInfo() {
   const [tournamentsList, setTournamentsList] = useState({});
@@ -81,7 +82,8 @@ function EventInfo() {
   };
 
   return (
-    <div className="tournamentList">
+    <div>
+      <div className="tournamentList">
       {eventList.map((eventItem, key) => {
         return(
           <EventInfoItem
@@ -100,6 +102,23 @@ function EventInfo() {
           />
         )
       })}
+    </div>
+    <div className="trainer">
+        <h1>Speakers</h1>
+          <div className="trainerList">
+              {eventList.map((trainerItem, key) => {
+                return(
+                  <TrainerItem
+                    key={key}
+                    name={trainerItem.name}
+                    image={trainerItem.speakerImage}
+                    speciality={trainerItem.speciality}
+                    description={trainerItem.bio}
+                  />
+                )
+              })}
+          </div>
+      </div>
     </div>
   );
 
@@ -152,3 +171,9 @@ function formatTime(dateString) {
 }
 
 export default EventInfo;
+
+// Move the associated speaker within the events pop-up display rather than having the speaker section
+
+// The client has concerns that as the events page grows, 
+//   it will be hard to decipher which speaker is associated with which event.
+// Display the speaker card on the event view more page.
