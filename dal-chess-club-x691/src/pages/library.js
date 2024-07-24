@@ -17,6 +17,10 @@ function Library() {
 
   return (
     <div className="library">
+      {/* Add the message here */}
+      <div className="library-message">
+        <strong>To lend out a book, please email</strong>  <a href="mailto:chess@dal.ca">chess@dal.ca</a>.
+      </div>
       <h1>Library Books List</h1>
       <div className="libraryList">
         {libraryList.map((libraryItem, index) => (
