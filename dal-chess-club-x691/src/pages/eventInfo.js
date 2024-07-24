@@ -123,7 +123,8 @@ function EventInfo() {
   // );
 
   return (
-    <EventInfoItem
+    <div>
+      <EventInfoItem
       tournamentID={tournamentID}
       name={tournamentsList.title}
       image={tournamentsList.eventImage}
@@ -136,6 +137,14 @@ function EventInfo() {
       registrationLink={tournamentsList.registration_link}
       participants={participants} // Pass the participants here
     />
+    <h1>Speakers</h1>
+    <TrainerItem
+      name={tournamentsList.name}
+      image={tournamentsList.speakerImage}
+      speciality={tournamentsList.speciality}
+      description={tournamentsList.bio}
+    />
+    </div>
   );
 }
 
