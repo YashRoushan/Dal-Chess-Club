@@ -17,16 +17,16 @@
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    width: auto;
+    width: 80%;
     max-width: 600px;
     min-width: 300px;
-    z-index: 1000;
+    max-height: 80%;
     background-color: white;
-    overflow-y: auto;
     cursor: default;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto; /* Enable vertical scrolling for the entire popup */
 }
 
 .library-popup-content img {
@@ -34,6 +34,11 @@
     height: auto;
     max-height: 400px;
     margin-bottom: 20px;
+}
+
+.library-popup-details {
+    width: 100%;
+    padding-right: 10px; /* Add padding to avoid content getting hidden behind scrollbar */
 }
 
 .library-popup-content button {
