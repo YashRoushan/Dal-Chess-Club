@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./styles/tournaments.css";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { BASE_URL } from "./config";
 
-function EventInfoItem({ tournamentID, name, image, date, time, endTime, participantsNo, price, description, registrationLink, participants }) {
-  const navigate = useNavigate();
+function EventInfoItem({ eventID, name, image, date, time, endTime, participantsNo, price, description, registrationLink, participants }) {
   const [pairings, setPairings] = useState('');
   const [standings, setStandings] = useState('');
   const location = useLocation();
@@ -61,12 +60,6 @@ function EventInfoItem({ tournamentID, name, image, date, time, endTime, partici
             <button className="tregisterButton">Register</button>
           </a>
         )}
-        <div className="ttables">
-          <h3>Standings</h3>
-          <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-          <h3>Pairings</h3>
-          <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
-        </div>
       </div>
     </div>
   );
