@@ -1275,22 +1275,43 @@ app.delete('/api/library/delete/:id', (req, res) => {
 
 //getting all news
 app.get('/api/news', (req, res) => {
-  const sqlSelectAllNews = "select * from news";
+  const sqlSelectAllNews = `
+    SELECT 
+      news.newsID, 
+      news.newsTitle, 
+      news.date, 
+      news.text, 
+      event_images.image AS imgurl, 
+      event_images.alt_text 
+    FROM 
+      news
+    LEFT JOIN 
+      event_images ON news.event_imageID = event_images.event_imageID
+  `;
+
   db.then((dbConnection) => {
     dbConnection.query(sqlSelectAllNews, (error, result) => {
       if (error) {
-        console.error('Error deleting news item:', error);
+        console.error('Error fetching news items:', error);
         res.status(500).json({ error: error.message });
-      }
-      else{
-        res.status(200).json(result);
+      } else {
+        const newsWithImages = result.map(item => ({
+          newsID: item.newsID,
+          newsTitle: item.newsTitle,
+          date: item.date,
+          text: item.text,
+          imageUrl: getImageUrl(item.imgurl),
+          altText: item.alt_text
+        }));
+        res.status(200).json(newsWithImages);
       }
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
     res.status(500).json({ error: "Internal Server Error", message: error.message });
-  })
-})
+  });
+});
+
 
 // adding news
 app.post('/api/news/add', (req, res) => {
