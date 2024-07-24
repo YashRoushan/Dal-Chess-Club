@@ -10,6 +10,7 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
     image_link: '',
     type: 'Opening'
   });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (tip) {
@@ -27,16 +28,41 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      let uploadedFilePath = formData.image_link;
+      
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        const uploadResponse = await fetch(`${BASE_URL}/api/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (uploadResponse.ok) {
+          const uploadData = await uploadResponse.json();
+          uploadedFilePath = `/src/images/tips/${uploadData.filename}`;
+        } else {
+          alert('Error uploading image');
+          return;
+        }
+      }
+
       const response = await fetch(`${BASE_URL}/api/tips/edit/${tip.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, image_link: uploadedFilePath }),
       });
+
       if (response.ok) {
         alert('Tip updated successfully');
         onUpdate();
@@ -68,13 +94,13 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
           value={formData.description}
           onChange={handleChange}
         />
-        <label htmlFor="image_link">Image Link:</label>
+        
+        <label htmlFor="file">Upload New Image:</label>
         <input
-          type="text"
-          id="image_link"
-          name="image_link"
-          value={formData.image_link}
-          onChange={handleChange}
+          type="file"
+          id="file"
+          name="file"
+          onChange={handleFileChange}
         />
         <label htmlFor="type">Type:</label>
         <select
@@ -90,7 +116,6 @@ function TipsEditForm({ tip, onCancel, onUpdate }) {
         <div className="button-container">
           <button type="button" onClick={onCancel}>Cancel</button>
           <button type="submit">Save</button>
-          
         </div>
       </form>
     </div>
@@ -147,7 +172,7 @@ const EditTips = () => {
 
   return (
     <div className="editPage-container">
-      <h1>Edit Tips</h1>
+      <h1>Edit Tips</h1> {/* Add heading */}
       <div className="editing-container">
         {editingTip ? (
           <TipsEditForm tip={editingTip} onCancel={() => setEditingTip(null)} onUpdate={handleUpdate} />

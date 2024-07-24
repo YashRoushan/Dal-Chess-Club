@@ -15,7 +15,7 @@
     border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
-    font-weight: normal; /* Ensure content in the table is not bold */
+    font-weight: normal; 
   }
   
   .faq-table th {
@@ -46,15 +46,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh; /* Adjusted to vertically center the container */
+    height: 50vh; 
   }
   
   .edit-form {
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 40px;
-    width: 100%; /* Increase width to make it more rectangular */
-    max-width: 1000px; /* Increase max-width to make it wider */
+    width: 100%; 
+    max-width: 1000px; 
     background-color: #f9f9f9;
   }
   
