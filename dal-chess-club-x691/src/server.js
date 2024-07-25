@@ -333,7 +333,7 @@ const { Upload } = require("@mui/icons-material");
 app.get("/api/news/getAllNews", (req, res) => {
   console.log("/api/news/getAllNews");
 
-  const sql = `SELECT news.newsTitle,news.date, news.text, event_images.image as imgurl, event_images.alt_text 
+  const sql = `SELECT news.newsID, news.newsTitle, news.date, news.text, event_images.image as imgurl, event_images.alt_text 
   FROM news
   LEFT JOIN event_images ON news.event_imageID = event_images.event_imageID`;
   db.then((dbConnection) => {
@@ -346,11 +346,11 @@ app.get("/api/news/getAllNews", (req, res) => {
       }
       if (data.length > 0) {
         const newsWithImages = data.map((item) => ({
-          id: item.newsId,
+          newsID: item.newsID, 
           title: item.newsTitle,
           date: moment(item.date).format("MMMM DD, YYYY hh:mm A"),
           text: item.text,
-          imageUrl: getImageUrl(item.imgurl), // Use the getImageUrl function
+          imageUrl: getImageUrl(item.imgurl), 
         }));
         return res.json(newsWithImages);
       } else {
@@ -381,6 +381,7 @@ app.get("/api/home/homePageCards", (req, res) => {
 
       if (data.length > 0) {
         const cardsData = data.slice(3, 6).map((item) => ({
+          newsID: item.newsID,
           id: item.event_imageID,
           content: item.alt_text,
           title: item.alt_text,
@@ -415,6 +416,7 @@ app.get("/api/home/getHomePageSlides", (req, res) => {
       }
       if (data.length > 0) {
         const slidesData = data.slice(0, 3).map((item) => ({
+          newsID: item.newsID,
           id: item.event_imageID,
           content: item.alt_text,
           title: item.alt_text,
