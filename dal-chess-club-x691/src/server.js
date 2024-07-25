@@ -1887,6 +1887,14 @@ app.post('/api/check-email', (req, res) => {
         const tempPassword = generateRandomPassword();
         console.log('Generated temp password:', tempPassword);
 
+        const updateQuery = 'UPDATE admin SET tempPass = ? WHERE username = ?';
+        dbConnection.query(updateQuery, [tempPassword, email], async (err) => {
+          if (err) {
+            console.error('Database error during password update:', err);
+            return res.status(500).json({ message: 'Internal Server Error', error: err });
+          }
+
+
         try {
           await sendEmail(email, 'Password Reset', `Your new temporary password is: ${tempPassword}`);
           console.log('Email sent successfully');
@@ -1895,6 +1903,7 @@ app.post('/api/check-email', (req, res) => {
           console.error('Error sending email:', emailErr);
           res.status(500).json({ message: 'Failed to send email. Please try again.', error: emailErr });
         }
+        })
       } else {
         res.json({ success: false, message: 'Email is incorrect, please try again!' });
       }
