@@ -30,6 +30,7 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import ResetPassword from './pages/resetPassword.js';
 import AuthGuard from './components/AuthGuard.js';
 import { AuthProvider } from './contexts/AuthContext';
 import MailingList from './pages/mailingList.js';
@@ -55,8 +56,8 @@ import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import TournamentParticipants from "./pages/tournamentParticipants";
 import NewsEditForm from './forms/editForm-news.js';
-import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file name match
-import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
+import GrandPrixForm from './pages/grandPrixForm'; 
+import GrandPrixPage from './grandPrixPage.js'; 
 import { IframeProvider } from './pages/IframeContext.js';
 import UsersChampions from './pages/usersChampions';
 import DailyTips from './pages/dailyTips';
@@ -91,6 +92,7 @@ function App() {
               <Route path="/adminLogin" element={<AdminLogin />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />

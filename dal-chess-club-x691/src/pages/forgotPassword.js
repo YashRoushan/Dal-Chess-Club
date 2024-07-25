@@ -1,11 +1,14 @@
 // ForgotPassword.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from "../config";
 import '../styles/forgotPassword.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,6 +27,11 @@ function ForgotPassword() {
 
       const data = await response.json();
       setMessage(data.message);
+
+      // Redirect to resetPassword page if email check is successful
+      if (data.success) {
+        navigate('/resetPassword');
+      }
     } catch (error) {
       console.error('There was an error!', error);
       setMessage('An error occurred. Please try again.');

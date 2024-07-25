@@ -1879,9 +1879,11 @@ app.post('/api/check-email', (req, res) => {
       }
   
       if (results.length > 0) {
-        res.json({ message: 'Email matches, check email to receive new password' });
+        res.json({ "success": true, message: 'Email matches, check email to receive new password' });
+      
+      
       } else {
-        res.json({ message: 'Email does not match' });
+        res.json({ "success": false, message: 'Email is incorrect, please try again!' });
       }
     })
   });
