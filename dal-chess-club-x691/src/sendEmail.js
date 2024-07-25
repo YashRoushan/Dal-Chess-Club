@@ -1,23 +1,22 @@
 const nodemailer = require('nodemailer');
 
-// Configure the transporter with your email service
-const transporter = nodemailer.createTransport({
-  service: 'gmail',  
-  auth: {
-    user: 'chessclubdal@gmail.com',
-    pass: 'chessclubtest'
-  }
-});
+async function sendEmail(to, subject, text) {
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'chessclubdal@gmail.com',
+      pass: 'ffqj uqtc dayc xfjn',
+    },
+  });
 
-function sendEmail(to, subject, text) {
-  const mailOptions = {
+  let mailOptions = {
     from: 'chessclubdal@gmail.com',
-    to,
-    subject,
-    text
+    to: to,
+    subject: subject,
+    text: text,
   };
 
-  return transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions);
 }
 
 module.exports = sendEmail;

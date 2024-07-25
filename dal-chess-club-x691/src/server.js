@@ -9,6 +9,8 @@ const bcrypt = require("bcrypt");
 const moment = require("moment");
 const app = express();
 const multer = require("multer");
+const generateRandomPassword = require('./generatePassword');
+const sendEmail = require('./sendEmail');
 
 app.use(cors());
 app.use(express.json());
@@ -1865,27 +1867,41 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
 // api to check if admin email matches inputted email
 app.post('/api/check-email', (req, res) => {
   const { email } = req.body;
+  console.log('Received email:', email);
 
   if (!email) {
+    console.error("No email provided in request body");
     return res.status(400).json({ message: 'Email is required' });
   }
 
   const query = 'SELECT username FROM admin WHERE username = ?';
   db.then((dbConnection) => {
-    dbConnection.query(query, [email], (err, results) => {
+    dbConnection.query(query, [email], async (err, results) => {
       if (err) {
         console.error('Database error:', err);
         return res.status(500).json({ message: 'Internal Server Error' });
       }
-  
+
+      console.log('Query results:', results);
       if (results.length > 0) {
-        res.json({ "success": true, message: 'Email matches, check email to receive new password' });
-      
-      
+        const tempPassword = generateRandomPassword();
+        console.log('Generated temp password:', tempPassword);
+
+        try {
+          await sendEmail(email, 'Password Reset', `Your new temporary password is: ${tempPassword}`);
+          console.log('Email sent successfully');
+          res.json({ success: true, message: 'Email matches. A new password has been sent to your email.' });
+        } catch (emailErr) {
+          console.error('Error sending email:', emailErr);
+          res.status(500).json({ message: 'Failed to send email. Please try again.', error: emailErr });
+        }
       } else {
-        res.json({ "success": false, message: 'Email is incorrect, please try again!' });
+        res.json({ success: false, message: 'Email is incorrect, please try again!' });
       }
-    })
+    });
+  }).catch((error) => {
+    console.error('Error connecting to database:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   });
 });
 
