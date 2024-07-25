@@ -3,9 +3,10 @@ import '../styles/news.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL} from '../config.js';
+import { useLocation } from 'react-router-dom';
 
-const NewsArticle = ({ title, date, text, imageUrl }) => (
-    <div className="news-article">
+const NewsArticle = ({ title, date, text, imageUrl, newsID }) => (
+    <div className="news-article" id={newsID}>
         <h2>{title}</h2>
         <p className="date">{date}</p>
         <p>{text}</p>
@@ -17,6 +18,7 @@ const NewsPage = () => {
     const [newsArticles, setNewsArticles] = useState([]);
     const [input, setInput] = useState("");
     const [dateFilter, setDateFilter] = useState('');
+    const location = useLocation();
 
     const fetchData = () => {
         fetch(`${BASE_URL}/api/news/getAllNews`)
@@ -34,6 +36,24 @@ const NewsPage = () => {
     useEffect(() => {
         fetchData();
     }, [input, dateFilter]);
+
+    useEffect(() => {
+        const hash = location.hash.replace('#', '');
+        console.log('Location hash:', hash);
+        if (hash) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => {
+                const element = document.getElementById(hash);
+                console.log('Element to scroll to:', element);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    console.log('Scrolled to element:', element);
+                } else {
+                    console.log('Element not found');
+                }
+            }, 800); 
+        }
+    }, [location, newsArticles]); 
 
     const handleInputChange = (event) => {
         setInput(event.target.value);
@@ -66,8 +86,8 @@ const NewsPage = () => {
             </div>
 
             <div className="news-container">
-                {newsArticles.length !== 0 ? newsArticles.map((article, index) => (
-                    <NewsArticle key={index} {...article} />
+                {newsArticles.length !== 0 ? newsArticles.map((article) => (
+                    <NewsArticle key={article.newsID} {...article} newsID={article.newsID} />
                 )) : <h3>No News Articles Found...</h3>}
             </div>
         </div>
