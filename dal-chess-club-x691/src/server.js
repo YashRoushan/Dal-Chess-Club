@@ -1076,31 +1076,37 @@ app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
 //Events Page
 
 // Getting events data
-// app.get('/api/events', async (req, res) => {
-//   try {
-//     const [rows] = await require('./database').query('SELECT * FROM events');
-//     res.json(rows);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
-app.get('/api/events', (req, res) => {
-  const sqlSelect = 'SELECT * FROM events';
+// Configuring storage for image uploads
+const eventImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'src/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
 
+const eventImageUpload = multer({ storage: eventImageStorage });
+
+// Getting events data
+app.get('/api/events', async (req, res) => {
+  const sqlSelectEvents = "Select * from events";
   db.then((dbConnection) => {
-    dbConnection.query(sqlSelect, (error, results) => {
-      if (error) {
-        console.error('Error retrieving events:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        res.status(200).json(results);
+    dbConnection.query(sqlSelectEvents, (err, result) => {
+      if (err) {
+        console.error("Error fetching events from events data:", err);
+        res.status(500).json({ error: err });
+      }
+      else {
+        res.status(200).json(result);
       }
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
     res.status(500).json({ error: "Internal Server Error", message: error.message });
-  });
+  })
+
 });
 
 // Addding events data in Tournaments page
