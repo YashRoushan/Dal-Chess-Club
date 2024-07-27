@@ -66,8 +66,6 @@ const Champions = () => {
     return (
         <div className="champions-page">
             <h1>Champions</h1>
-            <p>Welcome to the Champions page of the Dalhousie Chess Club.</p>
-            <p>Explore the records of our champions and be inspired by their journey and accomplishments.</p>
             <table className="champions-table">
                 <thead>
                 <tr>
