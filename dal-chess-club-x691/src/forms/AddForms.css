@@ -5,7 +5,7 @@
 .form-A,
 .form-B,
 .form-C,
-.form-container{
+.form-container {
   width: 50%;
   margin: auto;
   margin-bottom: 20px;
@@ -15,7 +15,9 @@
 }
 
 .text-form,
-.text-form-c {
+.text-form-c,
+.date-form,
+.dropdown-form {
   width: 100%;
   font-size: 14pt;
   padding: 10px;
@@ -58,9 +60,9 @@
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.list-group{
+.list-group {
   display: flex;
   flex-direction: column;
   /*background-color: #007aff;*/
   margin-left: 35vw;
-}
+} 
