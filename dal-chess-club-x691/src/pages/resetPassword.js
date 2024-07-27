@@ -1,51 +1,72 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from "../config";
 
 function ResetPassword() {
-  const [tempPassword, setTempPassword] = useState('');
+  const [tempPass, setTempPass] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add your reset password logic here
+    try {
+      const response = await fetch(`${BASE_URL}/api/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tempPass, newPassword, confirmPassword }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setMessage(data.message);
+
+      if (response.ok) {
+        navigate('/adminLogin');
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.');
+    }
   };
 
   return (
     <div className="resetPassword-container">
       <div className="resetPassword-header">
         <h1 id="main-header">Reset Password</h1>
-        <p>Please enter the password received in your email and reset your password.</p>
+        <p>Enter the temporary password and your new password below.</p>
       </div>
 
-      <div className="passwordFormDiv">
+      <div className="resetFormDiv">
         <form className="form-element" onSubmit={handleSubmit}>
-          <label>Password In Email:</label>
+          <label>Temporary Password:</label>
           <input
-            className="passwordText-form"
             type="password"
             required
-            value={tempPassword}
-            onChange={(e) => setTempPassword(e.target.value)}
+            value={tempPass}
+            onChange={(e) => setTempPass(e.target.value)}
           />
           <label>New Password:</label>
           <input
-            className="passwordText-form"
             type="password"
             required
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
-          <label>Confirm Password:</label>
+          <label>Confirm New Password:</label>
           <input
-            className="passwordText-form"
             type="password"
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <div className="reset-submit-container">
-            <button type="submit">Submit</button>
+            <button type="submit">Reset Password</button>
           </div>
         </form>
       </div>

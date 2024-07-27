@@ -1867,10 +1867,8 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
 // api to check if admin email matches inputted email
 app.post('/api/check-email', (req, res) => {
   const { email } = req.body;
-  console.log('Received email:', email);
 
   if (!email) {
-    console.error("No email provided in request body");
     return res.status(400).json({ message: 'Email is required' });
   }
 
@@ -1878,19 +1876,16 @@ app.post('/api/check-email', (req, res) => {
   db.then((dbConnection) => {
     dbConnection.query(query, [email], async (err, results) => {
       if (err) {
-        console.error('Database error:', err);
         return res.status(500).json({ message: 'Internal Server Error' });
       }
 
       console.log('Query results:', results);
       if (results.length > 0) {
         const tempPassword = generateRandomPassword();
-        console.log('Generated temp password:', tempPassword);
 
         const updateQuery = 'UPDATE admin SET tempPass = ? WHERE username = ?';
         dbConnection.query(updateQuery, [tempPassword, email], async (err) => {
           if (err) {
-            console.error('Database error during password update:', err);
             return res.status(500).json({ message: 'Internal Server Error', error: err });
           }
 
@@ -1900,7 +1895,6 @@ app.post('/api/check-email', (req, res) => {
           console.log('Email sent successfully');
           res.json({ success: true, message: 'Email matches. A new password has been sent to your email.' });
         } catch (emailErr) {
-          console.error('Error sending email:', emailErr);
           res.status(500).json({ message: 'Failed to send email. Please try again.', error: emailErr });
         }
         })
@@ -1909,9 +1903,58 @@ app.post('/api/check-email', (req, res) => {
       }
     });
   }).catch((error) => {
-    console.error('Error connecting to database:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   });
+});
+
+
+// api to reset password
+app.post('/api/reset-password', async (req, res) => {
+  const { tempPass, newPassword, confirmPassword } = req.body;
+
+  if (!tempPass || !newPassword || !confirmPassword) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ message: 'New passwords do not match' });
+  }
+
+  try {
+    const dbConnection = await db;
+
+    const query = 'SELECT tempPass FROM admin LIMIT 1';
+    dbConnection.query(query, (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ message: 'No admin user found' });
+      }
+
+      const admin = results[0];
+
+      if (admin.tempPass !== tempPass) {
+        return res.status(400).json({ message: 'Temporary password is incorrect' });
+      }
+
+      const updateQuery = 'UPDATE admin SET password = ?, tempPass = NULL WHERE tempPass = ?';
+      dbConnection.query(updateQuery, [newPassword, tempPass], (updateErr, updateResult) => {
+        if (updateErr) {
+          return res.status(500).json({ message: 'Internal Server Error', error: updateErr });
+        }
+
+        if (updateResult.affectedRows === 0) {
+          return res.status(500).json({ message: 'Failed to update password' });
+        }
+
+        res.json({ message: 'Password successfully reset' });
+      });
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 // API endpoint to fetch tips
