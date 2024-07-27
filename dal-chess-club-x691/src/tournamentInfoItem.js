@@ -13,10 +13,12 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
+  const [isPastTournament, setIsPastTournament] = useState(true);
 
   useEffect(() => {
     if (itemId) {
       fetchData(itemId);
+      fetchCurrentTournament(tournamentID);
     }
   }, [itemId]);
 
@@ -33,6 +35,24 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
       console.error('Error fetching data:', error);
     }
   };
+
+  // checking if the tournament is pastTournament or currentTournament
+  const fetchCurrentTournament = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/tournaments?id=${tournamentID}`);
+      console.log("tournament id is ", tournamentID);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log("data is ", data);
+      if (data.length > 0){
+      setIsPastTournament(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   const handleRegisterNow = () => {
     navigate(`/tournamentRegistration?tournamentsID=${tournamentID}`); // Navigate to the registration page with the tournament ID
@@ -86,9 +106,9 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
                     <li key={participant.id}>{participant.fullname}</li>
                 ))}
               </ul>
-              <div className="participants-register-container">
+              { !isPastTournament  && <div className="participants-register-container">
                 <button className="register-now-button" onClick={handleRegisterNow}>Register Now</button>
-              </div>
+              </div>}
 
             </div>
           </div>
