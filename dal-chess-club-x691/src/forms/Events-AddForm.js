@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
 import './AddForms.css';
 import { BASE_URL } from '../config';
-import { BASE_URL } from '../config';
 
 function EventsAddForm() {
-    const [title, setTitle] = useState('');
-    const [eventImage, setEventImage] = useState();
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [cost, setCost] = useState('');
-    const [locationID, setLocationID] = useState('');
-    const [categoryID, setCategoryID] = useState('');
-    const [speakerID, setSpeakerID] = useState('');
-    const [numOfAttendees, setNumOfAttendees] = useState('');
-    const [registrationDeadline, setRegistrationDeadline] = useState('');
     const [title, setTitle] = useState('');
     const [eventImage, setEventImage] = useState();
     const [startDate, setStartDate] = useState('');
