@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../styles/champions.css';
 import { BASE_URL } from "../config";
 
-
 const UsersChampions = () => {
     const [champions, setChampions] = useState([]);
+    const [selectedTournament, setSelectedTournament] = useState("Dalhousie Chess Championship");
 
     useEffect(() => {
         let isMounted = true;
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/api/champions`, {
+                const response = await fetch(`${BASE_URL}/api/champions?tournament=${encodeURIComponent(selectedTournament)}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -30,19 +30,41 @@ const UsersChampions = () => {
                 }
             }
         };
-        
+
         fetchData();
 
         return () => {
             isMounted = false;
         };
-    }, []);
+    }, [selectedTournament]);
+
+    const tournaments = [
+        "Dalhousie Chess Championship",
+        "Dalhousie Open",
+        "Summer Rapid Open",
+        "Summer Blitz Battle",
+        "Owen Maitzen Rapid Open",
+        "Fall Blitz Battle",
+        "Winter Rapid Open",
+        "Winter Blitz Battle"
+    ];
 
     return (
         <div className="champions-page">
+            <div className="tournament-tabs">
+                <ul className="nav-tabs">
+                    {tournaments.map(tournament => (
+                        <li
+                            key={tournament}
+                            className={tournament === selectedTournament ? 'active' : ''}
+                            onClick={() => setSelectedTournament(tournament)}
+                        >
+                            {tournament}
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <h1>Champions</h1>
-            {/* <p>Welcome to the Champions page of the Dalhousie Chess Club.</p>
-            <p>Explore the records of our champions and be inspired by their journey and accomplishments.</p> */}
             <table className="champions-table">
                 <thead>
                 <tr>
@@ -56,7 +78,6 @@ const UsersChampions = () => {
                         <td>{champion.name}</td>
                         <td>{formatDate(champion.year)}</td>
                     </tr>
-
                 ))}
                 </tbody>
             </table>
@@ -76,4 +97,4 @@ export function formatDate(dateString) {
     const year = date.getFullYear();
   
     return `${year}`;
-  }
+}
