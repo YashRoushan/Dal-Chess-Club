@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from "../config";
+import "../styles/resetPassword.css"
 
 function ResetPassword() {
   const [tempPass, setTempPass] = useState('');
@@ -31,7 +32,7 @@ function ResetPassword() {
         navigate('/adminLogin');
       }
     } catch (error) {
-      setMessage('An error occurred. Please try again.');
+      setMessage(error.message);
     }
   };
 

@@ -1867,8 +1867,10 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
 // api to check if admin email matches inputted email
 app.post('/api/check-email', (req, res) => {
   const { email } = req.body;
+  console.log('Received email:', email);
 
   if (!email) {
+    console.error("No email provided in request body");
     return res.status(400).json({ message: 'Email is required' });
   }
 
@@ -1876,36 +1878,47 @@ app.post('/api/check-email', (req, res) => {
   db.then((dbConnection) => {
     dbConnection.query(query, [email], async (err, results) => {
       if (err) {
+        console.error('Database error:', err);
         return res.status(500).json({ message: 'Internal Server Error' });
       }
 
       console.log('Query results:', results);
       if (results.length > 0) {
         const tempPassword = generateRandomPassword();
+        console.log('Generated temp password:', tempPassword);
 
-        const updateQuery = 'UPDATE admin SET tempPass = ? WHERE username = ?';
-        dbConnection.query(updateQuery, [tempPassword, email], async (err) => {
+        const tempPassDateTime = new Date();
+        tempPassDateTime.setHours(tempPassDateTime.getHours() - 3);
+        const formattedTempPassDateTime = tempPassDateTime.toISOString().slice(0, 19).replace('T', ' '); 
+
+        console.log('Setting tempPassDateTime to:', formattedTempPassDateTime);
+
+        const updateQuery = 'UPDATE admin SET tempPass = ?, tempPassDateTime = ? WHERE username = ?';
+        dbConnection.query(updateQuery, [tempPassword, formattedTempPassDateTime, email], async (err) => {
           if (err) {
+            console.error('Database error during password update:', err);
             return res.status(500).json({ message: 'Internal Server Error', error: err });
           }
 
-
-        try {
-          await sendEmail(email, 'Password Reset', `Your new temporary password is: ${tempPassword}`);
-          console.log('Email sent successfully');
-          res.json({ success: true, message: 'Email matches. A new password has been sent to your email.' });
-        } catch (emailErr) {
-          res.status(500).json({ message: 'Failed to send email. Please try again.', error: emailErr });
-        }
-        })
+          try {
+            await sendEmail(email, 'Password Reset', `Your new temporary password is: ${tempPassword}`);
+            console.log('Email sent successfully');
+            res.json({ success: true, message: 'Email matches. A new password has been sent to your email.' });
+          } catch (emailErr) {
+            console.error('Error sending email:', emailErr);
+            res.status(500).json({ message: 'Failed to send email. Please try again.', error: emailErr });
+          }
+        });
       } else {
         res.json({ success: false, message: 'Email is incorrect, please try again!' });
       }
     });
   }).catch((error) => {
+    console.error('Error connecting to database:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   });
 });
+
 
 
 // api to reset password
@@ -1921,38 +1934,48 @@ app.post('/api/reset-password', async (req, res) => {
   }
 
   try {
-    const dbConnection = await db;
-
-    const query = 'SELECT tempPass FROM admin LIMIT 1';
-    dbConnection.query(query, (err, results) => {
-      if (err) {
-        return res.status(500).json({ message: 'Internal Server Error' });
-      }
-
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'No admin user found' });
-      }
-
-      const admin = results[0];
-
-      if (admin.tempPass !== tempPass) {
-        return res.status(400).json({ message: 'Temporary password is incorrect' });
-      }
-
-      const updateQuery = 'UPDATE admin SET password = ?, tempPass = NULL WHERE tempPass = ?';
-      dbConnection.query(updateQuery, [newPassword, tempPass], (updateErr, updateResult) => {
-        if (updateErr) {
-          return res.status(500).json({ message: 'Internal Server Error', error: updateErr });
+    const query = 'SELECT password, tempPass, tempPassDateTime FROM admin WHERE tempPass = ? LIMIT 1';
+    db.then((dbConnection) => {
+      dbConnection.query(query, [tempPass], (err, results) => {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ message: 'Internal Server Error' });
         }
 
-        if (updateResult.affectedRows === 0) {
-          return res.status(500).json({ message: 'Failed to update password' });
+        if (results.length === 0) {
+          return res.status(400).json({ message: 'Temporary password is incorrect or no user found' });
         }
 
-        res.json({ message: 'Password successfully reset' });
+        const admin = results[0];
+        const tempPassDateTime = new Date(admin.tempPassDateTime).getTime();
+        const currentTime = new Date().getTime(); 
+
+        const expirationTime = 300000; // 5 minutes in milliseconds
+        const timeDifference = currentTime - tempPassDateTime;
+
+        if (timeDifference > expirationTime) {
+          console.log('Temporary password has expired');
+          return res.status(400).json({ message: 'Temporary password has expired' });
+        } else {
+          console.log('Temporary password is still valid');
+        }
+
+        
+        const updateQuery = 'UPDATE admin SET password = ?, tempPass = NULL, tempPassDateTime = NULL WHERE tempPass = ?';
+        dbConnection.query(updateQuery, [newPassword, tempPass], (err) => {
+          if (err) {
+            console.error('Database error during update:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+          }
+          res.json({ message: 'Password successfully reset' });
+        });
       });
+    }).catch((error) => {
+      console.error('Database connection error:', error);
+      res.status(500).json({ message: 'Internal Server Error', error: error.message });
     });
   } catch (error) {
+    console.error('Catch block error:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
