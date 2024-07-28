@@ -81,7 +81,6 @@ function EventInfo() {
       registrationLink={eventsList.registration_link}
       participants={participants} // Pass the participants here
     />
-    <h1>Speakers</h1>
     <TrainerItem
       name={eventsList.name}
       image={eventsList.speakerImage}
