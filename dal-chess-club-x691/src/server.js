@@ -1076,26 +1076,105 @@ app.put('/api/live-tournaments/edit/:game_id', (req, res) => {
 //Events Page
 
 // Getting events data
-// app.get('/api/events', async (req, res) => {
-//   try {
-//     const [rows] = await require('./database').query('SELECT * FROM events');
-//     res.json(rows);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
-app.get('/api/events', (req, res) => {
-  const sqlSelect = 'SELECT * FROM events';
+// Configuring storage for image uploads
+const eventImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'src/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const eventImageUpload = multer({ storage: eventImageStorage });
+
+// Getting events data
+
+// Configuring storage for image uploads
+const eventImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'src/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const eventImageUpload = multer({ storage: eventImageStorage });
+
+// Getting events data
+app.get('/api/events', async (req, res) => {
+  const sqlSelectEvents = "Select * from events";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectEvents, (err, result) => {
+      if (err) {
+        console.error("Error fetching events from events data:", err);
+        res.status(500).json({ error: err });
+      }
+      else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  })
+
+  const sqlSelectEvents = "Select * from events";
+  db.then((dbConnection) => {
+    dbConnection.query(sqlSelectEvents, (err, result) => {
+      if (err) {
+        console.error("Error fetching events from events data:", err);
+        res.status(500).json({ error: err });
+      }
+      else {
+        res.status(200).json(result);
+      }
+    });
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  })
+
+});
+
+// Adding events data in Events page
+app.post('/api/events/add', eventImageUpload.single('eventImage'), (req, res) => {
+  const { title, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
+
+  if (!req.file) {
+    return res.status(400).json({ error: 'Image upload failed' });
+  }
+
+  const imagePath = `/src/images/${req.file.originalname}`;
+  const alt_text = `${req.file.originalname} not found`;
+
+  const imageInsert = `INSERT INTO event_images (image, alt_text) VALUES (?, ?)`;
 
   db.then((dbConnection) => {
-    dbConnection.query(sqlSelect, (error, results) => {
+    dbConnection.query(imageInsert, [imagePath, alt_text], (error, result) => {
       if (error) {
-        console.error('Error retrieving events:', error);
-        res.status(500).json({ error: error.message });
-      } else {
-        res.status(200).json(results);
+        console.error('Error adding event image data:', error);
+        return res.status(500).json({ error: error.message });
       }
+
+      const event_imageID = result.insertId;
+
+      const sqlInsertEvent = `
+        INSERT INTO events 
+        (title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      dbConnection.query(sqlInsertEvent, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline], (error, result) => {
+        if (error) {
+          console.error('Error adding event data:', error);
+          return res.status(500).json({ error: error.message });
+        }
+
+        res.status(201).json({ message: 'Event added successfully', result });
+      });
     });
   }).catch((error) => {
     console.error("Database connection error:", error);
@@ -1103,20 +1182,6 @@ app.get('/api/events', (req, res) => {
   });
 });
 
-// Addding events data in Tournaments page
-app.post('/api/events/add', async (req, res) => {
-  try {
-    const { title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline } = req.body;
-    const sqlInsert = `
-    INSERT INTO events 
-    (title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const [result] = await require('./database').query(sqlInsert, [title, event_imageID, start_date, end_date, description, cost, locationID, categoryID, speakerID, num_of_attendees, registration_deadline]);
-    res.status(201).json({ message: 'Event added successfully', result });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 // Editing events data in Tournaments page
 app.put('/api/events/edit/:eventID', async (req, res) => {
