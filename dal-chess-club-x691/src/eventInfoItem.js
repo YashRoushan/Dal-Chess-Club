@@ -40,8 +40,3 @@ function EventInfoItem({ eventID, name, image, date, time, endTime, participants
 }
 
 export default EventInfoItem;
-
-// Fix the display of the events more information page
-
-// The text should be displayed in a wider block than narrowly to the side of the image.
-// Use the tournaments page as a guide for the styling
