@@ -110,6 +110,10 @@
 
 }
 
+.speakers{
+  margin-top: 150px;
+}
+
 @media (max-width: 768px) {
   .ttournament-info h1 {
     /*margin-top: 0;*/
