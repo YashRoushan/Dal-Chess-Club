@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../config.js';
 import EventInfoItem from '../eventInfoItem.js';
+import TrainerItem from '../trainerItem.js';
 
 function EventInfo() {
-  const [tournamentsList, setTournamentsList] = useState({});
+  const [eventsList, setEventsList] = useState({});
   const [participantCount, setParticipantCount] = useState(0);
   const [participants, setParticipants] = useState([]);
   const parameters = new URLSearchParams(window.location.search);
-  const tournamentID = Number(parameters.get('itemId'));
+  const eventID = Number(parameters.get('itemId'));
 
   useEffect(() => {
-    fetchTournamentData(tournamentID);
-    fetchParticipantCount(tournamentID);
-    fetchParticipants(tournamentID);
-  }, [tournamentID]);
+    fetchEventData(eventID);
+    fetchParticipantCount(eventID);
+    fetchParticipants(eventID);
+  }, [eventID]);
 
-  const [eventList, setEventsList] = useState([]);
-
-    // Fetch events from the API
-    useEffect(() => {
-      fetch(`${BASE_URL}/improve`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setEventsList(data);
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
-    }, []); 
-
-  const fetchTournamentData = async (id) => {
-    const serverUrl = `${BASE_URL}/events?id=${id}`;
-    console.log('Fetching tournament data:', serverUrl);
+  const fetchEventData = async (id) => {
+    const serverUrl = `${BASE_URL}/improve?id=${id}`;
+    console.log('Fetching event data:', serverUrl);
     try {
       const response = await fetch(serverUrl);
       if (!response.ok) {
@@ -40,10 +26,10 @@ function EventInfo() {
       }
       const data = await response.json();
       if (data.length === 0) {
-        console.error("No tournament found");
+        console.error("No event found");
       } else {
-        console.log('Tournament data:', data[0]);
-        setTournamentsList(data[0]);
+        console.log('Event data:', data[0]);
+        setEventsList(data[0]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -67,7 +53,7 @@ function EventInfo() {
   };
 
   const fetchParticipants = async (id) => {
-    console.log('Fetching participants for tournament ID:', id);
+    console.log('Fetching participants for event ID:', id);
     try {
       const response = await fetch(`${BASE_URL}/api/registration`);
       const data = await response.json();
@@ -81,43 +67,29 @@ function EventInfo() {
   };
 
   return (
-    <div className="tournamentList">
-      {eventList.map((eventItem, key) => {
-        return(
-          <EventInfoItem
-            key={key}
-            eventsID={eventItem.eventsID}
-            name={eventItem.title}
-            image={eventItem.eventImage}
-            price={formatPrice(eventItem.cost)}
-            date={formatDate(eventItem.start_date)}
-            time={formatTime(eventItem.start_date)}
-            endTime={formatTime(eventItem.end_date)}
-            description={eventItem.description}
-            participantsNo={participantCount} // Pass the participant count here
-            registrationLink={tournamentsList.registration_link}
-            participants={participants} // Pass the participants here
-          />
-        )
-      })}
+    <div>
+      <EventInfoItem
+      eventID={eventID}
+      name={eventsList.title}
+      image={eventsList.eventImage}
+      price={formatPrice(eventsList.cost)}
+      date={formatDate(eventsList.start_date)}
+      time={formatTime(eventsList.start_date)}
+      endTime={formatTime(eventsList.end_date)}
+      participantsNo={participantCount} // Pass the participant count here
+      description={eventsList.description}
+      registrationLink={eventsList.registration_link}
+      participants={participants} // Pass the participants here
+    />
+    <h1>Speakers</h1>
+    <TrainerItem
+      name={eventsList.name}
+      image={eventsList.speakerImage}
+      speciality={eventsList.speciality}
+      description={eventsList.bio}
+    />
     </div>
   );
-
-  // return (
-  //   <EventInfoItem
-  //     tournamentID={tournamentID}
-  //     name={tournamentsList.title}
-  //     image={tournamentsList.eventImage}
-  //     price={formatPrice(tournamentsList.cost)}
-  //     date={formatDate(tournamentsList.start_date)}
-  //     time={formatTime(tournamentsList.start_date)}
-  //     endTime={formatTime(tournamentsList.end_date)}
-  //     participantsNo={participantCount} // Pass the participant count here
-  //     description={tournamentsList.description}
-  //     registrationLink={tournamentsList.registration_link}
-  //     participants={participants} // Pass the participants here
-  //   />
-  // );
 }
 
 function formatPrice(price) {
