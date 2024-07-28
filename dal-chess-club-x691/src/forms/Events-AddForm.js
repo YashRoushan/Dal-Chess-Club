@@ -27,7 +27,6 @@ function EventsAddForm() {
     const [numOfAttendees, setNumOfAttendees] = useState('');
     const [registrationDeadline, setRegistrationDeadline] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -53,7 +52,6 @@ function EventsAddForm() {
 
             const result = await response.json();
             if (response.ok) {
-                setSuccessMessage('Event added successfully!');
                 setSuccessMessage('Event added successfully!');
                 console.log(result);
             } else {
@@ -187,7 +185,6 @@ function EventsAddForm() {
                     <button type="submit">Submit</button>
                 </div>
             </form>
-            {successMessage && <div className="success-message">{successMessage}</div>}
             {successMessage && <div className="success-message">{successMessage}</div>}
         </div>
     );
