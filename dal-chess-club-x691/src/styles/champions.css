@@ -1,14 +1,44 @@
+.tournament-tabs {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-tabs {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.nav-tabs li {
+    margin-right: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+}
+
+.nav-tabs li:hover {
+    /* background-color: #ddd; */
+    background-color: #FFD400;
+}
+
+
+/* Other styles for the Champions page */
 .champions-page {
     padding: 20px;
 }
 
 .champions-page h1 {
     text-align: center;
-}
-
-.champions-page p {
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .champions-table {
@@ -39,4 +69,13 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-container button {
+    margin: 0 5px;
 }
