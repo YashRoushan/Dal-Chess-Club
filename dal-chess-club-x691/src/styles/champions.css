@@ -1,4 +1,4 @@
-.tournament-tabs {
+.tournament-dropdown {
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
@@ -7,27 +7,17 @@
     align-items: center;
 }
 
-.nav-tabs {
-    list-style-type: none;
-    margin:0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.nav-tabs li {
+.tournament-dropdown select {
     margin-right: 20px;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
     color: black;
+    background-color: #f8f8f8;
+    border: none;
 }
 
-.nav-tabs li:hover {
-    /* background-color: #ddd; */
+.tournament-dropdown select:hover {
     background-color: #FFD400;
 }
 
