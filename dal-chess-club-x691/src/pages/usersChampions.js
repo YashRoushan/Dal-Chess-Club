@@ -70,6 +70,7 @@ const UsersChampions = () => {
                 <tr>
                     <th>Champion Name</th>
                     <th>Year</th>
+                    <th> Tournament Name </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,7 @@ const UsersChampions = () => {
                     <tr key={index}>
                         <td>{champion.name}</td>
                         <td>{formatDate(champion.year)}</td>
+                        <td> {champion.title} </td>
                     </tr>
                 ))}
                 </tbody>
