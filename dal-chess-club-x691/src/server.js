@@ -1089,38 +1089,10 @@ const eventImageStorage = multer.diskStorage({
 
 const eventImageUpload = multer({ storage: eventImageStorage });
 
-// Getting events data
 
-// Configuring storage for image uploads
-const eventImageStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'src/images/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-
-const eventImageUpload = multer({ storage: eventImageStorage });
 
 // Getting events data
 app.get('/api/events', async (req, res) => {
-  const sqlSelectEvents = "Select * from events";
-  db.then((dbConnection) => {
-    dbConnection.query(sqlSelectEvents, (err, result) => {
-      if (err) {
-        console.error("Error fetching events from events data:", err);
-        res.status(500).json({ error: err });
-      }
-      else {
-        res.status(200).json(result);
-      }
-    });
-  }).catch((error) => {
-    console.error("Database connection error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
-  })
-
   const sqlSelectEvents = "Select * from events";
   db.then((dbConnection) => {
     dbConnection.query(sqlSelectEvents, (err, result) => {
@@ -1887,3 +1859,112 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", message: error.message });
   });
 });
+// API endpoint to fetch tips
+app.get('/api/tips', (req, res) => {
+  const sql = 'SELECT * FROM tips';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, (err, results) => {
+      if (err) {
+        res.status(500).send('Error retrieving tips');
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  }).catch((error) => {
+    res.status(500).send('Database connection error');
+  });
+});
+
+
+// Get a specific tip by ID
+app.get('/api/tips/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = 'SELECT * FROM tips WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error fetching tip');
+      } else {
+        res.json(result[0]);
+      }
+    });
+  });
+});
+
+// Update a specific tip by ID
+app.put('/api/tips/edit/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, description, image_link, type } = req.body;
+  const sql = 'UPDATE tips SET title = ?, description = ?, image_link = ?, type = ? WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [title, description, image_link, type, id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error updating tip');
+      } else {
+        res.status(200).send('Tip updated successfully');
+      }
+    });
+  });
+});
+
+// Delete tip by ID
+app.delete('/api/tips/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = 'DELETE FROM tips WHERE id = ?';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [id], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting tip');
+      } else {
+        res.status(200).send('Tip deleted successfully');
+      }
+    });
+  });
+});
+
+// Add new tip
+app.post('/api/tips/add', (req, res) => {
+  const { title, description, image_link, type } = req.body;
+  const sql = 'INSERT INTO tips (title, description, image_link, type) VALUES (?, ?, ?, ?)';
+  db.then((dbConnection) => {
+    dbConnection.query(sql, [title, description, image_link, type], (err, result) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error adding tip');
+      } else {
+        res.status(200).send('Tip added successfully');
+      }
+    });
+  });
+});
+
+const ensureDirExists = (dir) => {
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(__dirname, 'src/images/tips');
+    ensureDirExists(dir);
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  res.json({ filename: req.file.originalname });
+});
+
+

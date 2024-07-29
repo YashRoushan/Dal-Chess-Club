@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddForms.css';
+import '../styles/AddForms.css';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../config';
 

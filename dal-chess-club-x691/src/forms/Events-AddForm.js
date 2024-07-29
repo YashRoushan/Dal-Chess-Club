@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './AddForms.css';
 import { BASE_URL } from '../config';
+import '../styles/AddForms.css';
 
 function EventsAddForm() {
     const [title, setTitle] = useState('');
