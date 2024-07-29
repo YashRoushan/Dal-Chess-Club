@@ -1867,7 +1867,7 @@ app.delete('/api/registration/delete/:id', async (req, res) => {
 // api to check if admin email matches inputted email
 app.post('/api/check-email', (req, res) => {
   const { email } = req.body;
-  console.log('Received email:', email);
+  
 
   if (!email) {
     console.error("No email provided in request body");
@@ -1885,13 +1885,12 @@ app.post('/api/check-email', (req, res) => {
       console.log('Query results:', results);
       if (results.length > 0) {
         const tempPassword = generateRandomPassword();
-        console.log('Generated temp password:', tempPassword);
+        
 
         const tempPassDateTime = new Date();
         tempPassDateTime.setHours(tempPassDateTime.getHours() - 3);
         const formattedTempPassDateTime = tempPassDateTime.toISOString().slice(0, 19).replace('T', ' '); 
 
-        console.log('Setting tempPassDateTime to:', formattedTempPassDateTime);
 
         const updateQuery = 'UPDATE admin SET tempPass = ?, tempPassDateTime = ? WHERE username = ?';
         dbConnection.query(updateQuery, [tempPassword, formattedTempPassDateTime, email], async (err) => {
@@ -1902,7 +1901,6 @@ app.post('/api/check-email', (req, res) => {
 
           try {
             await sendEmail(email, 'Password Reset', `Your new temporary password is: ${tempPassword}`);
-            console.log('Email sent successfully');
             res.json({ success: true, message: 'Email matches. A new password has been sent to your email.' });
           } catch (emailErr) {
             console.error('Error sending email:', emailErr);
