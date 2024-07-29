@@ -21,12 +21,12 @@ function ResetPassword() {
         body: JSON.stringify({ tempPass, newPassword, confirmPassword }),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
       const data = await response.json();
       setMessage(data.message);
+
+      if (!response.ok) {
+        setMessage(data.message);
+      }
 
       if (response.ok) {
         navigate('/adminLogin');

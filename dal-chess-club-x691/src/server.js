@@ -1930,7 +1930,7 @@ app.post('/api/reset-password', async (req, res) => {
   }
 
   if (newPassword !== confirmPassword) {
-    return res.status(400).json({ message: 'New passwords do not match' });
+    return res.status(400).json({ message: 'New passwords do not match. Please make sure they match.' });
   }
 
   try {
@@ -1943,7 +1943,7 @@ app.post('/api/reset-password', async (req, res) => {
         }
 
         if (results.length === 0) {
-          return res.status(400).json({ message: 'Temporary password is incorrect or no user found' });
+          return res.status(400).json({ message: 'Temporary password is incorrect. Please try again.' });
         }
 
         const admin = results[0];
@@ -1955,7 +1955,7 @@ app.post('/api/reset-password', async (req, res) => {
 
         if (timeDifference > expirationTime) {
           console.log('Temporary password has expired');
-          return res.status(400).json({ message: 'Temporary password has expired' });
+          return res.status(400).json({ message: 'Temporary password has expired. Please re-enter your email.' });
         } else {
           console.log('Temporary password is still valid');
         }
