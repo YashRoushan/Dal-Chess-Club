@@ -45,39 +45,44 @@ function DailyTips() {
         return tipsArray[index];
     };
 
+    const getRandomTipType = () => {
+        const types = ['opening', 'middle game', 'endgame'];
+        const day = currentDate.getDate();
+        const index = day % types.length;
+        return types[index];
+    };
+
+    const selectedTipType = getRandomTipType();
+    const selectedTip = selectedTipType === 'opening' ? getTipOfTheDay(openingTips) :
+                        selectedTipType === 'middle game' ? getTipOfTheDay(middleGameTips) :
+                        getTipOfTheDay(endgameTips);
+
+    const getIntroText = (type) => {
+        switch (type.toLowerCase()) {
+            case 'opening':
+                return "Mastering the art of the opening is a vital first step towards chess mastery. A strong opening sets the tone for the entire game, helping you establish control, develop your pieces effectively, and ensure the safety of your king.";
+            case 'middle game':
+                return "Transitioning to the middle game, the real strategic battle unfolds. It's not just about moving pieces; it's about launching a well-coordinated attack while maintaining a solid defense.";
+            case 'endgame':
+                return "The endgame is where chess matches are won or lost. It's a high-stakes phase where every move can make the difference between a resounding victory or a bitter defeat.";
+            default:
+                return "";
+        }
+    };
+
     return (
         <div className="daily-tips-page">
-            <h1 className="daily-tips-header"> Daily Chess Tips</h1>
+            <h1 className="daily-tips-header">Daily Chess Tips</h1>
             <p className="daily-tips-intro">Welcome to the Daily Chess Tips page! Use the valuable tips below to enhance your strategies for the opening, middle game, and endgame.</p>
             <p className="daily-tips-intro">The tips are updated every 24 hours, so be sure to check back daily for new insights to improve your chess game.</p>
             <div className="tips-container">
-                {getTipOfTheDay(openingTips) && (
+                {selectedTip && (
                     <div className="tip-container">
                         <div className="type-intro-box">
-                            <p><strong>Opening:</strong> Mastering the art of the opening is a vital first step towards chess mastery. A strong opening sets the tone for the entire game, helping you establish control, develop your pieces effectively, and ensure the safety of your king.</p>
+                            <p><strong>{selectedTip.type}:</strong> {getIntroText(selectedTip.type)}</p>
                         </div>
                         <div className="tip-content-wrapper">
-                            <Tip {...getTipOfTheDay(openingTips)} />
-                        </div>
-                    </div>
-                )}
-                {getTipOfTheDay(middleGameTips) && (
-                    <div className="tip-container">
-                        <div className="type-intro-box">
-                            <p><strong>Middle Game:</strong> Transitioning to the middle game, the real strategic battle unfolds. It's not just about moving pieces; it's about launching a well-coordinated attack while maintaining a solid defense.</p>
-                        </div>
-                        <div className="tip-content-wrapper">
-                            <Tip {...getTipOfTheDay(middleGameTips)} />
-                        </div>
-                    </div>
-                )}
-                {getTipOfTheDay(endgameTips) && (
-                    <div className="tip-container">
-                        <div className="type-intro-box">
-                            <p><strong>Endgame:</strong> The endgame is where chess matches are won or lost. It's a high-stakes phase where every move can make the difference between a resounding victory or a bitter defeat.</p>
-                        </div>
-                        <div className="tip-content-wrapper">
-                            <Tip {...getTipOfTheDay(endgameTips)} />
+                            <Tip {...selectedTip} />
                         </div>
                     </div>
                 )}
@@ -87,6 +92,8 @@ function DailyTips() {
 }
 
 export default DailyTips;
+
+
 
 
 
