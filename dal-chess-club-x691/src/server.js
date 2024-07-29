@@ -1710,7 +1710,6 @@ app.get('/api/champions', (req, res) => {
         console.error(err);
         res.status(500).send('Error retrieving champions');
       } else {
-        console.log(results);
         res.status(200).json(results);
       }
     });
