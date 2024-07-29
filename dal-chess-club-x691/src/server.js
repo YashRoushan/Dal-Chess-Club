@@ -1588,9 +1588,10 @@ app.get('/api/registration', async (req, res) => {
 });
 
 app.post('/api/registration/add', async (req, res) => {
-  const { fullname, email, cfcID, cfcRating, entry_date, tournamentsID } = req.body;
+  const { fullname, email, cfcID, cfcRating, cfcExpiryDate, halfPointByes, paymentMethod, entry_date, tournamentsID } = req.body;
 
-  console.log('Received data:', req.body); // Add this line for debugging
+  // Log incoming data for debugging
+  console.log('Received data:', req.body);
 
   // Check for required fields
   if (!fullname || !email || !tournamentsID) {
@@ -1599,12 +1600,13 @@ app.post('/api/registration/add', async (req, res) => {
 
   // SQL Query to insert the new registration into the 'user' table
   const insertQuery = `
-      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating, tournamentsID)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO user (fullname, email, entry_date, cfcID, cfcRating, cfcExpiryDate, halfPointByes, paymentMethod, tournamentsID)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
+  // Using the database connection to execute query
   db.then((dbConnection) => {
-      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null, tournamentsID], (error, results) => {
+      dbConnection.query(insertQuery, [fullname, email, entry_date, cfcID || null, cfcRating || null, cfcExpiryDate || null, halfPointByes || null, paymentMethod, tournamentsID], (error, results) => {
           if (error) {
               console.error('Failed to insert registration:', error);
               return res.status(500).json({ error: 'Database insertion failed', message: error.message });
