@@ -46,21 +46,21 @@ function ResetPassword() {
       <div className="resetFormDiv">
         <form className="form-element" onSubmit={handleSubmit}>
           <label>Temporary Password:</label>
-          <input
+          <input className="element-box"
             type="password"
             required
             value={tempPass}
             onChange={(e) => setTempPass(e.target.value)}
           />
           <label>New Password:</label>
-          <input
+          <input className="element-box"
             type="password"
             required
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
           <label>Confirm New Password:</label>
-          <input
+          <input className="element-box"
             type="password"
             required
             value={confirmPassword}
