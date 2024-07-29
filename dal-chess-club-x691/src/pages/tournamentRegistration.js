@@ -9,9 +9,9 @@ function RegistrationForm() {
     cfcId: '',
     cfcRating: '',
     hasCfcId: 'no',
-    cfcExpiryDate: '', // New state for CFC expiry date
+    cfcExpiryDate: '',
     halfPointByes: [],
-    paymentMethod: '' // New state for payment method
+    paymentMethod: ''
   });
 
   const [tournamentsID, setTournamentsID] = useState(null);
@@ -40,7 +40,6 @@ function RegistrationForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const dataToSend = {
       fullname: formData.name,
       email: formData.email,
@@ -102,9 +101,19 @@ function RegistrationForm() {
             required 
           />
           <div className="emailText-form">
-            <label>Do you have a CFC ID?</label>
-            <input type="radio" name="hasCfcId" value="yes" checked={formData.hasCfcId === 'yes'} onChange={handleInputChange} /> Yes
-            <input type="radio" name="hasCfcId" value="no" checked={formData.hasCfcId === 'no'} onChange={handleInputChange} /> No
+            {tournamentsID === '3' ? (
+              <>
+                <label>Do you have an active (non-expired) CFC membership? You MUST have one to play in the tournament. If you are not a member, please purchase a membership online at the CFC website, in this link: <a href="https://www.chess.ca/en/players/membership-join/">https://www.chess.ca/en/players/membership-join/</a></label>
+                <input type="radio" name="hasCfcId" value="yes" checked={formData.hasCfcId === 'yes'} onChange={handleInputChange} /> Yes
+                <input type="radio" name="hasCfcId" value="no" checked={formData.hasCfcId === 'no'} onChange={handleInputChange} /> No
+              </>
+            ) : (
+              <>
+                <label>Do you have a CFC ID?</label>
+                <input type="radio" name="hasCfcId" value="yes" checked={formData.hasCfcId === 'yes'} onChange={handleInputChange} /> Yes
+                <input type="radio" name="hasCfcId" value="no" checked={formData.hasCfcId === 'no'} onChange={handleInputChange} /> No
+              </>
+            )}
           </div>
           {formData.hasCfcId === 'yes' && (
             <>
