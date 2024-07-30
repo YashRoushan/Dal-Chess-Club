@@ -111,12 +111,6 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
               </div>}
 
             </div>
-            <h2>Registered Participants:</h2>
-            <ul>
-              {participants.map(participant => (
-                <li key={participant.id}>{participant.fullname}</li>
-              ))}
-            </ul>
             
           </div>
         </div>
@@ -126,12 +120,6 @@ function TournamentInfoItem({ tournamentID, name, image, date, time, endTime, pa
             <button className="tregisterButton">Register</button>
           </a>
         )}
-        <div className="ttables">
-          <h3>Standings</h3>
-          <div className="tstandings-table" dangerouslySetInnerHTML={{ __html: standings }}></div>
-          <h3>Pairings</h3>
-          <div className="tpairings-table" dangerouslySetInnerHTML={{ __html: pairings }}></div>
-        </div>
       </div>
   );
 }
