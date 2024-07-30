@@ -1,11 +1,12 @@
 import React , {useState, useEffect} from 'react';
 import './AddForms.css';
-import {useLocation} from 'react-router-dom';
-import {BASE_URL} from "../config";
+import {useLocation, useNavigate} from 'react-router-dom';
+import {BASE_URL, getImageUrl} from "../config";
 
 function NewsEditForm() {
 
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
   const [newsID, setNewsID] = useState(itemId);
@@ -47,20 +48,26 @@ function NewsEditForm() {
 
     const handleEdit = async (event) => {
       event.preventDefault();
-        const formData = { newsID, newsTitle, date, text, event_imageID, image };
         try {
+            const formData = new FormData();
+            formData.append('newsID', newsID);
+            formData.append('newsTitle', newsTitle);
+            formData.append('date', date);
+            formData.append('text', text);
+            formData.append('event_imageID', event_imageID);
+            formData.append('image', image);
+
             const response = await fetch(`${BASE_URL}/api/news/update/${itemId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formData,
             });
 
             const result = await response.json();
             if (result) {
                 console.log(result);
                 setSuccessMessage('News updated successfully');
+                window.alert(`News updated successfully!`);
+                navigate('../editNews');
             } else {
                 console.error('Failed to update news item');
             }
@@ -80,6 +87,18 @@ function NewsEditForm() {
 
         {successMessage && <div className="success-message">{successMessage}</div>}
         <form onSubmit={(e) => handleEdit(e)} className="form-combined">
+            <div className="form-container">
+                <div className="form-element">
+                    <label>Edit Image</label>
+                    <input
+                        className="file-form"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setImage(e.target.files[0])}
+
+                    />
+                </div>
+            </div>
             <div className="form-element">
                 <label>Title</label>
                 <input
@@ -110,24 +129,36 @@ function NewsEditForm() {
                     required
                 />
             </div>
+            {/*<div className="form-element">*/}
+            {/*    <label>Image</label>*/}
+            {/*    <input*/}
+            {/*        className="text-form"*/}
+            {/*        type="text"*/}
+            {/*        value={event_imageID}*/}
+            {/*        onChange={(e) => setEventImageID(e.target.value)}*/}
+            {/*        required*/}
+            {/*    />*/}
+            {/*</div>*/}
+            {/*<div className="form-element">*/}
+            {/*    <label>Event Image ID</label>*/}
+            {/*    <input*/}
+            {/*        className="text-form"*/}
+            {/*        type="text"*/}
+            {/*        value={event_imageID}*/}
+            {/*        onChange={(e) => setEventImageID(e.target.value)}*/}
+            {/*        required*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div className="form-element">
                 <label>Image</label>
-                <input
-                    className="text-form"
-                    type="text"
-                    value={event_imageID}
-                    onChange={(e) => setEventImageID(e.target.value)}
-                    required
-                />
-            </div>
-            <div className="form-element">
-                <label>Image URL</label>
-                <input
-                    className="text-form"
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                />
+                {image && <img
+                    src={getImageUrl(image)}
+                    alt={newsTitle}
+                    style={{
+                        width: '20vw',
+                        height: '20vw'
+                    }}
+                />}
             </div>
             <div className="submit-button-container">
                 <button type="submit">Submit</button>
