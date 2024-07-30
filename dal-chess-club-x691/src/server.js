@@ -1510,7 +1510,7 @@ app.get('/api/subscribers', async (req, res) => {
         console.error("Error fetching subscribers:", error);
         return res.status(500).json({ error: "Internal Server Error", message: error.message });
       }
-      console.log(results);
+      //console.log(results);
       if (results.length > 0) {
         const subscribers = results.map(subscriber => ({
 
@@ -1565,7 +1565,7 @@ app.get('/api/registration', async (req, res) => {
         console.error("Error fetching user:", error);
         return res.status(500).json({ error: "Internal Server Error", message: error.message });
       }
-      console.log(results);
+      //console.log(results);
       if (results.length > 0) {
         const users = results.map(user => ({
 
