@@ -58,7 +58,7 @@ function Home() {
             <SwiperSlide key={index} data-hash={`data${index + 1}`}>
 
               <div className="innerContent">
-                <Link to={`/news#${data.newsID}`}><img className="slidesImages" src={data.image} alt={data.title} /></Link>
+                <Link to={`/news#${data.newsID}`}><img src={data.image} alt={data.title} /></Link>
                 {/* <div className="slider-text">
                   <h1>{data.title}</h1>
                   <p>
@@ -70,7 +70,6 @@ function Home() {
           ))}
         </Swiper>
       </div>
-
 
       {/* cards-material ui */}
       <Container className="my-5">
