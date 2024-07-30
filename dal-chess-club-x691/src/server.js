@@ -1435,11 +1435,26 @@ app.get('/api/news/:id', (req, res) => {
 });
 
 // updating news
+const newsImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb (null, 'src/images/')
+  },
+  filename: function (req, file, cb) {
+    cb (null, file.originalname)
+  }
+})
 
-app.put('/api/news/update/:id', (req, res) => {
+const newsImageUpload = multer({storage: newsImageStorage})
+app.put('/api/news/update/:id', newsImageUpload.single('image'), (req, res) => {
   const { id } = req.params;
-  const { newsTitle, date, text, event_imageID, image } = req.body;
-  console.log("the body is ", req.body);
+  const {image, newsTitle, date, text, event_imageID } = req.body;
+  let imagePath='';
+   if (req.file){
+  imagePath = `/src/images/${req.file.originalname}`;
+   }
+  // console.log("the body is ", req.body);
+  // console.log("the file is ", req.file);
+
   const sqlUpdateNews = "UPDATE news SET newsTitle = ?, date = ?, text = ?, event_imageID = ? WHERE newsID = ?";
   const sqlUpdateImage = "UPDATE event_images SET image = ?, alt_text = ? WHERE event_imageID = ?";
 
@@ -1454,8 +1469,8 @@ app.put('/api/news/update/:id', (req, res) => {
         return res.status(404).json({ error: 'News item not found' });
       }
 
-      if (event_imageID && image) {
-        dbConnection.query(sqlUpdateImage, [image, newsTitle, event_imageID], (imageError, imageResult) => {
+      if (event_imageID && imagePath) {
+        dbConnection.query(sqlUpdateImage, [imagePath, newsTitle, event_imageID], (imageError, imageResult) => {
           if (imageError) {
             console.error('Error updating image:', imageError);
             return res.status(500).json({ error: imageError.message });
