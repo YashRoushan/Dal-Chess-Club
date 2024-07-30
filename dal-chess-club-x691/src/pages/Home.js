@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { Container, Grid, Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
-
-
 import { Navigation, Pagination, HashNavigation, Autoplay } from "swiper";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -60,7 +58,7 @@ function Home() {
             <SwiperSlide key={index} data-hash={`data${index + 1}`}>
 
               <div className="innerContent">
-                <Link to='/' onClick={() => { window.scroll({ top: 0, left: 0, behavior: "smooth", }); }}><img src={data.image} alt={data.title} /></Link>
+                <Link to={`/news#${data.newsID}`}><img src={data.image} alt={data.title} /></Link>
                 <div className="slider-text">
                   <h1>{data.title}</h1>
                   <p>
@@ -76,38 +74,38 @@ function Home() {
 
       {/* cards-material ui */}
       <Container className="my-5">
-      <Grid container spacing={3} className="cardCenter">
-        {cards.map((card, index) => (
-          <Grid item md={4} className="mt-3" key={index}>
-            <Card>
-              <CardActionArea
-                id="cardHover"
-                component={NavLink}
-                to={card.link} // Assuming each card object has a 'link' property
-                onClick={() => { window.scroll({ top: 0, left: 0, behavior: "smooth" }); }}
-              >
-                <CardMedia
-                  id="cardimg"
-                  component="img"
-                  alt={card.title}
-                  height="235"
-                  image={card.image}
-                  title={card.title}
-                />
-              </CardActionArea>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div" className="cardContent">
-                  {card.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" className="cardDescription">
-                  {card.content}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+        <Grid container spacing={3} className="cardCenter">
+          {cards.map((card, index) => (
+            <Grid item md={4} className="mt-3" key={index}>
+              <Card>
+                <CardActionArea
+                  id="cardHover"
+                  component={NavLink}
+                  to={`/news#${card.newsID}`}
+                  onClick={() => { window.scroll({ top: 0, left: 0, behavior: "smooth" }); }}
+                >
+                  <CardMedia
+                    id="cardimg"
+                    component="img"
+                    alt={card.title}
+                    height="235"
+                    image={card.image}
+                    title={card.title}
+                  />
+                </CardActionArea>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div" className="cardContent">
+                    {card.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" className="cardDescription">
+                    {card.content}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
       <h1>Daily Puzzle</h1>
       <ChessPuzzle />

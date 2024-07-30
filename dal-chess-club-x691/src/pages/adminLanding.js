@@ -11,6 +11,7 @@ import faqIcon from '../images/FAQ.png';
 import aboutUsIcon from '../images/aboutUs.png';
 import subscribersIcon from '../images/subscribe.jpg';
 import grandPrixIcon from '../images/grandPrix.webp';
+import tipsIcon from '../images/tips.jpg';
 
 const AdminLanding = () => {
     const [visibleDropdown, setVisibleDropdown] = useState(null);
@@ -36,6 +37,8 @@ const AdminLanding = () => {
         { label: 'Edit AboutUs', to: '/editAbout', category: 'aboutUs' },
         { label: 'Add Champion', to: '/Champions-AddForm', category: 'champion' },
         { label: 'Edit Champion', to: '/champions', category: 'champion' },
+        { label: 'Add Tips', to: '/tips-addForm', category: 'tips' },
+        { label: 'Edit Tips', to: '/tips-editForm', category: 'tips' },
     ];
 
     const categorizedLinks = {
@@ -47,6 +50,7 @@ const AdminLanding = () => {
         FAQ: redirectLink.filter(link => link.category === 'FAQ'),
         aboutUs: redirectLink.filter(link => link.category === 'aboutUs'),
         champion: redirectLink.filter(link => link.category === 'champion'),
+        tips: redirectLink.filter(link => link.category === 'tips')
     };
 
     const icons = {
@@ -59,7 +63,8 @@ const AdminLanding = () => {
         aboutUs: aboutUsIcon,
         champion: championIcon,
         subscribers: subscribersIcon,
-        grandPrix: grandPrixIcon
+        grandPrix: grandPrixIcon,
+        tips: tipsIcon
     };
 
 
@@ -93,7 +98,7 @@ const AdminLanding = () => {
                 ))}
             </div>
             <div className='admin-button-container-row2'>
-                {['FAQ', 'aboutUs', 'champion'].map((category, index) => (
+                {['FAQ', 'aboutUs', 'champion', 'tips'].map((category, index) => (
                     <div
                         key={index}
                         className="admin-dropdown"
@@ -129,6 +134,7 @@ const AdminLanding = () => {
                         <img src={icons.grandPrix} alt="grandPrix icon" className="icon" />
                     </Link>
                 </div>
+                
             </div>
         </div>
     );

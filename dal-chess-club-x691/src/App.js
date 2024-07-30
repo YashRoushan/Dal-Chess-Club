@@ -30,6 +30,7 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import ResetPassword from './pages/resetPassword.js';
 import AuthGuard from './components/AuthGuard.js';
 import { AuthProvider } from './contexts/AuthContext';
 import MailingList from './pages/mailingList.js';
@@ -42,6 +43,8 @@ import TournamentInfo from './pages/tournamentInfo.js';
 import Champions from './pages/champions.js';
 import ChampionsAddForm from './forms/Champions-AddForm.js';
 import ChampionsEditForm from './forms/Champions-EditForm.js';
+import EditTips from './forms/tips-editForm.js';
+import AddTips from './forms/tips-addForm.js';
 import EventInfo from './pages/eventInfo.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
@@ -53,10 +56,11 @@ import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
 import TournamentParticipants from "./pages/tournamentParticipants";
 import NewsEditForm from './forms/editForm-news.js';
-import GrandPrixForm from './pages/grandPrixForm'; // Check if the path and file name match
-import GrandPrixPage from './grandPrixPage.js'; // Check if the path and file name match
+import GrandPrixForm from './pages/grandPrixForm'; 
+import GrandPrixPage from './grandPrixPage.js'; 
 import { IframeProvider } from './pages/IframeContext.js';
 import UsersChampions from './pages/usersChampions';
+import DailyTips from './pages/dailyTips';
 
 
 
@@ -88,6 +92,7 @@ function App() {
               <Route path="/adminLogin" element={<AdminLogin />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
@@ -97,6 +102,7 @@ function App() {
               <Route path="/eventInfo" element={<EventInfo />} />
               <Route path="/champions" element={<Champions />} />
               <Route path="/usersChampions" element={<UsersChampions />} />
+              <Route path="/dailyTips" element={<DailyTips />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
@@ -131,6 +137,10 @@ function App() {
               <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
               <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
               <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
+              <Route path="/tips-editForm" element={<AuthGuard><EditTips /></AuthGuard>} />
+              <Route path="/tips-editForm/:id" element={<AuthGuard><EditTips /></AuthGuard>} />
+              <Route path="/tips-addForm" element={<AuthGuard><AddTips /></AuthGuard>} />
+
               
 
             </Routes>

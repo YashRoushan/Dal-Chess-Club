@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddForms.css';
+import '../styles/AddForms.css';
 
 function HomeAddForm() {
  const [homeImage, setHomeImage] = useState('');

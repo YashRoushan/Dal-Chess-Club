@@ -79,11 +79,13 @@ function NavBar() {
                         <>
                             <Link to='/improve'><button className='content'>Events</button></Link> 
                             <Link to='/library'><button className='content'>Library</button></Link> 
+                            <Link to='/dailyTips'><button className='content'>Daily Tips</button></Link>
                         </>
                         : 
                         <>
                             <Link to='/improve'><button className='content'>Events</button></Link> 
                             <Link to='/library'><button className='content'>Library</button></Link>
+                            <Link to='/dailyTips'><button className='content'>Daily Tips</button></Link>
                             
                         </>}
                 </div>

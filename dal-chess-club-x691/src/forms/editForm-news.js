@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import './AddForms.css';
+import '../styles/AddForms.css';
 import {useLocation} from 'react-router-dom';
 import {BASE_URL} from "../config";
 
