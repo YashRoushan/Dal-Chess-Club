@@ -1558,7 +1558,7 @@ app.delete('/api/subscribers/delete', (req, res) => {
 
 // Registration test
 app.get('/api/registration', async (req, res) => {
-  const sql = "SELECT id, tournamentsID, fullname, email, cfcID, entry_date FROM user";
+  const sql = "SELECT id, tournamentsID, fullname, email, cfcID, cfcRating, cfcExpiryDate, paymentMethod, halfPointByes, entry_date FROM user";
   db.then((dbConnection) => {
     dbConnection.query(sql, (error, results) => {
       if (error) {
@@ -1575,6 +1575,10 @@ app.get('/api/registration', async (req, res) => {
           email: `${user.email}`,
           cfcID: `${user.cfcID}`,
           entry_date: `${user.entry_date}`,
+          cfcRating:`${user.cfcRating}`,
+          cfcExpiryDate: `${user.cfcExpiryDate}`,
+          paymentMethod: `${user.paymentMethod}`,
+          halfPointByes: `${user.halfPointByes}`
         }));
         res.json(users);
       } else {
