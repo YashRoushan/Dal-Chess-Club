@@ -22,7 +22,6 @@ function NewsEditForm() {
           try{
               const response = await fetch(`${BASE_URL}/api/news/${itemId}`);
               console.log(response);
-              setSuccessMessage('fetched news successfully');
               if(!response.ok){
                   throw new Error(response.statusText);
               }
