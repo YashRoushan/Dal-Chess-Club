@@ -58,13 +58,13 @@ function Home() {
             <SwiperSlide key={index} data-hash={`data${index + 1}`}>
 
               <div className="innerContent">
-                <Link to={`/news#${data.newsID}`}><img src={data.image} alt={data.title} /></Link>
-                <div className="slider-text">
+                <Link to={`/news#${data.newsID}`}><img className="slidesImages" src={data.image} alt={data.title} /></Link>
+                {/* <div className="slider-text">
                   <h1>{data.title}</h1>
                   <p>
                     {data.content}
                   </p>
-                </div>
+                </div> */}
               </div>
             </SwiperSlide>
           ))}

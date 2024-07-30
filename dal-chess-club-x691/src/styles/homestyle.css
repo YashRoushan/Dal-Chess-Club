@@ -153,6 +153,7 @@
 }
 
 .swiper-slide img {
+  padding-left: 0px;
   display: block;
   width: 100%;
   height: 100%;
