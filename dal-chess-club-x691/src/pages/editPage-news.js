@@ -5,10 +5,10 @@ import {Link} from "react-router-dom";
 function EditNews() {
 
     const [items, setItems] = useState([
-        {newsID: 1, NewsTitle: 'Event 1', date: new Date().toISOString(), text: "Dummy 1", event_ImageID:1},
-        {newsID: 2, NewsTitle: 'Event 2', date: new Date().toISOString(), text: "Dummy 2", event_ImageID:2},
-        {newsID: 3, NewsTitle: 'Event 3', date: new Date().toISOString(), text: "Dummy 3", event_ImageID:3},
-        {newsID: 4, NewsTitle: 'Event 4', date: new Date().toISOString(), text: "Dummy 4", event_ImageID:4},
+        {newsID: 1, NewsTitle: 'Event 1', date: new Date().toISOString(), text: "Dummy 1", event_ImageID:1, imgurl:''},
+        {newsID: 2, NewsTitle: 'Event 2', date: new Date().toISOString(), text: "Dummy 2", event_ImageID:2, imgurl:''},
+        {newsID: 3, NewsTitle: 'Event 3', date: new Date().toISOString(), text: "Dummy 3", event_ImageID:3, imgurl:''},
+        {newsID: 4, NewsTitle: 'Event 4', date: new Date().toISOString(), text: "Dummy 4", event_ImageID:4, imgurl:''},
     ]);
 
     const fetchData = async () => {
@@ -84,18 +84,19 @@ function EditNews() {
                         <th>Title</th>
                         <th>Date</th>
                         <th>Text</th>
-                        {/*<th>Image</th>*/}
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
+                    {items.map(item => (console.log(item)))}
                     {items.map(item => (
                         <tr key={item.newsID}>
                             <td>{item.newsID}</td>
                             <td>{item.newsTitle}</td>
                             <td>{formatDate(item.date)}</td>
                             <td>{formatText(item.text)}</td>
-                            {/*<td><img src={item.event_imageID ? item.event_imageID : null} /></td>*/}
+                            <td>{item.imageUrl && <img src={item.imageUrl} alt={item.newsTitle} style={{ width: '100px', height: 'auto' }}/>}</td>
                             <td className='buttons-container'>
                                 <Link to={`/editForm-news?itemId=${item.newsID}`}><button>Edit</button></Link>
                                 <button onClick={() => handleDelete(item.newsID)}>Delete</button>
