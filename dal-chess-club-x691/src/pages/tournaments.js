@@ -31,7 +31,7 @@ function Tournaments() {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched tournaments:', data); // Debug log
+        //console.log('Fetched tournaments:', data); // Debug log
         if (data.length === 0) {
           setTournamentsList([]); // Clear the list if no data is returned
         } else {

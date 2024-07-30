@@ -26,7 +26,7 @@ function TournamentParticipants() {
           }
           const data = await response.json();
           const filteredParticipants = data.filter(user => user.tournamentsID === tournamentID.toString());
-          console.log("data is" , data);
+          //console.log("data is" , data);
           setParticipants(filteredParticipants);
       }  catch (e){
           console.log("Error fetching tournament Participants: ", e);

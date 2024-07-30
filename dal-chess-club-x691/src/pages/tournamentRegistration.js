@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/tournamentRegistration.css'; 
+import '../styles/tournamentRegistration.css';
 import { BASE_URL } from '../config';
 
 function RegistrationForm() {
-  // State to store form data
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     cfcId: '',
     cfcRating: '',
-    hasCfcId: 'no' // Additional state to track CFC ID radio button
+    hasCfcId: 'no',
+    cfcExpiryDate: '',
+    halfPointByes: [],
+    paymentMethod: ''
   });
 
   const [tournamentsID, setTournamentsID] = useState(null);
@@ -28,24 +30,30 @@ function RegistrationForm() {
     });
   };
 
+  const handleCheckboxChange = (event) => {
+    const { checked, value } = event.target;
+    setFormData(prevState => {
+      const newByes = checked ? [...prevState.halfPointByes, value] : prevState.halfPointByes.filter(bye => bye !== value);
+      return { ...prevState, halfPointByes: newByes };
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Prepare the data to be sent to the server
     const dataToSend = {
       fullname: formData.name,
       email: formData.email,
-      entry_date: new Date().toISOString().slice(0, 19).replace('T', ' '), // Format the date as YYYY-MM-DD HH:MM:SS
-      tournamentsID: tournamentsID
+      entry_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      tournamentsID: tournamentsID,
+      paymentMethod: formData.paymentMethod,
+      halfPointByes: formData.halfPointByes.join(', '),
+      cfcExpiryDate: formData.cfcExpiryDate || null
     };
 
-    // Conditionally add CFC details if "yes" is selected
     if (formData.hasCfcId === 'yes') {
       dataToSend.cfcID = formData.cfcId;
       dataToSend.cfcRating = formData.cfcRating;
     }
-
-    console.log('Data to be sent:', dataToSend); // Add this line for debugging
 
     try {
       const response = await fetch(BASE_URL + '/api/registration/add', {
@@ -84,7 +92,6 @@ function RegistrationForm() {
             onChange={handleInputChange} 
             required 
           />
-    
           <input 
             name="email" 
             className="emailText-form" 
@@ -93,52 +100,53 @@ function RegistrationForm() {
             onChange={handleInputChange} 
             required 
           />
-
           <div className="emailText-form">
-            <label>Do you have a CFC ID?</label>
-            <input 
-              type="radio" 
-              name="hasCfcId" 
-              value="yes" 
-              checked={formData.hasCfcId === 'yes'} 
-              onChange={handleInputChange} 
-            /> Yes
-            <input 
-              type="radio" 
-              name="hasCfcId" 
-              value="no" 
-              checked={formData.hasCfcId === 'no'} 
-              onChange={handleInputChange} 
-            /> No
+            {tournamentsID === '3' ? (
+              <>
+                <label>Do you have an active (non-expired) CFC membership? You MUST have one to play in the tournament. If you are not a member, please purchase a membership online at the CFC website, in this link: <a href="https://www.chess.ca/en/players/membership-join/">https://www.chess.ca/en/players/membership-join/</a></label>
+                <input type="radio" name="hasCfcId" value="yes" checked={formData.hasCfcId === 'yes'} onChange={handleInputChange} /> Yes
+                <input type="radio" name="hasCfcId" value="no" checked={formData.hasCfcId === 'no'} onChange={handleInputChange} /> No
+              </>
+            ) : (
+              <>
+                <label>Do you have a CFC ID?</label>
+                <input type="radio" name="hasCfcId" value="yes" checked={formData.hasCfcId === 'yes'} onChange={handleInputChange} /> Yes
+                <input type="radio" name="hasCfcId" value="no" checked={formData.hasCfcId === 'no'} onChange={handleInputChange} /> No
+              </>
+            )}
           </div>
-
           {formData.hasCfcId === 'yes' && (
             <>
-              <input 
-                name="cfcId" 
-                className="emailText-form" 
-                placeholder="Please state your CFC ID" 
-                value={formData.cfcId} 
-                onChange={handleInputChange} 
-              />
-              <input 
-                name="cfcRating" 
-                className="emailText-form" 
-                placeholder="Please state your CFC regular rating" 
-                value={formData.cfcRating} 
-                onChange={handleInputChange} 
-              />
+              <input name="cfcId" className="emailText-form" placeholder="Please state your CFC ID" value={formData.cfcId} onChange={handleInputChange} />
+              <input name="cfcRating" className="emailText-form" placeholder="Please state your CFC regular rating" value={formData.cfcRating} onChange={handleInputChange} />
+              <label htmlFor="cfcExpiryDate">What is your CFC membership expiry date?</label>
+              <input name="cfcExpiryDate" type="date" className="emailText-form" value={formData.cfcExpiryDate} onChange={handleInputChange} />
             </>
           )}
-          
+          {tournamentsID === '3' && (
+            <div className="emailText-form">
+              <label>Half-point byes request:</label>
+              {['Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5'].map((round, idx) => (
+                <div key={idx}>
+                  <input type="checkbox" value={round} onChange={handleCheckboxChange} /> {round} {idx === 4 ? '(0 point bye)' : ''}
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="emailText-form">
+            <label>Payment method:</label>
+            <input type="radio" name="paymentMethod" value="E-transfer to chess@dal.ca" onChange={handleInputChange} /> E-transfer to chess@dal.ca
+            <input type="radio" name="paymentMethod" value="Pay with cash during registration confirmation" onChange={handleInputChange} /> Pay with cash during registration confirmation
+          </div>
           <div className="reset-submit-container">
             <button type="submit">Register</button>
+            <button type="button" onClick={() => window.history.back()}>Cancel</button>
           </div>
         </form>
       </div>
       <div className="subscriptionMessage-container">
         <p>Want news about tournaments, events, socials or open positions?</p>
-        <p>Subsribe to our mailing list!</p>
+        <p>Subscribe to our mailing list!</p>
       </div>
       <div className="subscribe-button-container">
         <a href="mailingList">
@@ -150,3 +158,4 @@ function RegistrationForm() {
 }
 
 export default RegistrationForm;
+
