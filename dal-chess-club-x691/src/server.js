@@ -234,7 +234,7 @@ app.post("/emailVer", async (req, res) => {
           secret,
           { expiresIn: "5m" }
         );
-        const link = `http://localhost:3000/chessclub/resetPassword/${user.adminID}/${token}`;
+        const link = `https://outreach.cs.dal.ca/chessclub:3000/chessclub/resetPassword/${user.adminID}/${token}`;
         console.log(link);
 
         var transporter = nodemailer.createTransport({
