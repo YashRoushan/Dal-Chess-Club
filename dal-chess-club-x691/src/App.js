@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Tournaments from './pages/tournaments.js';
+import PastTournaments from "./pages/pastTournaments";
 import NewsPage from './pages/news.js';
 import NavBar from './pages/navbar';
 import Footer from './pages/footer';
@@ -29,6 +30,7 @@ import TrainersAddForm from './forms/Trainers-AddForm.js';
 import EventsAddForm from './forms/Events-AddForm.js';
 import LibraryAddForm from './forms/Library_AddForm.js';
 import ForgotPassword from './pages/forgotPassword.js';
+import ResetPassword from './pages/resetPassword.js';
 import AuthGuard from './components/AuthGuard.js';
 import { AuthProvider } from './contexts/AuthContext';
 import MailingList from './pages/mailingList.js';
@@ -38,6 +40,12 @@ import DeleteForm from './pages/deleteForm.js';
 import RegistrationForm from './pages/tournamentRegistration.js';
 import DalhousieOpenRegistration from './pages/dalhousieOpen.js';
 import TournamentInfo from './pages/tournamentInfo.js';
+import Champions from './pages/champions.js';
+import ChampionsAddForm from './forms/Champions-AddForm.js';
+import ChampionsEditForm from './forms/Champions-EditForm.js';
+import EditTips from './forms/tips-editForm.js';
+import AddTips from './forms/tips-addForm.js';
+import EventInfo from './pages/eventInfo.js';
 
 import TrainersEditForm from './forms/editForm-trainers.js';
 import AboutUsEditForm from './forms/editForm-about.js';
@@ -46,7 +54,13 @@ import FaqEditForm from './forms/editForm-faq.js';
 import LibraryEditForm from './forms/editForm-library.js';
 import TournamentsEditForm from './forms/editForm-tournaments.js';
 import LiveTournamentsEditForm from './forms/editForm-liveTournament.js';
+import TournamentParticipants from "./pages/tournamentParticipants";
 import NewsEditForm from './forms/editForm-news.js';
+import GrandPrixForm from './pages/grandPrixForm'; 
+import GrandPrixPage from './grandPrixPage.js'; 
+import { IframeProvider } from './pages/IframeContext.js';
+import UsersChampions from './pages/usersChampions';
+import DailyTips from './pages/dailyTips';
 
 
 
@@ -60,12 +74,16 @@ function App() {
 
   return (
     <div className="App">
+      <IframeProvider>
       <AuthProvider>
         <Suspense fallback="loading ...">
           <Router basename='/chessclub'>
             <NavBar />
+            <div className="wrapper">
+             <main className="content">
             <Routes>
               <Route path="/tournaments" element={<Tournaments />} />
+              <Route path="/pastTournaments" element={<PastTournaments />} />
               <Route path="/news" element={<NewsPage />} />
               <Route path="/library" element={<Library />} />
               <Route path="/improve" element={<Improve />} />
@@ -74,10 +92,17 @@ function App() {
               <Route path="/adminLogin" element={<AdminLogin />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
               <Route path="/mailingList" element={<MailingList />} />
               <Route path="/tournamentRegistration" element={<RegistrationForm />} />
               <Route path="/dalhousieOpen" element={<DalhousieOpenRegistration />} />
               <Route path="/tournamentInfo" element={<TournamentInfo />} />
+              <Route path="/grandPrixPage" element={<GrandPrixPage />} />
+              <Route path="/usersChampions" element={<UsersChampions />} />
+              <Route path="/eventInfo" element={<EventInfo />} />
+              <Route path="/champions" element={<Champions />} />
+              <Route path="/usersChampions" element={<UsersChampions />} />
+              <Route path="/dailyTips" element={<DailyTips />} />
 
               {/* Admin only Routes */}
               <Route path="/adminLanding" element={<AuthGuard><AdminLanding /></AuthGuard>} />
@@ -104,14 +129,30 @@ function App() {
               <Route path="/editForm-library" element={<AuthGuard><LibraryEditForm /></AuthGuard>} />
               <Route path="/editForm-tournaments" element={<AuthGuard><TournamentsEditForm /></AuthGuard>} />
               <Route path="/editForm-liveTournament" element={<AuthGuard><LiveTournamentsEditForm /></AuthGuard>} />
+              <Route path="/editForm-tournamentParticipants" element={<AuthGuard><TournamentParticipants /></AuthGuard>} />
               <Route path="/subscribersDeleteForm" element={<AuthGuard><SubscribersDeleteForm /></AuthGuard>} />
               <Route path="/deleteForm" element={<AuthGuard><DeleteForm /></AuthGuard>} />
               <Route path="/subscribers" element={<AuthGuard><Subscribers /></AuthGuard>} />
+              <Route path="/grandPrixForm" element={<AuthGuard><GrandPrixForm /></AuthGuard>} />
+              <Route path="/Champions-AddForm" element={<AuthGuard><ChampionsAddForm /></AuthGuard>} />
+              <Route path="/Champions-EditForm" element={<AuthGuard><ChampionsEditForm /></AuthGuard>} />
+              <Route path="/champions" element={<AuthGuard><Champions /></AuthGuard>} />
+              <Route path="/tips-editForm" element={<AuthGuard><EditTips /></AuthGuard>} />
+              <Route path="/tips-editForm/:id" element={<AuthGuard><EditTips /></AuthGuard>} />
+              <Route path="/tips-addForm" element={<AuthGuard><AddTips /></AuthGuard>} />
+
+              
+
             </Routes>
+            </main>
+             <footer className="footer">
           <Footer/>
+             </footer>
+            </div>
           </Router>
         </Suspense>
       </AuthProvider>
+      </IframeProvider>
     </div>
   );
 }

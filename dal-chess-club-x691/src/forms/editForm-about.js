@@ -1,73 +1,139 @@
-import React from 'react';
-import './AddForms.css';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import '../styles/AddForms.css';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
-function AboutUsEditForm() {
+function AboutUsEditForm({ memberItem, onCancel, onUpdate }) {
+  const navigate = useNavigate();
+  const [executiveName, setExecutiveName] = useState(memberItem.name);
+  const [memberImage, setMemberImage] = useState(memberItem.people_imageID);
+  const [memberDescription, setMemberDescription] = useState(memberItem.bio);
+  const [altText, setAltText] = useState('');
+  const [positions, setPositions] = useState([]);
+  const [selectedPosition, setSelectedPosition] = useState(memberItem.positionID);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const itemId = searchParams.get('itemId');
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const response = await fetch(BASE_URL + '/api/positions');
+        const data = await response.json();
+        setPositions(data);
+      } catch (error) {
+        console.error('Error fetching positions:', error);
+      }
+    };
 
-  const handleEdit = async (itemId, positionID, status, bio, people_imageID, name) => {
-    const formData = { positionID, status, bio, people_imageID, name };
+    fetchPositions();
+  }, []);
+
+  const handleEdit = async (event) => {
+    event.preventDefault();
+    const formData = {
+      name: executiveName,
+      positionID: selectedPosition,
+      bio: memberDescription,
+      people_imageID: memberImage,
+    };
+
     try {
-        const response = await fetch(`/api/members/edit/${itemId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+      const response = await fetch(`${BASE_URL}/api/members/update/${memberItem.memberID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-        const result = await response.json();
-        if (result) {
-            console.log(result);
-        } else {
-            console.error('Failed to update member');
-        }
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Failed to update member:', errorText);
+        setSuccessMessage('');
+        return;
+      }
+
+      const result = await response.json();
+      if (result) {
+        setSuccessMessage('Member updated successfully!');
+        onUpdate();
+        navigate('/editAbout');
+      } else {
+        console.error('Failed to update member');
+      }
     } catch (error) {
-        console.error('Error updating member:', error);
+      console.error('Error updating member:', error);
     }
-};
-
+  };
 
   return (
     <div className="add-form-container">
-
       <div className="header-info">
         <h2 id="main-header">About Us Page Edit Form</h2>
         <p>This is the page where you, the admin, can edit existing content in the "About Us" page.</p>
       </div>
-
-      <div className="form-A">
-        <form className="form-element">
-          <label>Images</label>
-          <input className="file-form" type="file" accept="image/*" required />
-        </form>
-      </div>
-
-      {/* Second Form */}
-      <div className="form-B">
-        <form className="form-element">
-          <label>Text</label>
-          <input className="text-form" type="text" required />
-        </form>
-      </div>
-
-      {/* Third Form */}
-      <div className="form-C">
-        <form className="form-element">
-          <label>Other Content</label>
-          <input className="text-form-c" type="text" required />
-        </form>
-      </div>
-
-      <div className="submit-button-container">
-        <button onClick={() => handleEdit(itemId)} type="submit">Submit</button>
-      </div>
-
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      <form onSubmit={handleEdit} className="form-combined">
+        <div className="form-element">
+          <label>Executive's Name</label>
+          <input
+            className="text-form"
+            type="text"
+            value={executiveName}
+            onChange={(e) => setExecutiveName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>Member Image ID</label>
+          <input
+            className="text-form"
+            type="number"
+            value={memberImage}
+            onChange={(e) => setMemberImage(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>Alternative Text For Image</label>
+          <input
+            className="text-form"
+            type="text"
+            value={altText}
+            onChange={(e) => setAltText(e.target.value)}
+          />
+        </div>
+        <div className="form-element">
+          <label>Member Description</label>
+          <textarea
+            className="text-form"
+            value={memberDescription}
+            onChange={(e) => setMemberDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-element">
+          <label>Position</label>
+          <select
+            className="text-form"
+            value={selectedPosition}
+            onChange={(e) => setSelectedPosition(e.target.value)}
+            required
+          >
+            <option value="">Select a position</option>
+            {positions.map((position) => (
+              <option key={position.positionID} value={position.positionID}>
+                {position.description}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="submit-button-container">
+          <button type="submit">Submit</button>
+          <button type="button" onClick={onCancel}>Cancel</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 }
 
 export default AboutUsEditForm;

@@ -1,5 +1,5 @@
 import React from 'react';
-import './AddForms.css';
+import '../styles/AddForms.css';
 import { useLocation } from 'react-router-dom';
 
 function EventsEditForm() {

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import TrainerPopUp from './trainerPopUp';
+import "./styles/trainer.css";
 
 function TrainerItem({name, image,  description }) {
   
@@ -10,7 +11,8 @@ function TrainerItem({name, image,  description }) {
   }
 
   return (
-    <div className="trainerItem" onClick={togglePopUp}>
+    <div className="trainerItemContainer">
+      <div className="trainerItem" onClick={togglePopUp}>
       <img className="trainer-image" src={image} alt="Trainer Image" />
       <h2> {name} </h2>
       {showPopUp && (
@@ -21,6 +23,7 @@ function TrainerItem({name, image,  description }) {
           onClose={togglePopUp}
         />
       )}
+      </div>
     </div>
   );
 }

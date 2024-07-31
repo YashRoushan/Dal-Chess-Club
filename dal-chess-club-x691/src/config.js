@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5001';
+const BASE_URL = 'https://outreach.cs.dal.ca/chessclub:5001';
 
 const getImageUrl = (imgurl) => {
   return `${BASE_URL}${imgurl}`;

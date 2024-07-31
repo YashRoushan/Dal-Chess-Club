@@ -1,31 +1,23 @@
 {
   "files": {
-    "main.css": "/chessclub/static/css/main.8472b4d6.css",
-    "main.js": "/chessclub/static/js/main.1fd58ac6.js",
-    "static/js/787.4e5a6856.chunk.js": "/chessclub/static/js/787.4e5a6856.chunk.js",
+    "main.css": "/chessclub/static/css/main.3d7d1c3e.css",
+    "main.js": "/chessclub/static/js/main.6027d269.js",
+    "static/js/453.9db12488.chunk.js": "/chessclub/static/js/453.9db12488.chunk.js",
     "static/media/Logo2.png": "/chessclub/static/media/Logo2.9cccce8de235a9c65981.png",
-    "static/media/slide-1.jpg": "/chessclub/static/media/slide-1.ae4700e0f028506e9cca.jpg",
-    "static/media/slide-3.jpg": "/chessclub/static/media/slide-3.2a3f8f6fee15114a1418.jpg",
-    "static/media/winter-rapid-open.jpg": "/chessclub/static/media/winter-rapid-open.45f978991d84dd78be65.jpg",
-    "static/media/slide-2.jpeg": "/chessclub/static/media/slide-2.157d881671e0fab1d392.jpeg",
-    "static/media/event.jpg": "/chessclub/static/media/event.0d3253638d5431709a98.jpg",
-    "static/media/winter-blitz.jpg": "/chessclub/static/media/winter-blitz.d3a12e77db250ca2a8c6.jpg",
     "static/media/logo.png": "/chessclub/static/media/logo.4834ddb8314cef5c5946.png",
-    "static/media/members.png": "/chessclub/static/media/members.617442e4a7b02ff550f0.png",
     "static/media/mysteries.jpg": "/chessclub/static/media/mysteries.e09238cb5beb716900d1.jpg",
-    "static/media/trainer.jpg": "/chessclub/static/media/trainer.e4ef7225d1872a0b98c6.jpg",
     "static/media/best.jpg": "/chessclub/static/media/best.cab169cf2ddc2a2149ee.jpg",
     "static/media/slick.svg": "/chessclub/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/chessclub/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/chessclub/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "static/media/slick.woff": "/chessclub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/chessclub/index.html",
-    "main.8472b4d6.css.map": "/chessclub/static/css/main.8472b4d6.css.map",
-    "main.1fd58ac6.js.map": "/chessclub/static/js/main.1fd58ac6.js.map",
-    "787.4e5a6856.chunk.js.map": "/chessclub/static/js/787.4e5a6856.chunk.js.map"
+    "static/media/slick.woff": "/chessclub/static/media/slick.295183786cd8a1389865.woff",
+    "main.3d7d1c3e.css.map": "/chessclub/static/css/main.3d7d1c3e.css.map",
+    "main.6027d269.js.map": "/chessclub/static/js/main.6027d269.js.map",
+    "453.9db12488.chunk.js.map": "/chessclub/static/js/453.9db12488.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8472b4d6.css",
-    "static/js/main.1fd58ac6.js"
+    "static/css/main.3d7d1c3e.css",
+    "static/js/main.6027d269.js"
   ]
 }

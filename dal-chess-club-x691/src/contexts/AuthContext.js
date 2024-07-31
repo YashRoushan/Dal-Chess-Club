@@ -1,15 +1,22 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({name: "", isAuthenticated: false});
+    const [user, setUser] = useState(() => {
+        const storedUser = sessionStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : {name: "", isAuthenticated: false};
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('user', JSON.stringify(user));
+    }, [user]);
 
     const login = async (userName, password) => {
         try {
-            const response = await fetch('http://localhost:5001/api/login');
+            const response = await fetch('https://outreach.cs.dal.ca/chessclub:5001/api/login');
             
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -32,6 +39,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser({name: "", isAuthenticated: false});
+        sessionStorage.removeItem('user');
     };
 
     return (
