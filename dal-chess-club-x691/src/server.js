@@ -1842,7 +1842,7 @@ app.get('/api/library/:id', (req, res) => {
 
 // getting all champions
 app.get('/api/champions', (req, res) => {
-  const sql = 'SELECT * FROM champions';
+  const sql = 'SELECT id, name, year, champions.tournamentID as championTournamentID, tournaments.title FROM champions JOIN tournaments ON champions.tournamentID = tournaments.tournamentsID';
   db.then((dbConnection) => {
     dbConnection.query(sql, (err, results) => {
       if (err) {
