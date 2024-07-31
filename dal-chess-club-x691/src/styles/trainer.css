@@ -58,6 +58,12 @@
     margin-left: 50px;
   }
 
+  .trainerItemContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   @media only screen and (max-width: 1300px) {
     .trainerList {
       grid-template-columns: 1fr 1fr;

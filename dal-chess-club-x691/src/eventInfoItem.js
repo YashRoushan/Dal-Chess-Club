@@ -7,7 +7,7 @@ function EventInfoItem({ eventID, name, image, date, time, endTime, participants
     <div className="tpopup-background">
       <div className="tpopup-content" onClick={e => e.stopPropagation()}>
         <div className="ttournament-info">
-          <img className="eevent-image" src={image} alt={name} />
+          <img className="ttournament-image" src={image} alt={name} />
           <div>
           <h1 className="ttitle">{name}</h1>
           </div>
@@ -34,6 +34,7 @@ function EventInfoItem({ eventID, name, image, date, time, endTime, participants
           </a>
         )}
       </div>
+      <h1 className="speakers">Speakers</h1>
     </div>
   );
 }
