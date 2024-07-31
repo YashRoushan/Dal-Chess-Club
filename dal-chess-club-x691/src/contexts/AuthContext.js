@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (userName, password) => {
         try {
-            const response = await fetch('https://outreach.cs.dal.ca/chessclub:5001/api/login');
+            const response = await fetch('https://outreach.cs.dal.ca:5002/api/login');
             
             if (!response.ok) {
                 throw new Error('Network response was not ok');

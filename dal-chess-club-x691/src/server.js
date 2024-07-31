@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const JWT_SECRET =
   "fposhrdg8943tupspgijw30949tgewg())q43fhsafnq43w98fas?2rwf[GF$WF]f4gegihfhuw43r[][)(f4o8fgdsbk";
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
 const moment = require("moment");
 const app = express();
 const multer = require("multer");
