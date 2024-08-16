@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TournamentItem from '../tournamentItem.js';
 import { TournamentSearch } from '../tournamentSearch.js';
 import "../styles/tournaments.css";
-import { BASE_URL} from '../config.js';
+import { BASE_URL } from '../config.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +20,7 @@ function Tournaments() {
     fetchData();
   }, [nameFilter, priceFilter, dateFilter]);
   
-  // fetches data from the server with querystrings incase of filters and assigns it to tournamentList.
+  // fetches data from the server with query strings in case of filters and assigns it to tournamentList.
   const fetchData = () => {
     const serverUrl =  `${BASE_URL}/tournaments?name=${nameFilter}&price=${priceFilter}&date=${dateFilter}`;
     fetch(serverUrl)
@@ -31,6 +31,7 @@ function Tournaments() {
         return response.json();
       })
       .then(data => {
+        //console.log('Fetched tournaments:', data); // Debug log
         if (data.length === 0) {
           setTournamentsList([]); // Clear the list if no data is returned
         } else {
@@ -56,7 +57,7 @@ function Tournaments() {
 
   return (
     <div className="tournament">
-      <h1>Tournaments</h1>
+      <h1>Current and Future Tournaments</h1>
       <div className="filters-container">
         
         <div className='input-wrapper'>
@@ -140,9 +141,10 @@ export function formatTime(dateString) {
   let hours = date.getHours();
   const ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
-  hours = hours ? hours : 12;
+  hours = hours ? 12 : 12;
 
   return `${hours}${ampm}`;
 }
 
 export default Tournaments;
+

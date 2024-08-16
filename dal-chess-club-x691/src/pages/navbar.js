@@ -4,14 +4,20 @@ import Logo from '../images/logo.png';
 import Reorder from '../images/reorder.png';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 
 function NavBar() {    
     const [showDropdowns, setShowDropdowns] = useState(false);
+    const [showDropdownAbout, setShowDropdownAbout] = useState(false);
+    const { user, logout } = useAuth();
 
     const toggleDropdowns = () => {
         setShowDropdowns(!showDropdowns);
     };
+    const setShowDropdownsAbout = () => {    
+        setShowDropdownAbout(!showDropdownAbout);
+    }
 
     //checking if the user is in mobile or desktop
     const [userIsDesktop, setUserIsDesktop] = useState(window.innerWidth > 650);
@@ -38,24 +44,62 @@ function NavBar() {
                 <Link to='/'><button className='dropbtn'>Home</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/about-us'><button className='dropbtn'>About Us</button></Link>
-                <div className='dropdown-content'>
-                    {userIsDesktop ? <Link to='/about-us'><button className='content'>Our Members</button></Link> : <Link to='/about-us'><button className='content'>{'>'} Our Members</button></Link>}
-                    {userIsDesktop ? <Link to='/faq'><button className='content'>FAQ</button></Link> : <Link to='/faq'><button className='content'>{'>'} FAQ</button></Link>}
-                </div>
+            <Link><button onClick={setShowDropdownsAbout} className='dropbtn'>About Us</button></Link>
+            {setShowDropdownsAbout && <div className='dropdown-content'>
+                <Link to='/about-us'><button  className='content'>Our Members</button></Link>
+                <Link to='/faq'><button className='content'>FAQ</button></Link>
+            </div>}
             </div>
             <div className='dropdown'>
-                <Link to='/tournaments'><button className='dropbtn'>Tournaments</button></Link>
+                <Link><button className='dropbtn'>Tournaments</button></Link>
+                <div className='dropdown-content'>
+                    {userIsDesktop ? 
+                        <>
+                            <Link to='/tournaments'><button className='content'>Current and Future Tournaments</button></Link> 
+                            <Link to='/pastTournaments'><button className='content'>Past Tournaments</button></Link>
+                            <Link to='grandPrixPage'><button className='content'>Grand Prix</button></Link> 
+                            <Link to='/usersChampions'><button className='content'>Champions</button></Link>
+                        </>
+                        : 
+                        <>
+                            <Link to='/tournaments'><button className='content'>Current and Future Tournaments</button></Link> 
+                            <Link to='pastTournaments'><button className='content'>Past Tournaments</button></Link> 
+                            <Link to='grandPrixPage'><button className='content'>Grand Prix</button></Link> 
+                            <Link to='/usersChampions'><button className='content'>Champions</button></Link>
+                        </>}
+                </div>
             </div>
             <div className='dropdown'>
                 <Link to='/news'><button className='dropbtn'>News</button></Link>
             </div>
             <div className='dropdown'>
-            <Link to='/improve'><button className='dropbtn' >Improve</button></Link>
+            <Link><button className='dropbtn' >Improve</button></Link>
                 <div className='dropdown-content'>
-                    {userIsDesktop ? <Link to='/library'><button className='content'>Library</button></Link> : <Link to='/library'><button className='content'>{'>'} Library</button></Link>}
+                    {userIsDesktop ? 
+                        <>
+                            <Link to='/improve'><button className='content'>Events</button></Link> 
+                            <Link to='/library'><button className='content'>Library</button></Link> 
+                            <Link to='/dailyTips'><button className='content'>Daily Tips</button></Link>
+                        </>
+                        : 
+                        <>
+                            <Link to='/improve'><button className='content'>Events</button></Link> 
+                            <Link to='/library'><button className='content'>Library</button></Link>
+                            <Link to='/dailyTips'><button className='content'>Daily Tips</button></Link>
+                            
+                        </>}
                 </div>
             </div>
+            {user.isAuthenticated && (
+                <>
+                    <div className='dropdown adminButtons'>
+                        <Link to='/adminLanding'><button className='dropbtn adminButtons'>Admin Dashboard</button></Link>
+                    </div>
+                    <div className='dropdown adminButtons'>
+                        <button className='dropbtn adminButtons' onClick={logout}>Logout</button>
+                    </div>
+                </>
+                )}
             
         </div>
     </div>

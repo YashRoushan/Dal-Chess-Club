@@ -79,12 +79,22 @@
   width: 100%;
   height: auto;
   display: block;
+  padding: 0px;
 }
 
 .ttournament-image {
   width: 375px;
   height:450px;
   margin-top: 70px;
+  margin-left: 30px;
+  background-size: cover;
+  background-position: center;
+}
+
+.eevent-image {
+  width: 375px;
+  height:425px;
+  margin-top: 100px;
   margin-left: 30px;
   background-size: cover;
   background-position: center;
@@ -100,10 +110,38 @@
 
 }
 
+.speakers{
+  margin-top: 150px;
+}
+
+@media (max-width: 768px) {
+  .ttournament-info h1 {
+    /*margin-top: 0;*/
+    /*display: block;*/
+  }
+  .ttournament-details{
+    margin-top: 500px;
+    margin-left: 3vw;
+    display: block;
+  }
+}
+
+
 .ttables{
-  margin-top: 300px;
+  /*margin-top: 180px;*/
   margin-left: 30px;
   margin-right:30px;
+}
+
+@media (max-width: 768px) {
+  .ttables{
+    /*margin-top: 70px;*/
+    margin-left: 30px;
+    margin-right:30px;
+  }
+  .dropdown-button{
+    margin-left: -3vw;
+  }
 }
 
 .tstandings-table, .tpairings-table {
@@ -130,6 +168,28 @@
   border-radius: 5px;
  }
 
+ .dropdown-button{
+   display: block;
+   width: 96vw;
+   text-align: center;
+   font-size: x-large;
+   padding: 5px;
+   background-color: #FFD400;
+   color: black;
+   font-weight: bold;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   min-width: 120px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+ }
+
+
+.dropdown-button:hover {
+  background-color: #242424;
+  color: #FFD400;
+}
 @media only screen and (max-width: 1300px) {
   .tournamentList {
     grid-template-columns: 1fr 1fr;

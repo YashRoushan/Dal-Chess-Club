@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TrainerItem from '../trainerItem'
 import '../styles/trainer.css'
 import EventItem from '../eventItem'
 import '../styles/event.css'
@@ -7,23 +6,36 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/tournaments.css";
 import { BASE_URL} from '../config.js';
-import TournamentItem from '../tournamentItem.js';
 
 function Improve() {
   const [eventList, setEventsList] = useState([]);
 
-    // Fetch events from the API
-    useEffect(() => {
-      fetch(`${BASE_URL}/improve`)
-        .then(response => response.json())
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+    const fetchData = () => {
+      const serverUrl =  `${BASE_URL}/improve`;
+      fetch(serverUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
-          console.log(data);
-          setEventsList(data);
+          console.log('Fetched events:', data); // Debug log
+          if (data.length === 0) {
+            setEventsList([]); // Clear the list if no data is returned
+          } else {
+            setEventsList(data);
+          }
         })
         .catch(error => {
           console.error("Error fetching data:", error);
+          setEventsList([]); // Clear the list if there is an error
         });
-    }, []); 
+    }
 
   return (
     <div className="improve">
@@ -32,8 +44,9 @@ function Improve() {
           <div className="tournamentList">
               {eventList.map((eventItem, key) => {
                 return(
-                  <TournamentItem
+                  <EventItem
                     key={key}
+                    eventsID={eventItem.eventsID}
                     name={eventItem.title}
                     image={eventItem.eventImage}
                     price={formatPrice(eventItem.cost)}
@@ -41,22 +54,6 @@ function Improve() {
                     time={formatTime(eventItem.start_date)}
                     endTime={formatTime(eventItem.end_date)}
                     description={eventItem.description}
-                  />
-                )
-              })}
-          </div>
-      </div>
-      <div className="trainer">
-        <h1>Speakers</h1>
-          <div className="trainerList">
-              {eventList.map((trainerItem, key) => {
-                return(
-                  <TrainerItem
-                    key={key}
-                    name={trainerItem.name}
-                    image={trainerItem.speakerImage}
-                    speciality={trainerItem.speciality}
-                    description={trainerItem.bio}
                   />
                 )
               })}
